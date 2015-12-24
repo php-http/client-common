@@ -6,9 +6,9 @@ use Http\Client\BatchResult;
 use Http\Client\HttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Message\MessageFactory;
-use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use PhpSpec\ObjectBehavior;
 
 class HttpMethodsClientSpec extends ObjectBehavior
 {

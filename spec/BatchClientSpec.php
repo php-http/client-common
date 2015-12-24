@@ -3,9 +3,9 @@
 namespace spec\Http\Client\Common;
 
 use Http\Client\HttpClient;
-use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use PhpSpec\ObjectBehavior;
 
 class BatchClientSpec extends ObjectBehavior
 {
