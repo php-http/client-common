@@ -5,27 +5,39 @@ namespace spec\Http\Client\Common;
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpClient;
 use Http\Client\HttpAsyncClient;
-use Http\Client\Common\HttpClientEmulator;
-use Http\Client\Common\HttpAsyncClientDecorator;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 
-class HttpClientEmulatorSpec extends ObjectBehavior
+class EmulatedHttpClientSpec extends ObjectBehavior
 {
     function let(HttpAsyncClient $httpAsyncClient)
     {
-        $this->beAnInstanceOf('spec\Http\Client\Common\HttpClientEmulatorStub', [$httpAsyncClient]);
+        $this->beConstructedWith($httpAsyncClient);
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('spec\Http\Client\Common\HttpClientEmulatorStub');
+        $this->shouldHaveType('Http\Client\Common\EmulatedHttpClient');
     }
 
-    function it_emulates_a_successful_request(HttpAsyncClient $httpAsyncClient, RequestInterface $request, Promise $promise, ResponseInterface $response)
+    function it_is_an_http_client()
     {
+        $this->shouldImplement('Http\Client\HttpClient');
+    }
+
+    function it_is_an_async_http_client()
+    {
+        $this->shouldImplement('Http\Client\HttpAsyncClient');
+    }
+
+    function it_emulates_a_successful_request(
+        HttpAsyncClient $httpAsyncClient,
+        RequestInterface $request,
+        Promise $promise,
+        ResponseInterface $response
+    ) {
         $promise->wait()->shouldBeCalled();
         $promise->getState()->willReturn(Promise::FULFILLED);
         $promise->wait()->willReturn($response);
@@ -45,18 +57,14 @@ class HttpClientEmulatorSpec extends ObjectBehavior
 
         $this->shouldThrow('Http\Client\Exception')->duringSendRequest($request);
     }
-}
 
-class HttpClientEmulatorStub implements HttpAsyncClient, HttpClient
-{
-    use HttpAsyncClientDecorator;
-    use HttpClientEmulator;
+    function it_decorates_the_underlying_client(
+        HttpAsyncClient $httpAsyncClient,
+        RequestInterface $request,
+        Promise $promise
+    ) {
+        $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-    /**
-     * @param HttpAsyncClient $httpAsyncClient
-     */
-    public function __construct(HttpAsyncClient $httpAsyncClient)
-    {
-        $this->httpAsyncClient = $httpAsyncClient;
+        $this->sendAsyncRequest($request)->shouldReturn($promise);
     }
 }
