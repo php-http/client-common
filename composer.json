@@ -12,9 +12,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "php-http/httplug": "1.0.0-beta",
-        "php-http/message-factory": "^1.0",
-        "php-http/promise": "^0.1.1"
+        "php-http/httplug": "^1.0",
+        "php-http/message-factory": "^1.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^2.4",
@@ -31,7 +30,9 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2-dev"
+            "dev-master": "0.3-dev"
         }
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "RC"
 }
