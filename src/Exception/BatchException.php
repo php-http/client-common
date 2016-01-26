@@ -2,7 +2,6 @@
 
 namespace Http\Client\Common\Exception;
 
-use Http\Client\Exception;
 use Http\Client\Exception\TransferException;
 use Http\Client\Common\BatchResult;
 
@@ -13,7 +12,7 @@ use Http\Client\Common\BatchResult;
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-final class BatchException extends TransferException implements Exception
+final class BatchException extends TransferException
 {
     /**
      * @var BatchResult

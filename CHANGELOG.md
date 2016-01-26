@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.0.0 - (Not released)
+
+### Changed
+
+- Remove useless interface in BatchException
+
 
 ## 0.2.0 - 2016-01-12
 
