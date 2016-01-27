@@ -25,6 +25,7 @@ This package provides common tools for HTTP Clients:
 
 - BatchClient to handle sending requests in parallel
 - A convenience client with HTTP method names as class methods
+- Emulator, decorator layers for sync/async clients
 
 
 ## Documentation
