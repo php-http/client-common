@@ -1,5 +1,12 @@
 # Change Log
 
+## Unreleased
+
+### Added
+
+- Add a flexible http client providing both contract, and only emulating what's necessary
+
+
 ## 1.0.0 - 2016-01-27
 
 ### Changed
