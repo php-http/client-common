@@ -7,6 +7,9 @@ use Http\Client\Common\HttpClientDecorator;
 use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
+use Http\Promise\Promise;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Prophet;
 
@@ -14,11 +17,7 @@ class FlexibleHttpClientSpec extends ObjectBehavior
 {
     function let(HttpClient $httpClient)
     {
-        $this->beAnInstanceOf(
-            'spec\Http\Client\Common\FlexibleHttpClientStub', [
-                $httpClient
-            ]
-        );
+        $this->beConstructedWith($httpClient);
     }
 
     function it_is_initializable()
@@ -38,55 +37,58 @@ class FlexibleHttpClientSpec extends ObjectBehavior
 
     function it_throw_exception_if_invalid_client()
     {
-        $httpClient = null;
-        $this->beConstructedWith($httpClient);
+        $this->beConstructedWith(null);
 
         $this->shouldThrow('\LogicException')->duringInstantiation();
     }
 
-    function it_emulates_an_async_client(HttpClient $httpClient)
-    {
+    function it_emulates_an_async_client(
+        HttpClient $httpClient,
+        RequestInterface $syncRequest,
+        ResponseInterface $syncResponse,
+        RequestInterface $asyncRequest,
+        ResponseInterface $asyncResponse
+    ) {
         $this->beConstructedWith($httpClient);
 
-        $this->getClient()->shouldImplement('Http\Client\HttpClient');
-        $this->getAsyncClient()->shouldImplement('Http\Client\HttpAsyncClient');
-        $this->getClient()->shouldNotImplement('Http\Client\Common\EmulatedHttpClient');
-        $this->getAsyncClient()->shouldImplement('Http\Client\Common\EmulatedHttpAsyncClient');
+        $httpClient->sendRequest($syncRequest)->willReturn($syncResponse);
+        $httpClient->sendRequest($asyncRequest)->willReturn($asyncResponse);
+
+        $this->sendRequest($syncRequest)->shouldReturn($syncResponse);
+        $promise = $this->sendAsyncRequest($asyncRequest);
+
+        $promise->shouldHaveType('Http\Promise\Promise');
+        $promise->wait()->shouldReturn($asyncResponse);
     }
 
-    function it_emulates_a_client(HttpAsyncClient $httpAsyncClient)
-    {
+    function it_emulates_a_client(
+        HttpAsyncClient $httpAsyncClient,
+        RequestInterface $asyncRequest,
+        Promise $promise,
+        RequestInterface $syncRequest,
+        Promise $syncPromise,
+        ResponseInterface $syncResponse
+    ) {
         $this->beConstructedWith($httpAsyncClient);
 
-        $this->getClient()->shouldImplement('Http\Client\HttpClient');
-        $this->getAsyncClient()->shouldImplement('Http\Client\HttpAsyncClient');
-        $this->getClient()->shouldImplement('Http\Client\Common\EmulatedHttpClient');
-        $this->getAsyncClient()->shouldNotImplement('Http\Client\EmulatedHttpAsyncClient');
+        $httpAsyncClient->sendAsyncRequest($asyncRequest)->willReturn($promise);
+        $httpAsyncClient->sendAsyncRequest($syncRequest)->willReturn($syncPromise);
+        $syncPromise->wait()->willReturn($syncResponse);
+
+        $this->sendAsyncRequest($asyncRequest)->shouldReturn($promise);
+        $this->sendRequest($syncRequest)->shouldReturn($syncResponse);
     }
 
-    function it_does_not_emulates_a_client()
+    function it_does_not_emulate_a_client(FlexibleHttpClient $client, RequestInterface $syncRequest, RequestInterface $asyncRequest)
     {
-        $prophet = new Prophet();
-        $httpClient = $prophet->prophesize();
-        $httpClient->willImplement('Http\Client\HttpClient');
-        $httpClient->willImplement('Http\Client\HttpAsyncClient');
+        $client->sendRequest($syncRequest)->shouldBeCalled();
+        $client->sendRequest($asyncRequest)->shouldNotBeCalled();
+        $client->sendAsyncRequest($asyncRequest)->shouldBeCalled();
+        $client->sendAsyncRequest($syncRequest)->shouldNotBeCalled();
 
-        $this->beConstructedWith($httpClient);
+        $this->beConstructedWith($client);
 
-        $this->getClient()->shouldNotImplement('Http\Client\Common\EmulatedHttpClient');
-        $this->getAsyncClient()->shouldNotImplement('Http\Client\Common\EmulatedHttpAsyncClient');
-    }
-}
-
-class FlexibleHttpClientStub extends FlexibleHttpClient
-{
-    public function getClient()
-    {
-        return $this->httpClient;
-    }
-
-    public function getAsyncClient()
-    {
-        return $this->httpAsyncClient;
+        $this->sendRequest($syncRequest);
+        $this->sendAsyncRequest($asyncRequest);
     }
 }
