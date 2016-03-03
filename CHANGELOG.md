@@ -5,6 +5,7 @@
 ### Added
 
 - Add a flexible http client providing both contract, and only emulating what's necessary
+- Plugin client moved here from `php-http/plugins`
 
 
 ## 1.0.0 - 2016-01-27
