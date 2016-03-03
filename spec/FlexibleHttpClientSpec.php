@@ -4,18 +4,18 @@ namespace spec\Http\Client\Common;
 
 use Http\Client\Common\HttpAsyncClientDecorator;
 use Http\Client\Common\HttpClientDecorator;
-use Http\Client\Common\HttpClientFlexible;
+use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Prophet;
 
-class HttpClientFlexibleSpec extends ObjectBehavior
+class FlexibleHttpClientSpec extends ObjectBehavior
 {
     function let(HttpClient $httpClient)
     {
         $this->beAnInstanceOf(
-            'spec\Http\Client\Common\HttpClientFlexibleStub', [
+            'spec\Http\Client\Common\FlexibleHttpClientStub', [
                 $httpClient
             ]
         );
@@ -23,7 +23,7 @@ class HttpClientFlexibleSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\HttpClientFlexible');
+        $this->shouldHaveType('Http\Client\Common\FlexibleHttpClient');
     }
 
     function it_is_an_http_client()
@@ -78,7 +78,7 @@ class HttpClientFlexibleSpec extends ObjectBehavior
     }
 }
 
-class HttpClientFlexibleStub extends HttpClientFlexible
+class FlexibleHttpClientStub extends FlexibleHttpClient
 {
     public function getClient()
     {

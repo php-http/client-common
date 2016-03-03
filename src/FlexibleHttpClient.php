@@ -11,7 +11,7 @@ use Http\Client\HttpClient;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class HttpClientFlexible implements HttpClient, HttpAsyncClient
+class FlexibleHttpClient implements HttpClient, HttpAsyncClient
 {
     use HttpClientDecorator;
     use HttpAsyncClientDecorator;
