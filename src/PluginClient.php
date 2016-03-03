@@ -19,8 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * TODO: make class final once removed from plugins.
  */
 /*final*/ class PluginClient implements HttpClient, HttpAsyncClient
-{
-    /**
+ {
+     /**
      * An HTTP async client.
      *
      * @var HttpAsyncClient
@@ -164,4 +164,4 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
     {
         return new LoopException('Too many restarts in plugin client', $request);
     }
-}
+ }
