@@ -3,7 +3,7 @@
     "description": "Common HTTP Client implementations and tools for HTTPlug",
     "license": "MIT",
     "keywords": ["http", "client", "httplug", "common"],
-    "homepage": "http://php-http.org",
+    "homepage": "http://httplug.io",
     "authors": [
         {
             "name": "Márk Sági-Kazár",
