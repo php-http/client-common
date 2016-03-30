@@ -50,7 +50,7 @@ class HttpClientRouter implements HttpClient, HttpAsyncClient
     {
         $this->clients[] = [
             'matcher' => $requestMatcher,
-            'client'  => new FlexibleHttpClient($client)
+            'client' => new FlexibleHttpClient($client),
         ];
     }
 
