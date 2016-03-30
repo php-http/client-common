@@ -2,13 +2,13 @@
 
 namespace spec\Http\Client\Common;
 
-use Http\Client\Common\RequestMatcher;
+use Http\Message\RequestMatcher;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
-use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use PhpSpec\ObjectBehavior;
 
 class HttpClientRouterSpec extends ObjectBehavior
 {

@@ -5,13 +5,19 @@ namespace Http\Client\Common;
 use Http\Client\Exception\RequestException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
+use Http\Message\RequestMatcher;
 use Psr\Http\Message\RequestInterface;
 
 /**
+ * Route a request to a specific client in the stack based using a RequestMatcher.
  *
+ * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
 class HttpClientRouter implements HttpClient, HttpAsyncClient
 {
+    /**
+     * @var array
+     */
     private $clients = [];
 
     /**
@@ -35,7 +41,7 @@ class HttpClientRouter implements HttpClient, HttpAsyncClient
     }
 
     /**
-     * Add a client to the router
+     * Add a client to the router.
      *
      * @param HttpClient|HttpAsyncClient $client
      * @param RequestMatcher             $requestMatcher
@@ -44,12 +50,12 @@ class HttpClientRouter implements HttpClient, HttpAsyncClient
     {
         $this->clients[] = [
             'matcher' => $requestMatcher,
-            'client'  => new HttpClientFlexible($client)
+            'client'  => new FlexibleHttpClient($client)
         ];
     }
 
     /**
-     * Choose a http client given a specific request
+     * Choose an HTTP client given a specific request.
      *
      * @param RequestInterface $request
      *
