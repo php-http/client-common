@@ -2,16 +2,12 @@
 
 namespace spec\Http\Client\Common;
 
-use Http\Client\Common\HttpAsyncClientDecorator;
-use Http\Client\Common\HttpClientDecorator;
-use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Prophet;
 
 class FlexibleHttpClientSpec extends ObjectBehavior
 {
@@ -79,8 +75,10 @@ class FlexibleHttpClientSpec extends ObjectBehavior
         $this->sendRequest($syncRequest)->shouldReturn($syncResponse);
     }
 
-    function it_does_not_emulate_a_client(FlexibleHttpClient $client, RequestInterface $syncRequest, RequestInterface $asyncRequest)
+    function it_does_not_emulate_a_client($client, RequestInterface $syncRequest, RequestInterface $asyncRequest)
     {
+        $client->implement('Http\Client\HttpClient');
+        $client->implement('Http\Client\HttpAsyncClient');
         $client->sendRequest($syncRequest)->shouldBeCalled();
         $client->sendRequest($asyncRequest)->shouldNotBeCalled();
         $client->sendAsyncRequest($asyncRequest)->shouldBeCalled();
