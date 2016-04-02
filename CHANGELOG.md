@@ -7,6 +7,10 @@
 - Add a flexible http client providing both contract, and only emulating what's necessary
 - HTTP Client Router: route requests to underlying clients
 
+### Deprecated
+
+- Extending client classes, they will be made final in version 2.0
+
 
 ## 1.0.0 - 2016-01-27
 
