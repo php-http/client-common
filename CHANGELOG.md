@@ -6,6 +6,7 @@
 
 - Add a flexible http client providing both contract, and only emulating what's necessary
 - HTTP Client Router: route requests to underlying clients
+- Plugin client and core plugins moved here from `php-http/plugins`
 
 ### Deprecated
 

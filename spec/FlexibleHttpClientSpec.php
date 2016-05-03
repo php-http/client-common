@@ -79,6 +79,7 @@ class FlexibleHttpClientSpec extends ObjectBehavior
     {
         $client->implement('Http\Client\HttpClient');
         $client->implement('Http\Client\HttpAsyncClient');
+
         $client->sendRequest($syncRequest)->shouldBeCalled();
         $client->sendRequest($asyncRequest)->shouldNotBeCalled();
         $client->sendAsyncRequest($asyncRequest)->shouldBeCalled();
