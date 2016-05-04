@@ -1,5 +1,13 @@
 # Change Log
 
+
+## Unreleased
+
+### Added
+
+- Suggest separate plugins in composer.json
+
+
 ## 1.1.0 - 2016-05-04
 
 ### Added

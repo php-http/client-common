@@ -21,6 +21,11 @@
         "phpspec/phpspec": "^2.4",
         "henrikbjorn/phpspec-code-coverage" : "^1.0"
     },
+    "suggest": {
+        "php-http/logger-plugin": "PSR-3 Logger plugin",
+        "php-http/cache-plugin": "PSR-6 Cache plugin",
+        "php-http/stopwatch-plugin": "Symfony Stopwatch plugin"
+    },
     "autoload": {
         "psr-4": {
             "Http\\Client\\Common\\": "src/"
