@@ -6,6 +6,7 @@
 ### Added
 
 - Suggest separate plugins in composer.json
+- Introduced `debug_plugins` option for `PluginClient`
 
 
 ## 1.1.0 - 2016-05-04
