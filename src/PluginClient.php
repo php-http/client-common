@@ -44,7 +44,8 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      * @param Plugin[]                   $plugins
      * @param array                      $options {
      *
-     *     @var int $max_restarts
+     *     @var int      $max_restarts
+     *     @var Plugin[] $debug_plugins an array of plugins that are injected between all normal plugins
      * }
      *
      * @throws \RuntimeException if client is not an instance of HttpClient or HttpAsyncClient
@@ -131,13 +132,13 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         /*
          * Inject debug plugins between each plugin.
          */
-        $pluginListWithDegug = $this->options['debug_plugins'];
+        $pluginListWithDebug = $this->options['debug_plugins'];
         foreach ($pluginList as $plugin) {
-            $pluginListWithDegug[] = $plugin;
-            $pluginListWithDegug = array_merge($pluginListWithDegug, $this->options['debug_plugins']);
+            $pluginListWithDebug[] = $plugin;
+            $pluginListWithDebug = array_merge($pluginListWithDebug, $this->options['debug_plugins']);
         }
 
-        while ($plugin = array_pop($pluginListWithDegug)) {
+        while ($plugin = array_pop($pluginListWithDebug)) {
             $lastCallable = function (RequestInterface $request) use ($plugin, $lastCallable, &$firstCallable) {
                 return $plugin->handleRequest($request, $lastCallable, $firstCallable);
             };
