@@ -110,7 +110,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'max_restarts' => 10,
-            'debug_plugins' => []
+            'debug_plugins' => [],
         ]);
 
         return $resolver->resolve($options);
@@ -129,7 +129,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         $firstCallable = $lastCallable = $clientCallable;
 
         /*
-         * Inject debug plugins between each plugin.  
+         * Inject debug plugins between each plugin.
          */
         $pluginListWithDegug = $this->options['debug_plugins'];
         foreach ($pluginList as $plugin) {
