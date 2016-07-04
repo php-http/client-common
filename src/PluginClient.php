@@ -114,6 +114,19 @@ final class PluginClient implements HttpClient, HttpAsyncClient
             'debug_plugins' => [],
         ]);
 
+        $resolver
+            ->setAllowedTypes('debug_plugins', 'array')
+            ->setAllowedValues('debug_plugins', function (array $plugins) {
+                foreach ($plugins as $plugin) {
+                    // Make sure each object passed with the `debug_plugins` is an instance of Plugin.
+                    if (!$plugin instanceof Plugin) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
         return $resolver->resolve($options);
     }
 
