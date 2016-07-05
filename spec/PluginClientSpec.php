@@ -87,4 +87,46 @@ class PluginClientSpec extends ObjectBehavior
 
         $this->shouldThrow('Http\Client\Common\Exception\LoopException')->duringSendRequest($request);
     }
+
+    function it_injects_debug_plugins(HttpClient $httpClient, RequestInterface $request, Plugin $plugin0, Plugin $plugin1, Plugin $debugPlugin)
+    {
+        $plugin0
+            ->handleRequest(
+                $request,
+                Argument::type('callable'),
+                Argument::type('callable')
+            )
+            ->shouldBeCalledTimes(1)
+            ->will(function ($args) {
+                return $args[1]($args[0]);
+            })
+        ;
+        $plugin1
+            ->handleRequest(
+                $request,
+                Argument::type('callable'),
+                Argument::type('callable')
+            )
+            ->shouldBeCalledTimes(1)
+            ->will(function ($args) {
+                return $args[1]($args[0]);
+            })
+        ;
+
+        $debugPlugin
+            ->handleRequest(
+                $request,
+                Argument::type('callable'),
+                Argument::type('callable')
+            )
+            ->shouldBeCalledTimes(3)
+            ->will(function ($args) {
+                return $args[1]($args[0]);
+            })
+        ;
+
+
+        $this->beConstructedWith($httpClient, [$plugin0, $plugin1], ['debug_plugins'=>[$debugPlugin]]);
+        $this->sendRequest($request);
+    }
 }

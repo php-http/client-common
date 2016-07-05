@@ -44,7 +44,8 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      * @param Plugin[]                   $plugins
      * @param array                      $options {
      *
-     *     @var int $max_restarts
+     *     @var int      $max_restarts
+     *     @var Plugin[] $debug_plugins an array of plugins that are injected between each normal plugin
      * }
      *
      * @throws \RuntimeException if client is not an instance of HttpClient or HttpAsyncClient
@@ -110,7 +111,21 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'max_restarts' => 10,
+            'debug_plugins' => [],
         ]);
+
+        $resolver
+            ->setAllowedTypes('debug_plugins', 'array')
+            ->setAllowedValues('debug_plugins', function (array $plugins) {
+                foreach ($plugins as $plugin) {
+                    // Make sure each object passed with the `debug_plugins` is an instance of Plugin.
+                    if (!$plugin instanceof Plugin) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
 
         return $resolver->resolve($options);
     }
@@ -127,7 +142,16 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     {
         $firstCallable = $lastCallable = $clientCallable;
 
-        while ($plugin = array_pop($pluginList)) {
+        /*
+         * Inject debug plugins between each plugin.
+         */
+        $pluginListWithDebug = $this->options['debug_plugins'];
+        foreach ($pluginList as $plugin) {
+            $pluginListWithDebug[] = $plugin;
+            $pluginListWithDebug = array_merge($pluginListWithDebug, $this->options['debug_plugins']);
+        }
+
+        while ($plugin = array_pop($pluginListWithDebug)) {
             $lastCallable = function (RequestInterface $request) use ($plugin, $lastCallable, &$firstCallable) {
                 return $plugin->handleRequest($request, $lastCallable, $firstCallable);
             };
