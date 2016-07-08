@@ -85,6 +85,16 @@ class HttpMethodsClientSpec extends ObjectBehavior
         $this->beConstructedWith($client, $messageFactory);
         $this->sendRequest($request)->shouldReturn($response);
     }
+
+    function it_returns_last_request(HttpClient $client, MessageFactory $messageFactory, RequestInterface $request, ResponseInterface $response)
+    {
+        $client->sendRequest($request)->shouldBeCalled()->willReturn($response);
+
+        $this->beConstructedWith($client, $messageFactory);
+        $this->getLastRequest()->shouldReturn(null);
+        $this->sendRequest($request)->shouldReturn($response);
+        $this->getLastRequest()->shouldReturn($request);
+    }
 }
 
 class HttpMethodsClientStub extends HttpMethodsClient
