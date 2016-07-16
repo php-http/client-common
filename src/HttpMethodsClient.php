@@ -37,6 +37,11 @@ class HttpMethodsClient implements HttpClient
     private $messageFactory;
 
     /**
+     * @var RequestInterface
+     */
+    private $lastRequest;
+
+    /**
      * @param HttpClient     $httpClient     The client to send requests with.
      * @param MessageFactory $messageFactory The message factory to create requests.
      */
@@ -200,6 +205,20 @@ class HttpMethodsClient implements HttpClient
      */
     public function sendRequest(RequestInterface $request)
     {
+        $this->lastRequest = $request;
+
         return $this->httpClient->sendRequest($request);
+    }
+
+    /**
+     * Get the last request that was sent via this client.
+     *
+     * Note that this will not return requests made directly through the underlying client's sendRequest method.
+     *
+     * @return RequestInterface|null
+     */
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
     }
 }
