@@ -37,8 +37,8 @@ class HttpMethodsClient implements HttpClient
     private $messageFactory;
 
     /**
-     * @param HttpClient     $httpClient     The client to send requests with.
-     * @param MessageFactory $messageFactory The message factory to create requests.
+     * @param HttpClient     $httpClient     The client to send requests with
+     * @param MessageFactory $messageFactory The message factory to create requests
      */
     public function __construct(HttpClient $httpClient, MessageFactory $messageFactory)
     {
@@ -174,7 +174,7 @@ class HttpMethodsClient implements HttpClient
     /**
      * Sends a request with any HTTP method.
      *
-     * @param string                      $method  HTTP method to use.
+     * @param string                      $method  HTTP method to use
      * @param string|UriInterface         $uri
      * @param array                       $headers
      * @param string|StreamInterface|null $body

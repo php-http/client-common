@@ -45,11 +45,11 @@ class BatchClient implements HttpClient
      *
      * @param RequestInterface[] The requests to send
      *
-     * @return BatchResult Containing one result per request.
+     * @return BatchResult Containing one result per request
      *
      * @throws BatchException If one or more requests fails. The exception gives access to the
      *                        BatchResult with a map of request to result for success, request to
-     *                        exception for failures.
+     *                        exception for failures
      */
     public function sendRequests(array $requests)
     {
