@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Throw exception when the response of a request is not acceptable.
  *
- * By default an exception will be thrown for all status codes from 400 to 599.
+ * Status codes 400-499 lead to a ClientErrorException, status 500-599 to a ServerErrorException.
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
