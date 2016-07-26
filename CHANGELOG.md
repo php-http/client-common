@@ -1,10 +1,12 @@
 # Change Log
 
-## Unreleased
+
+## UNRELEASED
 
 ### Changed
 
 - AddHostPlugin also sets the port if specified
+
 
 ## 1.2.0 - 2016-07-14
 
