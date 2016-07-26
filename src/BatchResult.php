@@ -74,7 +74,7 @@ final class BatchResult
      *
      * @return ResponseInterface
      *
-     * @throws \UnexpectedValueException If request was not part of the batch or failed.
+     * @throws \UnexpectedValueException If request was not part of the batch or failed
      */
     public function getResponseFor(RequestInterface $request)
     {
@@ -91,7 +91,7 @@ final class BatchResult
      * @param RequestInterface  $request
      * @param ResponseInterface $response
      *
-     * @return BatchResult the new BatchResult with this request-response pair added to it.
+     * @return BatchResult the new BatchResult with this request-response pair added to it
      */
     public function addResponse(RequestInterface $request, ResponseInterface $response)
     {
@@ -146,7 +146,7 @@ final class BatchResult
      *
      * @return Exception
      *
-     * @throws \UnexpectedValueException If request was not part of the batch or was successful.
+     * @throws \UnexpectedValueException If request was not part of the batch or was successful
      */
     public function getExceptionFor(RequestInterface $request)
     {
@@ -163,7 +163,7 @@ final class BatchResult
      * @param RequestInterface $request
      * @param Exception        $exception
      *
-     * @return BatchResult the new BatchResult with this request-exception pair added to it.
+     * @return BatchResult the new BatchResult with this request-exception pair added to it
      */
     public function addException(RequestInterface $request, Exception $exception)
     {

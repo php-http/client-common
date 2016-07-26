@@ -23,7 +23,7 @@ final class DecoderPlugin implements Plugin
     /**
      * @var bool Whether this plugin decode stream with value in the Content-Encoding header (default to true).
      *
-     * If set to false only the Transfer-Encoding header will be used.
+     * If set to false only the Transfer-Encoding header will be used
      */
     private $useContentEncoding;
 
