@@ -39,12 +39,14 @@ class AddHostPluginSpec extends ObjectBehavior
     ) {
         $host->getScheme()->shouldBeCalled()->willReturn('http://');
         $host->getHost()->shouldBeCalled()->willReturn('example.com');
+        $host->getPort()->shouldBeCalled()->willReturn(8000);
 
         $request->getUri()->shouldBeCalled()->willReturn($uri);
         $request->withUri($uri)->shouldBeCalled()->willReturn($request);
 
         $uri->withScheme('http://')->shouldBeCalled()->willReturn($uri);
         $uri->withHost('example.com')->shouldBeCalled()->willReturn($uri);
+        $uri->withPort(8000)->shouldBeCalled()->willReturn($uri);
         $uri->getHost()->shouldBeCalled()->willReturn('');
 
         $this->beConstructedWith($host);
@@ -58,13 +60,14 @@ class AddHostPluginSpec extends ObjectBehavior
     ) {
         $host->getScheme()->shouldBeCalled()->willReturn('http://');
         $host->getHost()->shouldBeCalled()->willReturn('example.com');
+        $host->getPort()->shouldBeCalled()->willReturn(8000);
 
         $request->getUri()->shouldBeCalled()->willReturn($uri);
         $request->withUri($uri)->shouldBeCalled()->willReturn($request);
 
         $uri->withScheme('http://')->shouldBeCalled()->willReturn($uri);
         $uri->withHost('example.com')->shouldBeCalled()->willReturn($uri);
-
+        $uri->withPort(8000)->shouldBeCalled()->willReturn($uri);
 
         $this->beConstructedWith($host, ['replace' => true]);
         $this->handleRequest($request, function () {}, function () {});
