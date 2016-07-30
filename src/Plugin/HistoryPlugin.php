@@ -2,7 +2,6 @@
 
 namespace Http\Client\Common\Plugin;
 
-use Exception;
 use Http\Client\Common\Plugin;
 use Http\Client\Exception;
 use Psr\Http\Message\RequestInterface;
@@ -41,8 +40,10 @@ final class HistoryPlugin implements Plugin
             $journal->addSuccess($request, $response);
 
             return $response;
-        }, function (Exception $exception) use ($request, $journal) {
-            $journal->addFailure($request, $exception);
+        }, function ($exception) use ($request, $journal) {
+            if ($exception instanceof Exception) {
+                $journal->addFailure($request, $exception);
+            }
 
             throw $exception;
         });
