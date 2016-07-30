@@ -2,6 +2,7 @@
 
 namespace Http\Client\Common\Plugin;
 
+use Exception;
 use Http\Client\Common\Plugin;
 use Http\Client\Exception;
 use Psr\Http\Message\RequestInterface;
