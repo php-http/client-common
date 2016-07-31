@@ -3,7 +3,6 @@
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
-use Http\Client\Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -62,7 +61,7 @@ final class RetryPlugin implements Plugin
             }
 
             return $response;
-        }, function (Exception $exception) use ($request, $next, $first, $chainIdentifier) {
+        }, function (\Exception $exception) use ($request, $next, $first, $chainIdentifier) {
             if (!array_key_exists($chainIdentifier, $this->retryStorage)) {
                 $this->retryStorage[$chainIdentifier] = 0;
             }
