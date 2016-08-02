@@ -68,4 +68,21 @@ class LeastUsedClientPoolSpec extends ObjectBehavior
         $this->shouldThrow('Http\Client\Exception\HttpException')->duringSendRequest($request);
         $this->shouldThrow('Http\Client\Exception\HttpException')->duringSendRequest($request);
     }
+
+    public function it_uses_the_lowest_request_client(HttpClientPoolItem $client1, HttpClientPoolItem $client2, RequestInterface $request, ResponseInterface $response)
+    {
+        $this->addHttpClient($client1);
+        $this->addHttpClient($client2);
+
+        $client1->getSendingRequestCount()->willReturn(10);
+        $client2->getSendingRequestCount()->willReturn(2);
+
+        $client1->isDisabled()->willReturn(false);
+        $client2->isDisabled()->willReturn(false);
+
+        $client1->sendRequest($request)->shouldNotBeCalled();
+        $client2->sendRequest($request)->willReturn($response);
+
+        $this->sendRequest($request)->shouldReturn($response);
+    }
 }

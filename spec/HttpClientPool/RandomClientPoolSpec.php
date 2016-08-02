@@ -11,11 +11,11 @@ use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class RoundRobinClientPoolSpec extends ObjectBehavior
+class RandomClientPoolSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\HttpClientPool\RoundRobinClientPool');
+        $this->shouldHaveType('Http\Client\Common\HttpClientPool\RandomClientPool');
     }
 
     public function it_is_an_http_client()
@@ -67,17 +67,5 @@ class RoundRobinClientPoolSpec extends ObjectBehavior
 
         $this->shouldThrow('Http\Client\Exception\HttpException')->duringSendRequest($request);
         $this->shouldThrow('Http\Client\Exception\HttpException')->duringSendRequest($request);
-    }
-
-    public function it_round_between_clients(HttpClient $client1, HttpClient $client2, RequestInterface $request, ResponseInterface $response)
-    {
-        $this->addHttpClient($client1);
-        $this->addHttpClient($client2);
-
-        $client1->sendRequest($request)->willReturn($response);
-        $client2->sendRequest($request)->willReturn($response);
-
-        $this->sendRequest($request)->shouldReturn($response);
-        $this->sendRequest($request)->shouldReturn($response);
     }
 }
