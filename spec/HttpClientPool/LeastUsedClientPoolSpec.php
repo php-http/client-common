@@ -6,6 +6,7 @@ use Http\Client\Common\HttpClientPoolItem;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
+use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
@@ -71,6 +72,10 @@ class LeastUsedClientPoolSpec extends ObjectBehavior
 
     public function it_uses_the_lowest_request_client(HttpClientPoolItem $client1, HttpClientPoolItem $client2, RequestInterface $request, ResponseInterface $response)
     {
+        if (extension_loaded('xdebug')) {
+            throw new SkippingException('This test fail when xdebug is enable on PHP < 7');
+        }
+
         $this->addHttpClient($client1);
         $this->addHttpClient($client2);
 
