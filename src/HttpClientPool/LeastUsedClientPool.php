@@ -13,12 +13,12 @@ use Http\Client\Common\HttpClientPoolItem;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class LeastUsedClientPool extends HttpClientPool
+final class LeastUsedClientPool extends HttpClientPool
 {
     /**
      * {@inheritdoc}
      */
-    public function chooseHttpClient()
+    protected function chooseHttpClient()
     {
         $clientPool = array_filter($this->clientPool, function (HttpClientPoolItem $clientPoolItem) {
             return !$clientPoolItem->isDisabled();

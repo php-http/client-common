@@ -10,12 +10,12 @@ use Http\Client\Common\HttpClientPool;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class RoundRobinClientPool extends HttpClientPool
+final class RoundRobinClientPool extends HttpClientPool
 {
     /**
      * {@inheritdoc}
      */
-    public function chooseHttpClient()
+    protected function chooseHttpClient()
     {
         $last = current($this->clientPool);
 

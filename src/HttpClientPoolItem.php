@@ -128,7 +128,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
      *
      * @return \DateTime|null
      */
-    protected function getDisabledAt()
+    private function getDisabledAt()
     {
         return $this->disabledAt;
     }
@@ -136,7 +136,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Increment the request count.
      */
-    protected function incrementRequestCount()
+    private function incrementRequestCount()
     {
         ++$this->sendingRequestCount;
     }
@@ -144,7 +144,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Decrement the request count.
      */
-    protected function decrementRequestCount()
+    private function decrementRequestCount()
     {
         --$this->sendingRequestCount;
     }
@@ -152,7 +152,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Enable the current client.
      */
-    protected function enable()
+    private function enable()
     {
         $this->disabledAt = null;
     }
@@ -160,7 +160,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Disable the current client.
      */
-    protected function disable()
+    private function disable()
     {
         $this->disabledAt = new \DateTime('now');
     }
