@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.3.0 - Unreleased
+
+- Add HttpClientPool client to leverage load balancing and fallback mechanism [see the documentation](http://docs.php-http.org/en/latest/components/client-common.html) for more details
 
 ## 1.2.1 - 2016-07-26
 
