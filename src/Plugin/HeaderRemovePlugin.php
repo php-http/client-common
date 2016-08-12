@@ -18,7 +18,7 @@ final class HeaderRemovePlugin implements Plugin
     private $headers = [];
 
     /**
-     * @param array $headers headers to remove from the request
+     * @param array $headers List of header names to remove from the request
      */
     public function __construct(array $headers)
     {
