@@ -6,7 +6,8 @@ use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Set default values for the request headers.
+ * Set header to default value if it does not exist.
+ *
  * If a given header already exists the value wont be replaced and the request wont be changed.
  *
  * @author Soufiane Ghzal <sghzal@gmail.com>
@@ -19,7 +20,7 @@ final class HeaderDefaultsPlugin implements Plugin
     private $headers = [];
 
     /**
-     * @param array $headers headers to set to the request
+     * @param array $headers Hashmap of header name to header value
      */
     public function __construct(array $headers)
     {

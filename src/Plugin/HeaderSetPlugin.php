@@ -6,7 +6,8 @@ use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Set headers to the request.
+ * Set headers on the request.
+ *
  * If the header does not exist it wil be set, if the header already exists it will be replaced.
  *
  * @author Soufiane Ghzal <sghzal@gmail.com>
@@ -19,7 +20,7 @@ final class HeaderSetPlugin implements Plugin
     private $headers = [];
 
     /**
-     * @param array $headers headers to set to the request
+     * @param array $headers Hashmap of header name to header value
      */
     public function __construct(array $headers)
     {

@@ -6,7 +6,8 @@ use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Adds headers to the request.
+ * Append headers to the request.
+ *
  * If the header already exists the value will be appended to the current value.
  *
  * This only makes sense for headers that can have multiple values like 'Forwarded'
@@ -23,7 +24,7 @@ final class HeaderAppendPlugin implements Plugin
     private $headers = [];
 
     /**
-     * @param array $headers headers to add to the request
+     * @param array $headers Hashmap of header name to header value
      */
     public function __construct(array $headers)
     {
