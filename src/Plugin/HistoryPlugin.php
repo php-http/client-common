@@ -40,8 +40,10 @@ final class HistoryPlugin implements Plugin
             $journal->addSuccess($request, $response);
 
             return $response;
-        }, function (Exception $exception) use ($request, $journal) {
-            $journal->addFailure($request, $exception);
+        }, function (\Exception $exception) use ($request, $journal) {
+            if ($exception instanceof Exception) {
+                $journal->addFailure($request, $exception);
+            }
 
             throw $exception;
         });

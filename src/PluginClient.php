@@ -3,7 +3,6 @@
 namespace Http\Client\Common;
 
 use Http\Client\Common\Exception\LoopException;
-use Http\Client\Exception as HttplugException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\FulfilledPromise;
@@ -79,7 +78,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         $pluginChain = $this->createPluginChain($this->plugins, function (RequestInterface $request) {
             try {
                 return new FulfilledPromise($this->client->sendRequest($request));
-            } catch (HttplugException $exception) {
+            } catch (\Exception $exception) {
                 return new RejectedPromise($exception);
             }
         });
