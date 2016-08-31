@@ -134,9 +134,9 @@ class RedirectPlugin implements Plugin
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         // Check in storage
-        if (array_key_exists($request->getRequestTarget(), $this->redirectStorage)) {
-            $uri = $this->redirectStorage[$request->getRequestTarget()]['uri'];
-            $statusCode = $this->redirectStorage[$request->getRequestTarget()]['status'];
+        if (array_key_exists((string) $request->getUri(), $this->redirectStorage)) {
+            $uri = $this->redirectStorage[(string) $request->getUri()]['uri'];
+            $statusCode = $this->redirectStorage[(string) $request->getUri()]['status'];
             $redirectRequest = $this->buildRedirectRequest($request, $uri, $statusCode);
 
             return $first($redirectRequest);
@@ -157,14 +157,14 @@ class RedirectPlugin implements Plugin
                 $this->circularDetection[$chainIdentifier] = [];
             }
 
-            $this->circularDetection[$chainIdentifier][] = $request->getRequestTarget();
+            $this->circularDetection[$chainIdentifier][] = (string) $request->getUri();
 
-            if (in_array($redirectRequest->getRequestTarget(), $this->circularDetection[$chainIdentifier])) {
+            if (in_array((string) $redirectRequest->getUri(), $this->circularDetection[$chainIdentifier])) {
                 throw new CircularRedirectionException('Circular redirection detected', $request, $response);
             }
 
             if ($this->redirectCodes[$statusCode]['permanent']) {
-                $this->redirectStorage[$request->getRequestTarget()] = [
+                $this->redirectStorage[(string) $request->getUri()] = [
                     'uri' => $uri,
                     'status' => $statusCode,
                 ];
