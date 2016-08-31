@@ -4,8 +4,8 @@ namespace spec\Http\Client\Common\Plugin;
 
 use Http\Client\Exception\TransferException;
 use Http\Client\Common\Plugin\Journal;
-use Http\Promise\FulfilledPromise;
-use Http\Promise\RejectedPromise;
+use Http\Client\Promise\HttpFulfilledPromise;
+use Http\Client\Promise\HttpRejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
@@ -32,7 +32,7 @@ class HistoryPluginSpec extends ObjectBehavior
     {
         $next = function (RequestInterface $receivedRequest) use($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new FulfilledPromise($response->getWrappedObject());
+                return new HttpFulfilledPromise($response->getWrappedObject());
             }
         };
 
@@ -46,7 +46,7 @@ class HistoryPluginSpec extends ObjectBehavior
         $exception = new TransferException();
         $next = function (RequestInterface $receivedRequest) use($request, $exception) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new RejectedPromise($exception);
+                return new HttpRejectedPromise($exception);
             }
         };
 

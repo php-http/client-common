@@ -36,14 +36,14 @@ class EmulatedHttpAsyncClientSpec extends ObjectBehavior
     ) {
         $httpClient->sendRequest($request)->willReturn($response);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 
     function it_emulates_a_failed_request(HttpClient $httpClient, RequestInterface $request)
     {
         $httpClient->sendRequest($request)->willThrow('Http\Client\Exception\TransferException');
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
     }
 
     function it_decorates_the_underlying_client(

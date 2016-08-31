@@ -6,6 +6,7 @@
 - Add HttpClientPool client to leverage load balancing and fallback mechanism [see the documentation](http://docs.php-http.org/en/latest/components/client-common.html) for more details
 
 ### Changed
+- Fix Emulated Trait to use Http based promise which respect the HttpAsyncClient interface
 - RedirectPlugin: use the full URL instead of the URI to properly keep track of redirects
 
 ## 1.2.1 - 2016-07-26

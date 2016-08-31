@@ -2,7 +2,7 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Promise\FulfilledPromise;
+use Http\Client\Promise\HttpFulfilledPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -31,7 +31,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $request->withHeader('TE', ['gzip', 'deflate', 'compress', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate', 'compress'])->shouldBeCalled()->willReturn($request);
         $next = function () use($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Transfer-Encoding')->willReturn(true);
@@ -53,7 +53,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $request->withHeader('TE', ['gzip', 'deflate', 'compress', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate', 'compress'])->shouldBeCalled()->willReturn($request);
         $next = function () use($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Transfer-Encoding')->willReturn(false);
@@ -75,7 +75,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $request->withHeader('TE', ['gzip', 'deflate', 'compress', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate', 'compress'])->shouldBeCalled()->willReturn($request);
         $next = function () use($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Transfer-Encoding')->willReturn(false);
@@ -97,7 +97,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $request->withHeader('TE', ['gzip', 'deflate', 'compress', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate', 'compress'])->shouldBeCalled()->willReturn($request);
         $next = function () use($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Transfer-Encoding')->willReturn(false);
@@ -121,7 +121,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $request->withHeader('TE', ['gzip', 'deflate', 'compress', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate', 'compress'])->shouldNotBeCalled();
         $next = function () use($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Transfer-Encoding')->willReturn(false);
