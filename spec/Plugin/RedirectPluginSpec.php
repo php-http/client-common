@@ -419,7 +419,7 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new FulfilledPromise($responseRedirect->getWrappedObject());
+                return new HttpFulfilledPromise($responseRedirect->getWrappedObject());
             }
         };
 
@@ -433,7 +433,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $promise->wait()->shouldBeCalled()->willReturn($finalResponse);
 
         $finalPromise = $this->handleRequest($request, $next, $first);
-        $finalPromise->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $finalPromise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
         $finalPromise->wait()->shouldReturn($finalResponse);
     }
 }
