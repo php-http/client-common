@@ -36,16 +36,18 @@ class RedirectPluginSpec extends ObjectBehavior
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('/redirect');
 
-        $request->getRequestTarget()->willReturn('/original');
         $request->getUri()->willReturn($uri);
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
+        $uri->__toString()->willReturn('/original');
 
         $uri->withPath('/redirect')->willReturn($uriRedirect);
         $uriRedirect->withFragment('')->willReturn($uriRedirect);
         $uriRedirect->withQuery('')->willReturn($uriRedirect);
+        $uriRedirect->__toString()->willReturn('/redirect');
 
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
         $modifiedRequest->getMethod()->willReturn('GET');
+
 
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
@@ -67,7 +69,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $finalPromise->wait()->shouldReturn($finalResponse);
     }
 
-    function it_use_storage_on_301(UriInterface $uriRedirect, RequestInterface $request, RequestInterface $modifiedRequest)
+    function it_use_storage_on_301(UriInterface $uri, UriInterface $uriRedirect, RequestInterface $request, RequestInterface $modifiedRequest)
     {
         $this->beAnInstanceOf('spec\Http\Client\Common\Plugin\RedirectPluginStub');
         $this->beConstructedWith($uriRedirect, '/original', '301');
@@ -76,11 +78,14 @@ class RedirectPluginSpec extends ObjectBehavior
             throw new \Exception('Must not be called');
         };
 
-        $request->getRequestTarget()->willReturn('/original');
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
 
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
         $modifiedRequest->getMethod()->willReturn('GET');
+
+        $uriRedirect->__toString()->willReturn('/redirect');
 
         $this->handleRequest($request, $next, function () {});
     }
@@ -98,8 +103,8 @@ class RedirectPluginSpec extends ObjectBehavior
         $this->beAnInstanceOf('spec\Http\Client\Common\Plugin\RedirectPluginStub');
         $this->beConstructedWith($uriRedirect, '', '301');
 
-        $request->getRequestTarget()->willReturn('/301-url');
         $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/301-url');
 
         $responseRedirect->getStatusCode()->willReturn('301');
         $responseRedirect->hasHeader('Location')->willReturn(true);
@@ -111,8 +116,10 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
 
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
         $modifiedRequest->getMethod()->willReturn('GET');
+
+        $uriRedirect->__toString()->willReturn('/redirect');
 
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
@@ -142,7 +149,8 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
-        $request->getRequestTarget()->willReturn('/original');
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
 
         $responseRedirect->getStatusCode()->willReturn('302');
         $responseRedirect->hasHeader('Location')->willReturn(true);
@@ -158,8 +166,10 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
 
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
         $modifiedRequest->getMethod()->willReturn('GET');
+
+        $uriRedirect->__toString()->willReturn('/redirect');
 
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
@@ -179,7 +189,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, $first);
     }
 
-    function it_throws_http_exception_on_no_location(RequestInterface $request, ResponseInterface $responseRedirect)
+    function it_throws_http_exception_on_no_location(RequestInterface $request, UriInterface $uri, ResponseInterface $responseRedirect)
     {
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
@@ -187,7 +197,8 @@ class RedirectPluginSpec extends ObjectBehavior
             }
         };
 
-        $request->getRequestTarget()->willReturn('/original');
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
         $responseRedirect->getStatusCode()->willReturn('302');
         $responseRedirect->hasHeader('Location')->willReturn(false);
 
@@ -196,7 +207,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $promise->shouldThrow('Http\Client\Exception\HttpException')->duringWait();
     }
 
-    function it_throws_http_exception_on_invalid_location(RequestInterface $request, ResponseInterface $responseRedirect)
+    function it_throws_http_exception_on_invalid_location(RequestInterface $request, UriInterface $uri, ResponseInterface $responseRedirect)
     {
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
@@ -204,7 +215,8 @@ class RedirectPluginSpec extends ObjectBehavior
             }
         };
 
-        $request->getRequestTarget()->willReturn('/original');
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
         $responseRedirect->getHeaderLine('Location')->willReturn('scheme:///invalid');
 
         $responseRedirect->getStatusCode()->willReturn('302');
@@ -256,7 +268,8 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
-        $request->getRequestTarget()->willReturn('/original');
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
 
         $responseRedirect->getStatusCode()->willReturn('302');
         $responseRedirect->hasHeader('Location')->willReturn(true);
@@ -270,7 +283,8 @@ class RedirectPluginSpec extends ObjectBehavior
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
         $modifiedRequest->getUri()->willReturn($uriRedirect);
 
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
+        $uriRedirect->__toString()->willReturn('/redirect');
         $modifiedRequest->getMethod()->willReturn('POST');
         $modifiedRequest->withMethod('GET')->willReturn($modifiedRequest);
 
@@ -303,7 +317,8 @@ class RedirectPluginSpec extends ObjectBehavior
     ) {
         $this->beConstructedWith(['preserve_header' => ['Accept']]);
 
-        $request->getRequestTarget()->willReturn('/original');
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
 
         $responseRedirect->getStatusCode()->willReturn('302');
         $responseRedirect->hasHeader('Location')->willReturn(true);
@@ -316,7 +331,8 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
 
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
+        $uriRedirect->__toString()->willReturn('/redirect');
         $modifiedRequest->getMethod()->willReturn('GET');
         $modifiedRequest->getHeaders()->willReturn(['Accept' => 'value', 'Cookie' => 'value']);
         $modifiedRequest->withoutHeader('Cookie')->willReturn($modifiedRequest);
@@ -347,8 +363,8 @@ class RedirectPluginSpec extends ObjectBehavior
         $this->beAnInstanceOf('spec\Http\Client\Common\Plugin\RedirectPluginStubCircular');
         $this->beConstructedWith(spl_object_hash((object)$first));
 
-        $request->getRequestTarget()->willReturn('/original');
         $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
 
         $responseRedirect->getStatusCode()->willReturn('302');
         $responseRedirect->hasHeader('Location')->willReturn(true);
@@ -360,7 +376,7 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
         $modifiedRequest->getUri()->willReturn($uriRedirect);
-        $modifiedRequest->getRequestTarget()->willReturn('/redirect');
+        $uriRedirect->__toString()->willReturn('/redirect');
         $modifiedRequest->getMethod()->willReturn('GET');
 
         $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
@@ -372,6 +388,53 @@ class RedirectPluginSpec extends ObjectBehavior
         $promise = $this->handleRequest($request, $next, $first);
         $promise->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
         $promise->shouldThrow('Http\Client\Common\Exception\CircularRedirectionException')->duringWait();
+    }
+
+    function it_redirects_http_to_https(
+        UriInterface $uri,
+        UriInterface $uriRedirect,
+        RequestInterface $request,
+        ResponseInterface $responseRedirect,
+        RequestInterface $modifiedRequest,
+        ResponseInterface $finalResponse,
+        Promise $promise
+    ) {
+        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->hasHeader('Location')->willReturn(true);
+        $responseRedirect->getHeaderLine('Location')->willReturn('https://my-site.com/original');
+
+        $request->getUri()->willReturn($uri);
+        $request->withUri($uriRedirect)->willReturn($modifiedRequest);
+        $uri->__toString()->willReturn('http://my-site.com/original');
+
+        $uri->withScheme('https')->willReturn($uriRedirect);
+        $uriRedirect->withHost('my-site.com')->willReturn($uriRedirect);
+        $uriRedirect->withPath('/original')->willReturn($uriRedirect);
+        $uriRedirect->withFragment('')->willReturn($uriRedirect);
+        $uriRedirect->withQuery('')->willReturn($uriRedirect);
+        $uriRedirect->__toString()->willReturn('https://my-site.com/original');
+
+        $modifiedRequest->getUri()->willReturn($uriRedirect);
+        $modifiedRequest->getMethod()->willReturn('GET');
+
+        $next = function (RequestInterface $receivedRequest) use($request, $responseRedirect) {
+            if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
+                return new FulfilledPromise($responseRedirect->getWrappedObject());
+            }
+        };
+
+        $first = function (RequestInterface $receivedRequest) use($modifiedRequest, $promise) {
+            if (Argument::is($modifiedRequest->getWrappedObject())->scoreArgument($receivedRequest)) {
+                return $promise->getWrappedObject();
+            }
+        };
+
+        $promise->getState()->willReturn(Promise::FULFILLED);
+        $promise->wait()->shouldBeCalled()->willReturn($finalResponse);
+
+        $finalPromise = $this->handleRequest($request, $next, $first);
+        $finalPromise->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $finalPromise->wait()->shouldReturn($finalResponse);
     }
 }
 
