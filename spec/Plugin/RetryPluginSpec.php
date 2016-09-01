@@ -3,8 +3,8 @@
 namespace spec\Http\Client\Common\Plugin;
 
 use Http\Client\Exception;
-use Http\Promise\FulfilledPromise;
-use Http\Promise\RejectedPromise;
+use Http\Client\Promise\HttpFulfilledPromise;
+use Http\Client\Promise\HttpRejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
@@ -26,11 +26,11 @@ class RetryPluginSpec extends ObjectBehavior
     {
         $next = function (RequestInterface $receivedRequest) use($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new FulfilledPromise($response->getWrappedObject());
+                return new HttpFulfilledPromise($response->getWrappedObject());
             }
         };
 
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 
     function it_throws_exception_on_multiple_exceptions(RequestInterface $request)
@@ -43,17 +43,17 @@ class RetryPluginSpec extends ObjectBehavior
             $count++;
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 if ($count == 1) {
-                    return new RejectedPromise($exception1);
+                    return new HttpRejectedPromise($exception1);
                 }
 
                 if ($count == 2) {
-                    return new RejectedPromise($exception2);
+                    return new HttpRejectedPromise($exception2);
                 }
             }
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $promise->shouldThrow($exception2)->duringWait();
     }
 
@@ -66,17 +66,17 @@ class RetryPluginSpec extends ObjectBehavior
             $count++;
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 if ($count == 1) {
-                    return new RejectedPromise($exception);
+                    return new HttpRejectedPromise($exception);
                 }
 
                 if ($count == 2) {
-                    return new FulfilledPromise($response->getWrappedObject());
+                    return new HttpFulfilledPromise($response->getWrappedObject());
                 }
             }
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
         $promise->wait()->shouldReturn($response);
     }
 
@@ -89,16 +89,16 @@ class RetryPluginSpec extends ObjectBehavior
             $count++;
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 if ($count % 2 == 1) {
-                    return new RejectedPromise($exception);
+                    return new HttpRejectedPromise($exception);
                 }
 
                 if ($count % 2 == 0) {
-                    return new FulfilledPromise($response->getWrappedObject());
+                    return new HttpFulfilledPromise($response->getWrappedObject());
                 }
             }
         };
 
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 }

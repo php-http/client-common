@@ -6,8 +6,8 @@ use Http\Client\Exception;
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
+use Http\Client\Promise\HttpRejectedPromise;
 use Http\Promise\Promise;
-use Http\Promise\RejectedPromise;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
@@ -60,10 +60,10 @@ class HttpClientPoolItemSpec extends ObjectBehavior
     {
         $this->beConstructedWith($httpAsyncClient);
 
-        $promise = new RejectedPromise(new TransferException());
+        $promise = new HttpRejectedPromise(new TransferException());
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $this->isDisabled()->shouldReturn(true);
         $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendAsyncRequest($request);
     }
@@ -84,12 +84,12 @@ class HttpClientPoolItemSpec extends ObjectBehavior
     {
         $this->beConstructedWith($httpAsyncClient, 0);
 
-        $promise = new RejectedPromise(new TransferException());
+        $promise = new HttpRejectedPromise(new TransferException());
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $this->isDisabled()->shouldReturn(false);
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
     }
 
     public function it_increments_request_count(HttpAsyncClient $httpAsyncClient, RequestInterface $request, ResponseInterface $response)

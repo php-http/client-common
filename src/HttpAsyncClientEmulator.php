@@ -3,7 +3,7 @@
 namespace Http\Client\Common;
 
 use Http\Client\Exception;
-use Http\Promise;
+use Http\Client\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -28,9 +28,9 @@ trait HttpAsyncClientEmulator
     public function sendAsyncRequest(RequestInterface $request)
     {
         try {
-            return new Promise\FulfilledPromise($this->sendRequest($request));
+            return new Promise\HttpFulfilledPromise($this->sendRequest($request));
         } catch (Exception $e) {
-            return new Promise\RejectedPromise($e);
+            return new Promise\HttpRejectedPromise($e);
         }
     }
 }

@@ -6,8 +6,8 @@ use Http\Client\Common\Exception\LoopException;
 use Http\Client\Exception as HttplugException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
-use Http\Promise\FulfilledPromise;
-use Http\Promise\RejectedPromise;
+use Http\Client\Promise\HttpFulfilledPromise;
+use Http\Client\Promise\HttpRejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -78,9 +78,9 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         // we have both an async and sync call
         $pluginChain = $this->createPluginChain($this->plugins, function (RequestInterface $request) {
             try {
-                return new FulfilledPromise($this->client->sendRequest($request));
+                return new HttpFulfilledPromise($this->client->sendRequest($request));
             } catch (HttplugException $exception) {
-                return new RejectedPromise($exception);
+                return new HttpRejectedPromise($exception);
             }
         });
 

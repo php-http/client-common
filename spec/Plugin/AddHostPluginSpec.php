@@ -4,10 +4,7 @@ namespace spec\Http\Client\Common\Plugin;
 
 use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
-use Http\Promise\FulfilledPromise;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
 

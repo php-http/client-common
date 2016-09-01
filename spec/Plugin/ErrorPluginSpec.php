@@ -2,7 +2,7 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Promise\FulfilledPromise;
+use Http\Client\Promise\HttpFulfilledPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
@@ -27,12 +27,12 @@ class ErrorPluginSpec extends ObjectBehavior
 
         $next = function (RequestInterface $receivedRequest) use($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new FulfilledPromise($response->getWrappedObject());
+                return new HttpFulfilledPromise($response->getWrappedObject());
             }
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $promise->shouldThrow('Http\Client\Common\Exception\ClientErrorException')->duringWait();
     }
 
@@ -43,12 +43,12 @@ class ErrorPluginSpec extends ObjectBehavior
 
         $next = function (RequestInterface $receivedRequest) use($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new FulfilledPromise($response->getWrappedObject());
+                return new HttpFulfilledPromise($response->getWrappedObject());
             }
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $promise->shouldThrow('Http\Client\Common\Exception\ServerErrorException')->duringWait();
     }
 
@@ -58,10 +58,10 @@ class ErrorPluginSpec extends ObjectBehavior
 
         $next = function (RequestInterface $receivedRequest) use($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
-                return new FulfilledPromise($response->getWrappedObject());
+                return new HttpFulfilledPromise($response->getWrappedObject());
             }
         };
 
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Promise\FulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Promise\FulfilledPromise;
+use Http\Client\Promise\HttpFulfilledPromise;
 use Http\Message\Cookie;
 use Http\Message\CookieJar;
 use Http\Promise\Promise;
@@ -141,7 +141,7 @@ class CookiePluginSpec extends ObjectBehavior
     function it_saves_cookie(RequestInterface $request, ResponseInterface $response, UriInterface $uri)
     {
         $next = function () use ($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Set-Cookie')->willReturn(true);
@@ -164,7 +164,7 @@ class CookiePluginSpec extends ObjectBehavior
         UriInterface $uri
     ) {
         $next = function () use ($response) {
-            return new FulfilledPromise($response->getWrappedObject());
+            return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
         $response->hasHeader('Set-Cookie')->willReturn(true);
@@ -177,7 +177,7 @@ class CookiePluginSpec extends ObjectBehavior
         $uri->getPath()->willReturn('/');
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Promise\RejectedPromise');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $promise->shouldThrow('Http\Client\Exception\TransferException')->duringWait();
     }
 }
