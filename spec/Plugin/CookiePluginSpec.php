@@ -14,9 +14,6 @@ use Prophecy\Argument;
 
 class CookiePluginSpec extends ObjectBehavior
 {
-    /**
-     * @var CookieJar
-     */
     private $cookieJar;
 
     function let()
