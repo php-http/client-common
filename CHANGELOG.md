@@ -1,11 +1,12 @@
 # Change Log
 
 
-## 1.3.0 - Unreleased
+## 1.3.0 - 2016-10-16
 
 ### Changed
 
 - Fix Emulated Trait to use Http based promise which respect the HttpAsyncClient interface
+- Require Httplug 1.1 where we use HTTP specific promises. 
 - RedirectPlugin: use the full URL instead of the URI to properly keep track of redirects
 
 
