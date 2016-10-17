@@ -8,7 +8,7 @@
 - Fix Emulated Trait to use Http based promise which respect the HttpAsyncClient interface
 - Require Httplug 1.1 where we use HTTP specific promises. 
 - RedirectPlugin: use the full URL instead of the URI to properly keep track of redirects
-
+- Add AddPathPlugin for API URLs with base path
 
 ## 1.2.1 - 2016-07-26
 
