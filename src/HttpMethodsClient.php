@@ -4,7 +4,7 @@ namespace Http\Client\Common;
 
 use Http\Client\Exception;
 use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
+use Http\Message\RequestFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -32,18 +32,18 @@ class HttpMethodsClient implements HttpClient
     private $httpClient;
 
     /**
-     * @var MessageFactory
+     * @var RequestFactory
      */
-    private $messageFactory;
+    private $requestFactory;
 
     /**
      * @param HttpClient     $httpClient     The client to send requests with
-     * @param MessageFactory $messageFactory The message factory to create requests
+     * @param RequestFactory $requestFactory The message factory to create requests
      */
-    public function __construct(HttpClient $httpClient, MessageFactory $messageFactory)
+    public function __construct(HttpClient $httpClient, RequestFactory $requestFactory)
     {
         $this->httpClient = $httpClient;
-        $this->messageFactory = $messageFactory;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -185,7 +185,7 @@ class HttpMethodsClient implements HttpClient
      */
     public function send($method, $uri, array $headers = [], $body = null)
     {
-        return $this->sendRequest($this->messageFactory->createRequest(
+        return $this->sendRequest($this->requestFactory->createRequest(
             $method,
             $uri,
             $headers,
