@@ -1,15 +1,24 @@
 # Change Log
 
 
+## 1.3.1 - 2016-11-04
+
+### Added
+
+- Add Path plugin
+- Base URI plugin that combines Add Host and Add Path plugins
+
+
 ## 1.3.0 - 2016-10-16
 
 ### Changed
 
 - Fix Emulated Trait to use Http based promise which respect the HttpAsyncClient interface
-- Require Httplug 1.1 where we use HTTP specific promises. 
+- Require Httplug 1.1 where we use HTTP specific promises.
 - RedirectPlugin: use the full URL instead of the URI to properly keep track of redirects
 - Add AddPathPlugin for API URLs with base path
 - Add BaseUriPlugin that combines AddHostPlugin and AddPathPlugin
+
 
 ## 1.2.1 - 2016-07-26
 
