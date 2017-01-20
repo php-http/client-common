@@ -25,7 +25,7 @@ class ContentLengthPluginSpec extends ObjectBehavior
         $request->hasHeader('Content-Length')->shouldBeCalled()->willReturn(false);
         $request->getBody()->shouldBeCalled()->willReturn($stream);
         $stream->getSize()->shouldBeCalled()->willReturn(100);
-        $request->withHeader('Content-Length', 100)->shouldBeCalled()->willReturn($request);
+        $request->withHeader('Content-Length', '100')->shouldBeCalled()->willReturn($request);
 
         $this->handleRequest($request, function () {}, function () {});
     }
