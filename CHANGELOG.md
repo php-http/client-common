@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.4.1 - 2017-02-20
+
+### Fixed
+
+- Cast return value of `StreamInterface::getSize` to string in `ContentLengthPlugin`
 
 ## 1.4.0 - 2016-11-04
 
