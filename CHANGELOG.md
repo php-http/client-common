@@ -1,5 +1,15 @@
 # Change Log
 
+## Unreleased
+
+### Deprecated
+
+- `DecoderPlugin` does not longer claim to support `compress` content encoding
+
+### Fixed
+
+- `DecoderPlugin` uses the right `FilteredStream` to handle `deflate` content encoding
+
 ## 1.4.1 - 2017-02-20
 
 ### Fixed
