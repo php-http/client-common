@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- `CookiePlugin` allows main domain cookies to be sent/stored for subdomains
 - `DecoderPlugin` uses the right `FilteredStream` to handle `deflate` content encoding
 
 ## 1.4.1 - 2017-02-20
