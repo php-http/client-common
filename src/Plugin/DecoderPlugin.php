@@ -50,7 +50,7 @@ final class DecoderPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $encodings = extension_loaded('zlib') ? ['gzip', 'deflate', 'compress'] : ['identity'];
+        $encodings = extension_loaded('zlib') ? ['gzip', 'deflate'] : ['identity'];
 
         if ($this->useContentEncoding) {
             $request = $request->withHeader('Accept-Encoding', $encodings);
@@ -127,12 +127,8 @@ final class DecoderPlugin implements Plugin
             return new Encoding\DechunkStream($stream);
         }
 
-        if (strtolower($encoding) == 'compress') {
-            return new Encoding\DecompressStream($stream);
-        }
-
         if (strtolower($encoding) == 'deflate') {
-            return new Encoding\InflateStream($stream);
+            return new Encoding\DecompressStream($stream);
         }
 
         if (strtolower($encoding) == 'gzip') {
