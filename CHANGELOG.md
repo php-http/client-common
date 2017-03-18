@@ -1,6 +1,7 @@
 # Change Log
 
-## Unreleased
+
+## 1.4.2 - 2017-03-18
 
 ### Deprecated
 
@@ -10,11 +11,13 @@
 
 - `DecoderPlugin` uses the right `FilteredStream` to handle `deflate` content encoding
 
+
 ## 1.4.1 - 2017-02-20
 
 ### Fixed
 
 - Cast return value of `StreamInterface::getSize` to string in `ContentLengthPlugin`
+
 
 ## 1.4.0 - 2016-11-04
 
