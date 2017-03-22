@@ -82,6 +82,41 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
+    function it_does_not_load_cookie_on_hackish_domains(RequestInterface $request, UriInterface $uri, Promise $promise)
+    {
+        $cookie = new Cookie('name', 'value', 86400, 'test.com');
+        $this->cookieJar->addCookie($cookie);
+
+        $request->getUri()->willReturn($uri);
+        $uri->getHost()->willReturn('hacktest.com');
+
+        $request->withAddedHeader('Cookie', 'name=value')->shouldNotBeCalled();
+
+        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
+            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
+                return $promise->getWrappedObject();
+            }
+        }, function () {});
+    }
+
+    function it_loads_cookie_on_subdomains(RequestInterface $request, UriInterface $uri, Promise $promise)
+    {
+        $cookie = new Cookie('name', 'value', 86400, 'test.com');
+        $this->cookieJar->addCookie($cookie);
+
+        $request->getUri()->willReturn($uri);
+        $uri->getHost()->willReturn('www.test.com');
+        $uri->getPath()->willReturn('/');
+
+        $request->withAddedHeader('Cookie', 'name=value')->willReturn($request);
+
+        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
+            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
+                return $promise->getWrappedObject();
+            }
+        }, function () {});
+    }
+
     function it_does_not_load_cookie_if_path_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com', '/sub');
