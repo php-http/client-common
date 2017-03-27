@@ -12,7 +12,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * This only makes sense for headers that can have multiple values like 'Forwarded'
  *
- * @link https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+ * @see https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
  *
  * @author Soufiane Ghzal <sghzal@gmail.com>
  */
