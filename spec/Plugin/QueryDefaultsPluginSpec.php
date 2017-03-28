@@ -21,7 +21,7 @@ class QueryDefaultsPluginSpec extends ObjectBehavior
 
     public function it_is_a_plugin()
     {
-        $this->shouldImplement(Plugin::class);
+        $this->shouldImplement('Http\Client\Common\Plugin');
     }
 
     public function it_sets_the_default_header(RequestInterface $request, UriInterface $uri)
