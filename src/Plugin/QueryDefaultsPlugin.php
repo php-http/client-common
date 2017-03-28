@@ -20,7 +20,8 @@ final class QueryDefaultsPlugin implements Plugin
     private $queryParams = [];
 
     /**
-     * @param array $queryParams Hashmap of query name to query value. Names and values should not be url encoded.
+     * @param array $queryParams Hashmap of query name to query value. Names and values must not be url encoded as
+     *                           this plugin will encode them
      */
     public function __construct(array $queryParams)
     {
