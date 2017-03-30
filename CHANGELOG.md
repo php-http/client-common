@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+### Added
+
+- `QueryDefaultsPlugin` to add default query parameters. 
 
 ## 1.4.2 - 2017-03-18
 
