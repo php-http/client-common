@@ -1,16 +1,16 @@
 # Change Log
 
-## 1.5.0
-
-### Added
-
-- `QueryDefaultsPlugin` to add default query parameters. 
-
 ## Unreleased
 
 ### Deprecated
 
 - The `debug_plugins` option for `PluginClient` is deprecated and will be removed in 2.0. Use the decorator design pattern instead like in [ProfilePlugin](https://github.com/php-http/HttplugBundle/blob/de33f9c14252f22093a5ec7d84f17535ab31a384/Collector/ProfilePlugin.php).
+
+## 1.5.0 - 2017-03-30
+
+### Added
+
+- `QueryDefaultsPlugin` to add default query parameters.
 
 ## 1.4.2 - 2017-03-18
 
