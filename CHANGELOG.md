@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Add the `always_prepend` option to `AddPathPlugin`.
+- The `BaseUriPlugin` can now passthru options for the underlying `AddPathPlugin`.
+
 ### Deprecated
 
 - The `debug_plugins` option for `PluginClient` is deprecated and will be removed in 2.0. Use the decorator design pattern instead like in [ProfilePlugin](https://github.com/php-http/HttplugBundle/blob/de33f9c14252f22093a5ec7d84f17535ab31a384/Collector/ProfilePlugin.php).
