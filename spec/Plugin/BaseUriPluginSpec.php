@@ -99,4 +99,22 @@ class BaseUriPluginSpec extends ObjectBehavior
         $this->beConstructedWith($host, ['replace' => true]);
         $this->handleRequest($request, function () {}, function () {});
     }
+
+    function it_adds_path_only_if_required(
+        RequestInterface $request,
+        UriInterface $host,
+        UriInterface $uri
+    ) {
+        $host->getHost()->shouldBeCalled()->willReturn('example.com');
+        $host->getPath()->shouldBeCalled()->willReturn('/api');
+
+        $request->getUri()->shouldBeCalled()->willReturn($uri);
+        $request->withUri($uri)->shouldNotBeCalled();
+
+        $uri->getHost()->shouldBeCalled()->willReturn('example.com');
+        $uri->getPath()->shouldBeCalled()->willReturn('/api/users');
+
+        $this->beConstructedWith($host, [], ['always_prepend' => false]);
+        $this->handleRequest($request, function () {}, function () {});
+    }
 }

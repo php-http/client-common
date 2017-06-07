@@ -5,6 +5,7 @@ namespace Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Prepend a base path to the request URI. Useful for base API URLs like http://domain.com/api.
@@ -19,9 +20,18 @@ final class AddPathPlugin implements Plugin
     private $uri;
 
     /**
-     * @param UriInterface $uri
+     * @var bool
      */
-    public function __construct(UriInterface $uri)
+    private $alwaysPrepend;
+
+    /**
+     * @param UriInterface $uri
+     * @param array        $config {
+     *
+     *     @var bool $alwaysPrepend Set to true to always prepend the path even if the request path start with that path.
+     * }
+     */
+    public function __construct(UriInterface $uri, array $config = [])
     {
         if ($uri->getPath() === '') {
             throw new \LogicException('URI path cannot be empty');
@@ -32,6 +42,12 @@ final class AddPathPlugin implements Plugin
         }
 
         $this->uri = $uri;
+
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $options = $resolver->resolve($config);
+
+        $this->alwaysPrepend = $options['always_prepend'];
     }
 
     /**
@@ -39,10 +55,26 @@ final class AddPathPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $request = $request->withUri($request->getUri()
-            ->withPath($this->uri->getPath().$request->getUri()->getPath())
-        );
+        $prepend = $this->uri->getPath();
+        $path = $request->getUri()->getPath();
+
+        if ($this->alwaysPrepend || substr($path, 0, strlen($prepend)) !== $prepend) {
+            $request = $request->withUri($request->getUri()
+                ->withPath($prepend.$path)
+            );
+        }
 
         return $next($request);
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    private function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'always_prepend' => true,
+        ]);
+        $resolver->setAllowedTypes('always_prepend', 'bool');
     }
 }

@@ -26,13 +26,14 @@ final class BaseUriPlugin implements Plugin
     /**
      * @param UriInterface $uri        Has to contain a host name and cans have a path.
      * @param array        $hostConfig Config for AddHostPlugin. @see AddHostPlugin::configureOptions
+     * @param array        $pathConfig Config for AddPassPlugin. @see AddPathPlugin::configureOptions
      */
-    public function __construct(UriInterface $uri, array $hostConfig = [])
+    public function __construct(UriInterface $uri, array $hostConfig = [], array $pathConfig = [])
     {
         $this->addHostPlugin = new AddHostPlugin($uri, $hostConfig);
 
         if (rtrim($uri->getPath(), '/')) {
-            $this->addPathPlugin = new AddPathPlugin($uri);
+            $this->addPathPlugin = new AddPathPlugin($uri, $pathConfig);
         }
     }
 

@@ -61,4 +61,23 @@ class AddPathPluginSpec extends ObjectBehavior
         $this->beConstructedWith($host);
         $this->shouldThrow('\LogicException')->duringInstantiation();
     }
+
+    function it_adds_path_only_if_required(
+        RequestInterface $request,
+        UriInterface $host,
+        UriInterface $uri
+    ) {
+        $host->getPath()->shouldBeCalled()->willReturn('/api');
+
+        $request->getUri()->shouldBeCalled()->willReturn($uri);
+        $request->withUri($uri)->shouldNotBeCalled();
+
+        $uri->withPath('/api/api/users')->shouldNotBeCalled();
+        $uri->getPath()->shouldBeCalled()->willReturn('/api/users');
+
+        $this->beConstructedWith($host, [
+            'always_prepend' => false,
+        ]);
+        $this->handleRequest($request, function () {}, function () {});
+    }
 }
