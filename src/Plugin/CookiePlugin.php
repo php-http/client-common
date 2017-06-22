@@ -6,6 +6,8 @@ use Http\Client\Common\Plugin;
 use Http\Client\Exception\TransferException;
 use Http\Message\Cookie;
 use Http\Message\CookieJar;
+use Http\Message\CookieUtil;
+use Http\Message\Exception\UnexpectedValueException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -114,15 +116,17 @@ final class CookiePlugin implements Plugin
 
             switch (strtolower($key)) {
                 case 'expires':
-                    $expires = \DateTime::createFromFormat(\DateTime::COOKIE, $value);
-
-                    if (true !== ($expires instanceof \DateTime)) {
+                    try {
+                        $expires = CookieUtil::parseDate($value);
+                    } catch (UnexpectedValueException $e) {
                         throw new TransferException(
                             sprintf(
                                 'Cookie header `%s` expires value `%s` could not be converted to date',
                                 $name,
                                 $value
-                            )
+                            ),
+                            null,
+                            $e
                         );
                     }
 
