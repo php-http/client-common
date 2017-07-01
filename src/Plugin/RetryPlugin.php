@@ -25,6 +25,16 @@ final class RetryPlugin implements Plugin
     private $retry;
 
     /**
+     * @var callable
+     */
+    private $delay;
+
+    /**
+     * @var callable
+     */
+    private $decider;
+
+    /**
      * Store the retry counter for each request.
      *
      * @var array
@@ -35,6 +45,8 @@ final class RetryPlugin implements Plugin
      * @param array $config {
      *
      *     @var int $retries Number of retries to attempt if an exception occurs before letting the exception bubble up.
+     *     @var callable $decider A callback that gets a request and an exception to decide if we should retry this or not.
+     *     @var callable $delay A callback to return how many milliseconds we should wait before trying again.
      * }
      */
     public function __construct(array $config = [])
@@ -42,11 +54,21 @@ final class RetryPlugin implements Plugin
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'retries' => 1,
+            'decider' => function(RequestInterface $request, Exception $e) {
+                return true;
+            },
+            'delay' => function(RequestInterface $request, Exception $e, $retries) {
+                return ((int) pow(2, $retries - 1)) * 1000;
+            },
         ]);
         $resolver->setAllowedTypes('retries', 'int');
+        $resolver->setAllowedTypes('decider', 'callable');
+        $resolver->setAllowedTypes('delay', 'callable');
         $options = $resolver->resolve($config);
 
         $this->retry = $options['retries'];
+        $this->decider = $options['decider'];
+        $this->delay = $options['delay'];
     }
 
     /**
@@ -73,7 +95,12 @@ final class RetryPlugin implements Plugin
                 throw $exception;
             }
 
-            ++$this->retryStorage[$chainIdentifier];
+            if (!call_user_func($this->decider, $request, $exception)) {
+                throw $exception;
+            }
+
+            $time = call_user_func($this->delay, $request, $exception, ++$this->retryStorage[$chainIdentifier]);
+            usleep($time);
 
             // Retry in synchrone
             $promise = $this->handleRequest($request, $next, $first);
