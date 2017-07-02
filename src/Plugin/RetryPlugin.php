@@ -54,10 +54,10 @@ final class RetryPlugin implements Plugin
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'retries' => 1,
-            'decider' => function(RequestInterface $request, Exception $e) {
+            'decider' => function (RequestInterface $request, Exception $e) {
                 return true;
             },
-            'delay' => function(RequestInterface $request, Exception $e, $retries) {
+            'delay' => function (RequestInterface $request, Exception $e, $retries) {
                 return ((int) pow(2, $retries - 1)) * 1000;
             },
         ]);
