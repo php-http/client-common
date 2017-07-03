@@ -45,8 +45,8 @@ final class RetryPlugin implements Plugin
      * @param array $config {
      *
      *     @var int $retries Number of retries to attempt if an exception occurs before letting the exception bubble up.
-     *     @var callable $decider A callback that gets a request and an exception to decide if we should retry this or not.
-     *     @var callable $delay A callback to return how many milliseconds we should wait before trying again.
+     *     @var callable $decider A callback that gets a request and an exception to decide after a failure whether the request should be retried.
+     *     @var callable $delay A callback that gets a request, an exception and the number of retries and returns how many milliseconds we should wait before trying again.
      * }
      */
     public function __construct(array $config = [])
@@ -57,9 +57,7 @@ final class RetryPlugin implements Plugin
             'decider' => function (RequestInterface $request, Exception $e) {
                 return true;
             },
-            'delay' => function (RequestInterface $request, Exception $e, $retries) {
-                return ((int) pow(2, $retries - 1)) * 1000;
-            },
+            'delay' =>  __CLASS__.'::defaultDelay',
         ]);
         $resolver->setAllowedTypes('retries', 'int');
         $resolver->setAllowedTypes('decider', 'callable');
@@ -99,13 +97,26 @@ final class RetryPlugin implements Plugin
                 throw $exception;
             }
 
-            $time = call_user_func($this->delay, $request, $exception, ++$this->retryStorage[$chainIdentifier]);
+            $time = call_user_func($this->delay, $request, $exception, $this->retryStorage[$chainIdentifier]);
             usleep($time);
 
             // Retry in synchrone
+            $this->retryStorage[$chainIdentifier]++;
             $promise = $this->handleRequest($request, $next, $first);
 
             return $promise->wait();
         });
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param Exception $e
+     * @param int $retries The number of retries we made before. First time this get called it will be 0.
+     *
+     * @return int
+     */
+    public static function defaultDelay(RequestInterface $request, Exception $e, $retries)
+    {
+        return ((int) pow(2, $retries)) * 1000;
     }
 }
