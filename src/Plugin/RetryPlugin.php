@@ -57,7 +57,7 @@ final class RetryPlugin implements Plugin
             'decider' => function (RequestInterface $request, Exception $e) {
                 return true;
             },
-            'delay' =>  __CLASS__.'::defaultDelay',
+            'delay' => __CLASS__.'::defaultDelay',
         ]);
         $resolver->setAllowedTypes('retries', 'int');
         $resolver->setAllowedTypes('decider', 'callable');
@@ -101,7 +101,7 @@ final class RetryPlugin implements Plugin
             usleep($time);
 
             // Retry in synchrone
-            $this->retryStorage[$chainIdentifier]++;
+            ++$this->retryStorage[$chainIdentifier];
             $promise = $this->handleRequest($request, $next, $first);
 
             return $promise->wait();
@@ -110,8 +110,8 @@ final class RetryPlugin implements Plugin
 
     /**
      * @param RequestInterface $request
-     * @param Exception $e
-     * @param int $retries The number of retries we made before. First time this get called it will be 0.
+     * @param Exception        $e
+     * @param int              $retries The number of retries we made before. First time this get called it will be 0.
      *
      * @return int
      */
