@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Added
+
+- Added new option 'delay' for `RetryPlugin`.
+- Added new option 'decider' for `RetryPlugin`.
+
+### Changed
+
+- The `RetryPlugin` does now wait between retries. To disable/change this feature you must write something like: 
+ 
+```php
+$plugin = new RetryPlugin(['delay' => function(RequestInterface $request, Exception $e, $retries) { 
+  return 0; 
+}); 
+```
+
 ### Deprecated
 
 - The `debug_plugins` option for `PluginClient` is deprecated and will be removed in 2.0. Use the decorator design pattern instead like in [ProfilePlugin](https://github.com/php-http/HttplugBundle/blob/de33f9c14252f22093a5ec7d84f17535ab31a384/Collector/ProfilePlugin.php).
