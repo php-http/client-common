@@ -102,7 +102,7 @@ class RetryPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 
-    function it_has_a_good_default_delay(RequestInterface $request, Exception\HttpException $exception)
+    function it_has_an_exponential_default_delay(RequestInterface $request, Exception\HttpException $exception)
     {
         $this->defaultDelay($request, $exception, 0)->shouldBe(1000);
         $this->defaultDelay($request, $exception, 1)->shouldBe(2000);

@@ -117,6 +117,6 @@ final class RetryPlugin implements Plugin
      */
     public static function defaultDelay(RequestInterface $request, Exception $e, $retries)
     {
-        return ((int) pow(2, $retries)) * 1000;
+        return pow(2, $retries) * 1000;
     }
 }
