@@ -5,6 +5,18 @@
 ### Added
 
 - `PluginClientFactory` to create `PluginClient` instances.
+- Added new option 'delay' for `RetryPlugin`.
+- Added new option 'decider' for `RetryPlugin`.
+
+### Changed
+
+- The `RetryPlugin` does now wait between retries. To disable/change this feature you must write something like: 
+ 
+```php
+$plugin = new RetryPlugin(['delay' => function(RequestInterface $request, Exception $e, $retries) { 
+  return 0; 
+}); 
+```
 
 ### Deprecated
 
