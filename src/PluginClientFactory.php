@@ -55,6 +55,8 @@ final class PluginClientFactory
             return $factory($client, $plugins, $options);
         }
 
+        unset($options['client_name']);
+
         return new PluginClient($client, $plugins, $options);
     }
 }

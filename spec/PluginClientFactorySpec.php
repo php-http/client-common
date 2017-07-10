@@ -18,4 +18,9 @@ class PluginClientFactorySpec extends ObjectBehavior
 
         $client->shouldHaveType('Http\Client\Common\PluginClient');
     }
+
+    function it_does_not_construct_plugin_client_with_client_name_option(HttpClient $httpClient)
+    {
+        $this->createClient($httpClient, [], ['client_name' => 'Default']);
+    }
 }
