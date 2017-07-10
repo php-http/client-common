@@ -69,11 +69,7 @@ final class CookiePlugin implements Plugin
                     }
 
                     // Restrict setting cookie from another domain
-                    if (false === strpos(
-                            '.'.$request->getUri()->getHost(),
-                            '.'.$cookie->getDomain()
-                        )
-                    ) {
+                    if (!preg_match("/\.{$cookie->getDomain()}$/", '.'.$request->getUri()->getHost())) {
                         continue;
                     }
 
