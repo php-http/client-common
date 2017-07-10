@@ -13,13 +13,15 @@ use Psr\Http\Message\RequestInterface;
  */
 abstract class HttpClientPool implements HttpAsyncClient, HttpClient
 {
-    /** @var HttpClientPoolItem[] */
+    /**
+     * @var HttpClientPoolItem[]
+     */
     protected $clientPool = [];
 
     /**
      * Add a client to the pool.
      *
-     * @param HttpClient|HttpAsyncClient $client
+     * @param HttpClient|HttpAsyncClient|HttpClientPoolItem $client
      */
     public function addHttpClient($client)
     {

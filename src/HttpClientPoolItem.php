@@ -17,22 +17,29 @@ use Http\Client\Exception;
  */
 class HttpClientPoolItem implements HttpClient, HttpAsyncClient
 {
-    /** @var int Number of request this client is currently sending */
+    /**
+     * @var int Number of request this client is currently sending
+     */
     private $sendingRequestCount = 0;
 
-    /** @var \DateTime|null Time when this client has been disabled or null if enable */
+    /**
+     * @var \DateTime|null Time when this client has been disabled or null if enable
+     */
     private $disabledAt;
 
-    /** @var int|null Number of seconds after this client is reenable, by default null: never reenable this client */
+    /**
+     * @var int|null Number of seconds after this client is reenable, by default null: never reenable this client
+     */
     private $reenableAfter;
 
-    /** @var FlexibleHttpClient A http client responding to async and sync request */
+    /**
+     * @var FlexibleHttpClient A http client responding to async and sync request
+     */
     private $client;
 
     /**
-     * {@inheritdoc}
-     *
-     * @param null|int $reenableAfter Number of seconds after this client is reenable
+     * @param HttpClient|HttpAsyncClient $client
+     * @param null|int                   $reenableAfter Number of seconds after this client is reenable
      */
     public function __construct($client, $reenableAfter = null)
     {
@@ -91,6 +98,8 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
      *
      * Will also reactivate this client if possible
      *
+     * @internal
+     *
      * @return bool
      */
     public function isDisabled()
@@ -115,6 +124,8 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
 
     /**
      * Get current number of request that is send by the underlying http client.
+     *
+     * @internal
      *
      * @return int
      */
