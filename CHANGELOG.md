@@ -4,6 +4,7 @@
 
 ### Added
 
+- Add HttpClientPool client to leverage load balancing and fallback mechanism [see the documentation](http://docs.php-http.org/en/latest/components/client-common.html) for more details.
 - `PluginClientFactory` to create `PluginClient` instances.
 - Added new option 'delay' for `RetryPlugin`.
 - Added new option 'decider' for `RetryPlugin`.
