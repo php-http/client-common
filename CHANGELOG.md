@@ -37,6 +37,7 @@ $plugin = new RetryPlugin(['delay' => function(RequestInterface $request, Except
 
 ### Fixed
 
+- `CookiePlugin` allows main domain cookies to be sent/stored for subdomains
 - `DecoderPlugin` uses the right `FilteredStream` to handle `deflate` content encoding
 
 
