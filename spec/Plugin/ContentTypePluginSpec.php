@@ -65,4 +65,45 @@ class ContentTypePluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
+    function it_adds_xml_content_type_header_if_size_limit_is_not_reached_using_default_value(RequestInterface $request)
+    {
+        $this->beConstructedWith([
+            'skip_detection' => true
+        ]);
+
+        $request->hasHeader('Content-Type')->shouldBeCalled()->willReturn(false);
+        $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
+        $request->withHeader('Content-Type', 'application/xml')->shouldBeCalled()->willReturn($request);
+
+        $this->handleRequest($request, function () {}, function () {});
+    }
+
+    function it_adds_xml_content_type_header_if_size_limit_is_not_reached(RequestInterface $request)
+    {
+        $this->beConstructedWith([
+            'skip_detection' => true,
+            'size_limit' => 32000000
+        ]);
+
+        $request->hasHeader('Content-Type')->shouldBeCalled()->willReturn(false);
+        $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
+        $request->withHeader('Content-Type', 'application/xml')->shouldBeCalled()->willReturn($request);
+
+        $this->handleRequest($request, function () {}, function () {});
+    }
+
+    function it_does_not_set_content_type_header_if_size_limit_is_reached(RequestInterface $request)
+    {
+        $this->beConstructedWith([
+            'skip_detection' => true,
+            'size_limit' => 8
+        ]);
+
+        $request->hasHeader('Content-Type')->shouldBeCalled()->willReturn(false);
+        $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
+        $request->withHeader('Content-Type', null)->shouldNotBeCalled();
+
+        $this->handleRequest($request, function () {}, function () {});
+    }
+
 }

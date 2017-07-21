@@ -5,14 +5,55 @@ namespace Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Allow to set the correct content type header on the request automatically only if it is not set .
+ * Allow to set the correct content type header on the request automatically only if it is not set.
  *
  * @author Karim Pinchon <karim.pinchon@gmail.com>
  */
 final class ContentTypePlugin implements Plugin
 {
+    /**
+     * Allow to disable the content type detection when stream is too large (as it can consume a lot of resource).
+     *
+     * @var bool
+     *
+     * true     skip the content type detection
+     * false    detect the content type (default value)
+     */
+    protected $skipDetection;
+
+    /**
+     * Determine the size stream limit for which the detection as to be skipped (default to 16Mb).
+     *
+     * @var int
+     */
+    protected $sizeLimit;
+
+    /**
+     * @param array $config {
+     *
+     *     @var bool $skip_detection True skip detection if stream size is bigger than $size_limit.
+     *     @var int $size_limit size stream limit for which the detection as to be skipped.
+     * }
+     */
+    public function __construct(array $config = [])
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'skip_detection' => false,
+            'size_limit' => 16000000,
+        ]);
+        $resolver->setAllowedTypes('skip_detection', 'bool');
+        $resolver->setAllowedTypes('size_limit', 'int');
+
+        $options = $resolver->resolve($config);
+
+        $this->skipDetection = $options['skip_detection'];
+        $this->sizeLimit = $options['size_limit'];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -23,6 +64,10 @@ final class ContentTypePlugin implements Plugin
             $streamSize = $stream->getSize();
 
             if (0 == $streamSize) {
+                return $next($request);
+            }
+
+            if ($this->skipDetection && $streamSize >= $this->sizeLimit) {
                 return $next($request);
             }
 
