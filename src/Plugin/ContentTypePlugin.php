@@ -60,8 +60,10 @@ final class ContentTypePlugin implements Plugin
      */
     private function isXml($stream)
     {
-        libxml_use_internal_errors(true);
+        $previousValue = libxml_use_internal_errors(true);
+        $isXml = simplexml_load_string($stream);
+        libxml_use_internal_errors($previousValue);
 
-        return simplexml_load_string($stream);
+        return $isXml;
     }
 }
