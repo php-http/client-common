@@ -63,6 +63,10 @@ final class ContentTypePlugin implements Plugin
             $stream = $request->getBody();
             $streamSize = $stream->getSize();
 
+            if (!$stream->isSeekable()) {
+                return $next($request);
+            }
+
             if (0 == $streamSize) {
                 return $next($request);
             }
