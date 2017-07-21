@@ -4,6 +4,7 @@ namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Allow to set the correct content type header on the request automatically only if it is not set .
@@ -42,26 +43,30 @@ final class ContentTypePlugin implements Plugin
     }
 
     /**
-     * @param $stream
+     * @param $stream StreamInterface
      *
      * @return bool
      */
     private function isJson($stream)
     {
-        json_decode($stream);
+        $stream->rewind();
+
+        json_decode($stream->getContents());
 
         return json_last_error() == JSON_ERROR_NONE;
     }
 
     /**
-     * @param $stream
+     * @param $stream StreamInterface
      *
      * @return \SimpleXMLElement|false
      */
     private function isXml($stream)
     {
+        $stream->rewind();
+
         $previousValue = libxml_use_internal_errors(true);
-        $isXml = simplexml_load_string($stream);
+        $isXml = simplexml_load_string($stream->getContents());
         libxml_use_internal_errors($previousValue);
 
         return $isXml;
