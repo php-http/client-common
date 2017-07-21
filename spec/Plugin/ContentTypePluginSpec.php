@@ -56,4 +56,13 @@ class ContentTypePluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
+    function it_does_not_set_content_type_header_if_size_0_or_unknown(RequestInterface $request)
+    {
+        $request->hasHeader('Content-Type')->shouldBeCalled()->willReturn(false);
+        $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for());
+        $request->withHeader('Content-Type', null)->shouldNotBeCalled();
+
+        $this->handleRequest($request, function () {}, function () {});
+    }
+
 }

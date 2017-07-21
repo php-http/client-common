@@ -19,6 +19,11 @@ final class ContentTypePlugin implements Plugin
     {
         if (!$request->hasHeader('Content-Type')) {
             $stream = $request->getBody();
+            $streamSize = $stream->getSize();
+
+            if (0 == $streamSize) {
+                return $next($request);
+            }
 
             if ($this->isJson($stream)) {
                 $request = $request->withHeader('Content-Type', 'application/json');
