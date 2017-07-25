@@ -67,11 +67,11 @@ final class ContentTypePlugin implements Plugin
                 return $next($request);
             }
 
-            if (null === $streamSize || 0 === $streamSize) {
+            if (0 === $streamSize) {
                 return $next($request);
             }
 
-            if ($this->skipDetection && $streamSize >= $this->sizeLimit) {
+            if ($this->skipDetection && (null === $streamSize || $streamSize >= $this->sizeLimit)) {
                 return $next($request);
             }
 
