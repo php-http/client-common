@@ -67,7 +67,7 @@ final class ContentTypePlugin implements Plugin
                 return $next($request);
             }
 
-            if (0 == $streamSize) {
+            if (null === $streamSize || 0 === $streamSize) {
                 return $next($request);
             }
 
