@@ -46,7 +46,7 @@ final class RetryPlugin implements Plugin
      *
      *     @var int $retries Number of retries to attempt if an exception occurs before letting the exception bubble up.
      *     @var callable $decider A callback that gets a request and an exception to decide after a failure whether the request should be retried.
-     *     @var callable $delay A callback that gets a request, an exception and the number of retries and returns how many milliseconds we should wait before trying again.
+     *     @var callable $delay A callback that gets a request, an exception and the number of retries and returns how many microseconds we should wait before trying again.
      * }
      */
     public function __construct(array $config = [])
@@ -117,6 +117,6 @@ final class RetryPlugin implements Plugin
      */
     public static function defaultDelay(RequestInterface $request, Exception $e, $retries)
     {
-        return pow(2, $retries) * 1000;
+        return pow(2, $retries) * 500000;
     }
 }
