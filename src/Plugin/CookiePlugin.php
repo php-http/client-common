@@ -125,26 +125,32 @@ final class CookiePlugin implements Plugin
                             )
                         );
                     }
+
                     break;
 
                 case 'max-age':
                     $maxAge = (int) $value;
+
                     break;
 
                 case 'domain':
                     $domain = $value;
+
                     break;
 
                 case 'path':
                     $path = $value;
+
                     break;
 
                 case 'secure':
                     $secure = true;
+
                     break;
 
                 case 'httponly':
                     $httpOnly = true;
+
                     break;
             }
         }
