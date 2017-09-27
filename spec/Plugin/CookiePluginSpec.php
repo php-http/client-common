@@ -221,4 +221,24 @@ class CookiePluginSpec extends ObjectBehavior
         $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $promise->shouldThrow('Http\Client\Exception\TransferException')->duringWait();
     }
+
+    function it_support_rfc6265(RequestInterface $request, ResponseInterface $response, UriInterface $uri)
+    {
+        $next = function () use ($response) {
+            return new HttpFulfilledPromise($response->getWrappedObject());
+        };
+
+        $response->hasHeader('Set-Cookie')->willReturn(true);
+        $response->getHeader('Set-Cookie')->willReturn([
+            'cookie=value; expires=Tuesday, 31 Mar 99 07:42:12 GMT; Max-Age=60; path=/; domain=test.com; secure; HttpOnly'
+        ]);
+
+        $request->getUri()->willReturn($uri);
+        $uri->getHost()->willReturn('test.com');
+        $uri->getPath()->willReturn('/');
+
+        $promise = $this->handleRequest($request, $next, function () {});
+        $promise->shouldHaveType('Http\Promise\Promise');
+        $promise->wait()->shouldReturnAnInstanceOf('Psr\Http\Message\ResponseInterface');
+    }
 }
