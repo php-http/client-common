@@ -8,6 +8,7 @@
 - `PluginClientFactory` to create `PluginClient` instances.
 - Added new option 'delay' for `RetryPlugin`.
 - Added new option 'decider' for `RetryPlugin`.
+- Supports more cookie date formats in the Cookie Plugin
 
 ### Changed
 
