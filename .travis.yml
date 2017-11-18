@@ -38,7 +38,7 @@ matrix:
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if [ "$DEPENDENCIES" = "minimun" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
-    - if [ "$DEPENDENCIES" = "beta" ]; then COMPOSER_FLAGS="--minimum-stability=beta"; fi;
+    - if [ "$DEPENDENCIES" = "beta" ]; then COMPOSER_FLAGS="--stability beta"; fi;
 
 install:
     # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
