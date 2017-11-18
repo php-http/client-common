@@ -32,7 +32,7 @@ matrix:
         - php: 7.1
           env: DEPENDENCIES="symfony/lts:v3"
 
-          # Latest beta releases
+          # Latest beta release
         - php: 7.1
           env: DEPENDENCIES="beta"
 
