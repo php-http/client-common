@@ -19,11 +19,21 @@ branches:
 matrix:
     fast_finish: true
     include:
-        - php: 5.4 # Min supported PHP version
+          # Minimum supported PHP and Symfony version
+        - php: 5.4
           env: DEPENDENCIES="minimun" COVERAGE=true TEST_COMMAND="composer test-ci"
-        - php: 7.1 # Latest PHP version
-          env: DEPENDENCIES="beta"
+
+          # Latest releases
         - php: 7.1
+
+          # Latest beta releases
+        - php: 7.1
+          env: DEPENDENCIES="beta"
+
+    allow_failures:
+          # Latest beta is allowed to fail.
+        - php: 7.1
+          env: DEPENDENCIES="beta"
           
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
