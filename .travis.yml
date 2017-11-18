@@ -28,9 +28,9 @@ matrix:
 
           # Test LTS versions
         - php: 7.1
-          env: DEPENDENCIES="symfony/lts:2"
+          env: DEPENDENCIES="symfony/lts:v2"
         - php: 7.1
-          env: DEPENDENCIES="symfony/lts:3"
+          env: DEPENDENCIES="symfony/lts:v3"
 
           # Latest beta releases
         - php: 7.1
@@ -44,7 +44,7 @@ matrix:
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if [ "$DEPENDENCIES" = "minimun" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
-    - if [ "$DEPENDENCIES" = "beta" ]; then COMPOSER_FLAGS="--stability beta"; fi;
+    - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
     - if [ ! -z "$DEPENDENCIES" ]; then composer require --no-update $DEPENDENCIES; fi;
 
 install:
