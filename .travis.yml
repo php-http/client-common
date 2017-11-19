@@ -21,7 +21,7 @@ matrix:
     include:
           # Minimum supported PHP and Symfony version
         - php: 5.4
-          env: DEPENDENCIES="minimun" COVERAGE=true TEST_COMMAND="composer test-ci"
+          env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="composer test-ci"
 
           # Test the latest stable release
         - php: 7.1
@@ -43,7 +43,7 @@ matrix:
           
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-    - if [ "$DEPENDENCIES" = "minimun" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
+    - if [ "$DEPENDENCIES" = "minimum" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
     - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
     - if [[ $DEPENDENCIES == *"/"* ]]; then composer require --no-update $DEPENDENCIES; fi;
 
