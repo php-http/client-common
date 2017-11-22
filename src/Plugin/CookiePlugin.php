@@ -51,7 +51,7 @@ final class CookiePlugin implements Plugin
                 continue;
             }
 
-            if ($cookie->isSecure() && ($request->getUri()->getScheme() !== 'https')) {
+            if ($cookie->isSecure() && ('https' !== $request->getUri()->getScheme())) {
                 continue;
             }
 
