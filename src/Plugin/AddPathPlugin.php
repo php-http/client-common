@@ -23,11 +23,11 @@ final class AddPathPlugin implements Plugin
      */
     public function __construct(UriInterface $uri)
     {
-        if ($uri->getPath() === '') {
+        if ('' === $uri->getPath()) {
             throw new \LogicException('URI path cannot be empty');
         }
 
-        if (substr($uri->getPath(), -1) === '/') {
+        if ('/' === substr($uri->getPath(), -1)) {
             throw new \LogicException('URI path cannot end with a slash.');
         }
 
