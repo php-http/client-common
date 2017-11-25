@@ -31,9 +31,9 @@ matrix:
 
           # Test LTS versions
         - php: 5.4
-          env: DEPENDENCIES="symfony/lts:v2"
+          env: DEPENDENCIES="symfony/lts:^2"
         - php: 5.5
-          env: DEPENDENCIES="symfony/lts:v3"
+          env: DEPENDENCIES="symfony/lts:^3"
 
           # Latest dev release
         - php: 7.1
