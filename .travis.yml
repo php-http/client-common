@@ -40,7 +40,7 @@ matrix:
           env: STABILITY="dev"
 
     allow_failures:
-          # Latest beta is allowed to fail.
+          # Latest dev is allowed to fail.
         - env: STABILITY="dev"
           
 before_install:
