@@ -20,7 +20,7 @@ matrix:
     fast_finish: true
     include:
         - php: 5.5
-          env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage^1.0"
+          env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^1.0"
 
           # Test the latest stable release
         - php: 5.6
