@@ -19,14 +19,15 @@ branches:
 matrix:
     fast_finish: true
     include:
-        - php: 5.5
-          env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^1.0"
+        - php: 7.1
+          env: DEPENDENCIES="minimum"
 
           # Test the latest stable release
-        - php: 5.6
+        - php: 5.5
         - php: 7.0
         - php: 7.1
         - php: 7.2
+          env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^1.0"
 
           # Test LTS versions
         - php: 5.4
