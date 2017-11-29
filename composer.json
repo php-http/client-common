@@ -18,8 +18,7 @@
         "symfony/options-resolver": "^2.6 || ^3.0 || ^4.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.4",
-        "henrikbjorn/phpspec-code-coverage" : "^1.0",
+        "phpspec/phpspec": "^2.4 || ^3.0 || ^4.0",
         "guzzlehttp/psr7": "^1.4"
     },
     "suggest": {

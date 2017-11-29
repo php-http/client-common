@@ -19,9 +19,8 @@ branches:
 matrix:
     fast_finish: true
     include:
-          # Minimum supported PHP and Symfony version
-        - php: 7.1
-          env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="composer test-ci"
+        - php: 5.5
+          env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage^1.0"
 
           # Test the latest stable release
         - php: 5.6
