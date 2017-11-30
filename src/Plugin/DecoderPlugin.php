@@ -123,15 +123,15 @@ final class DecoderPlugin implements Plugin
      */
     private function decorateStream($encoding, StreamInterface $stream)
     {
-        if ('chunked' == strtolower($encoding)) {
+        if ('chunked' === strtolower($encoding)) {
             return new Encoding\DechunkStream($stream);
         }
 
-        if ('deflate' == strtolower($encoding)) {
+        if ('deflate' === strtolower($encoding)) {
             return new Encoding\DecompressStream($stream);
         }
 
-        if ('gzip' == strtolower($encoding)) {
+        if ('gzip' === strtolower($encoding)) {
             return new Encoding\GzipDecodeStream($stream);
         }
 
