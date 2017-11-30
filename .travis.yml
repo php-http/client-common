@@ -19,7 +19,7 @@ branches:
 matrix:
     fast_finish: true
     include:
-        - php: 7.0
+        - php: 7.1
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" DEPENDENCIES="doctrine/instantiator:^1.1"
 
           # Test the latest stable release
