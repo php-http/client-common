@@ -20,7 +20,7 @@ matrix:
     fast_finish: true
     include:
         - php: 7.1
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" DEPENDENCIES="doctrine/instanciator:^1.05"
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" DEPENDENCIES="doctrine/instanciator:^1.0.5"
 
           # Test the latest stable release
         - php: 5.4
