@@ -19,8 +19,8 @@ branches:
 matrix:
     fast_finish: true
     include:
-        - php: 7.1
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" DEPENDENCIES="doctrine/instanciator:^1.0.5"
+        - php: 7.0
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" DEPENDENCIES="doctrine/instantiator:^1.1"
 
           # Test the latest stable release
         - php: 5.4
@@ -54,7 +54,7 @@ before_install:
 
 install:
     # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
     - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
 
 script:
