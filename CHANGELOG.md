@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.7.0 - 2017-11-30
+
+### Added 
+
+- Symfony 4 support
+
+### Changed
+
+- Strict comparison in DecoderPlugin
+
 ## 1.6.0 - 2017-10-16
 
 ### Added
