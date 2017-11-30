@@ -102,7 +102,7 @@ final class ContentTypePlugin implements Plugin
 
         json_decode($stream->getContents());
 
-        return JSON_ERROR_NONE == json_last_error();
+        return JSON_ERROR_NONE === json_last_error();
     }
 
     /**
