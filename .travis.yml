@@ -31,9 +31,11 @@ matrix:
 
           # Test LTS versions
         - php: 5.4
-          env: DEPENDENCIES="symfony/lts:^2"
+          env: DEPENDENCIES="dunglas/symfony-lock:^2"
         - php: 5.5
-          env: DEPENDENCIES="symfony/lts:^3"
+          env: DEPENDENCIES="dunglas/symfony-lock:^3"
+        - php: 7.1
+          env: DEPENDENCIES="dunglas/symfony-lock:^4"
 
           # Latest dev release
         - php: 7.1
