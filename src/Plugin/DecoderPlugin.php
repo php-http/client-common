@@ -4,6 +4,7 @@ namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
 use Http\Message\Encoding;
+use Http\Message\Stream\BufferedStream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -26,6 +27,12 @@ final class DecoderPlugin implements Plugin
      * If set to false only the Transfer-Encoding header will be used
      */
     private $useContentEncoding;
+    
+    /**
+     * @var bool Whether this plugin should buffer the output of the decoded stream, this ensure that the stream is 
+     * seekable and can be rewind / seek for multiple usages.
+     */
+    private $buffered;
 
     /**
      * @param array $config {
@@ -38,11 +45,14 @@ final class DecoderPlugin implements Plugin
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'use_content_encoding' => true,
+            'buffered' => false,
         ]);
         $resolver->setAllowedTypes('use_content_encoding', 'bool');
+        $resolver->setAllowedTypes('buffered', 'bool');
         $options = $resolver->resolve($config);
 
         $this->useContentEncoding = $options['use_content_encoding'];
+        $this->buffered = $options['buffered'];
     }
 
     /**
@@ -123,18 +133,28 @@ final class DecoderPlugin implements Plugin
      */
     private function decorateStream($encoding, StreamInterface $stream)
     {
+        $decorated = null;
+        
         if ('chunked' === strtolower($encoding)) {
-            return new Encoding\DechunkStream($stream);
+            $decorated = new Encoding\DechunkStream($stream);
         }
 
         if ('deflate' === strtolower($encoding)) {
-            return new Encoding\DecompressStream($stream);
+            $decorated = new Encoding\DecompressStream($stream);
         }
 
         if ('gzip' === strtolower($encoding)) {
-            return new Encoding\GzipDecodeStream($stream);
+            $decorated = new Encoding\GzipDecodeStream($stream);
+        }
+        
+        if ($decorated === null) {
+            return null;   
+        }
+        
+        if ($this->buffered) {
+            $decorated = new BufferedStream($decorated);
         }
 
-        return false;
+        return $decorated;
     }
 }
