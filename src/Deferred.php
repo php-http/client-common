@@ -7,7 +7,7 @@ use Http\Promise\Promise;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * A deferred allow to return a promise which has not been resolved yet
+ * A deferred allow to return a promise which has not been resolved yet.
  */
 class Deferred implements Promise
 {
@@ -36,9 +36,9 @@ class Deferred implements Promise
      */
     public function then(callable $onFulfilled = null, callable $onRejected = null)
     {
-        $deferred = new Deferred($this->waitCallback);
+        $deferred = new self($this->waitCallback);
 
-        $this->onFulfilledCallbacks[] = function (ResponseInterface $response) use($onFulfilled, $deferred) {
+        $this->onFulfilledCallbacks[] = function (ResponseInterface $response) use ($onFulfilled, $deferred) {
             try {
                 if (null !== $onFulfilled) {
                     $response = $onFulfilled($response);
@@ -49,7 +49,7 @@ class Deferred implements Promise
             }
         };
 
-        $this->onRejectedCallbacks[] = function (Exception $exception) use($onRejected, $deferred) {
+        $this->onRejectedCallbacks[] = function (Exception $exception) use ($onRejected, $deferred) {
             try {
                 if (null !== $onRejected) {
                     $response = $onRejected($exception);
@@ -75,11 +75,11 @@ class Deferred implements Promise
     }
 
     /**
-     * Resolve this deferred with a Response
+     * Resolve this deferred with a Response.
      */
     public function resolve(ResponseInterface $response)
     {
-        if ($this->state !== self::PENDING) {
+        if (self::PENDING !== $this->state) {
             return;
         }
 
@@ -92,11 +92,11 @@ class Deferred implements Promise
     }
 
     /**
-     * Reject this deferred with an Exception
+     * Reject this deferred with an Exception.
      */
     public function reject(Exception $exception)
     {
-        if ($this->state !== self::PENDING) {
+        if (self::PENDING !== $this->state) {
             return;
         }
 
@@ -113,7 +113,7 @@ class Deferred implements Promise
      */
     public function wait($unwrap = true)
     {
-        if ($this->state === self::PENDING) {
+        if (self::PENDING === $this->state) {
             $callback = $this->waitCallback;
             $callback();
         }
@@ -122,7 +122,7 @@ class Deferred implements Promise
             return;
         }
 
-        if ($this->state === self::FULFILLED) {
+        if (self::FULFILLED === $this->state) {
             return $this->value;
         }
 

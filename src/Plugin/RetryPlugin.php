@@ -78,7 +78,7 @@ final class RetryPlugin implements Plugin
         $chainIdentifier = spl_object_hash((object) $first);
 
         $promise = $next($request);
-        $deferred = new Deferred(function () use($promise) {
+        $deferred = new Deferred(function () use ($promise) {
             $promise->wait(false);
         });
 
