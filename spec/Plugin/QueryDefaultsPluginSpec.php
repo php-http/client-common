@@ -39,4 +39,21 @@ class QueryDefaultsPluginSpec extends ObjectBehavior
         }, function () {
         });
     }
+
+    public function it_does_not_replace_existing_request_value(RequestInterface $request, UriInterface $uri)
+    {
+        $this->beConstructedWith([
+            'foo' => 'fooDefault',
+            'bar' => 'barDefault',
+        ]);
+
+        $request->getUri()->shouldBeCalled()->willReturn($uri);
+        $uri->getQuery()->shouldBeCalled()->willReturn('foo=new');
+        $uri->withQuery('foo=new&bar=barDefault')->shouldBeCalled()->willReturn($uri);
+        $request->withUri($uri)->shouldBeCalled()->willReturn($request);
+
+        $this->handleRequest($request, function () {
+        }, function () {
+        });
+    }
 }
