@@ -1,5 +1,11 @@
 # Change Log
 
+## Upcoming
+
+### Added
+
+ - Add an option on ErrorPlugin to only throw exception on response with 5XX status code.
+
 ## 1.7.0 - 2017-11-30
 
 ### Added 
