@@ -39,9 +39,11 @@ final class AddPathPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $request = $request->withUri($request->getUri()
-            ->withPath($this->uri->getPath().$request->getUri()->getPath())
-        );
+        if (strpos($request->getUri()->getPath(), $this->uri->getPath()) !== 0) {
+            $request = $request->withUri($request->getUri()
+                ->withPath($this->uri->getPath().$request->getUri()->getPath())
+            );
+        }
 
         return $next($request);
     }
