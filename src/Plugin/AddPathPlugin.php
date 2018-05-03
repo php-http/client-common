@@ -19,6 +19,13 @@ final class AddPathPlugin implements Plugin
     private $uri;
 
     /**
+     * Stores identifiers of the already altered requests.
+     *
+     * @var array
+     */
+    private $alteredRequests = [];
+
+    /**
      * @param UriInterface $uri
      */
     public function __construct(UriInterface $uri)
@@ -39,10 +46,13 @@ final class AddPathPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        if (0 !== strpos($request->getUri()->getPath(), $this->uri->getPath())) {
+        $identifier = spl_object_hash((object) $first);
+
+        if (!in_array($identifier, $this->alteredRequests)) {
             $request = $request->withUri($request->getUri()
                 ->withPath($this->uri->getPath().$request->getUri()->getPath())
             );
+            $this->alteredRequests[] = $identifier;
         }
 
         return $next($request);
