@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.8 (unreleased)
+
+### Changed
+
+- AddPathPlugin no longer add prefix multiple times if a request is restarted - it now only adds the prefix if that request chain has not yet passed through the AddPathPlugin
+
 ## 1.7.0 - 2017-11-30
 
 ### Added 
