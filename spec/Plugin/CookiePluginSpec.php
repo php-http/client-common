@@ -51,6 +51,27 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
+    function it_combines_multiple_cookies_into_one_header(RequestInterface $request, UriInterface $uri, Promise $promise)
+    {
+        $cookie = new Cookie('name', 'value', 86400, 'test.com');
+        $cookie2 = new Cookie('name2', 'value2', 86400, 'test.com');
+
+        $this->cookieJar->addCookie($cookie);
+        $this->cookieJar->addCookie($cookie2);
+
+        $request->getUri()->willReturn($uri);
+        $uri->getHost()->willReturn('test.com');
+        $uri->getPath()->willReturn('/');
+
+        $request->withAddedHeader('Cookie', 'name=value; name2=value2')->willReturn($request);
+
+        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
+            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
+                return $promise->getWrappedObject();
+            }
+        }, function () {});
+    }
+
     function it_does_not_load_cookie_if_expired(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', null, 'test.com', false, false, null, (new \DateTime())->modify('-1 day'));
