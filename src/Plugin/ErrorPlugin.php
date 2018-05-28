@@ -7,6 +7,7 @@ use Http\Client\Common\Exception\ServerErrorException;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Throw exception when the response of a request is not acceptable.
@@ -17,6 +18,31 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class ErrorPlugin implements Plugin
 {
+    /**
+     * @var bool Whether this plugin should only throw 5XX Exceptions (default to false).
+     *
+     * If set to true 4XX Responses code will never throw an exception
+     */
+    private $onlyServerException;
+
+    /**
+     * @param array $config {
+     *
+     *    @var bool only_server_exception Whether this plugin should only throw 5XX Exceptions (default to false).
+     * }
+     */
+    public function __construct(array $config = [])
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'only_server_exception' => false,
+        ]);
+        $resolver->setAllowedTypes('only_server_exception', 'bool');
+        $options = $resolver->resolve($config);
+
+        $this->onlyServerException = $options['only_server_exception'];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -42,7 +68,7 @@ final class ErrorPlugin implements Plugin
      */
     protected function transformResponseToException(RequestInterface $request, ResponseInterface $response)
     {
-        if ($response->getStatusCode() >= 400 && $response->getStatusCode() < 500) {
+        if (!$this->onlyServerException && $response->getStatusCode() >= 400 && $response->getStatusCode() < 500) {
             throw new ClientErrorException($response->getReasonPhrase(), $request, $response);
         }
 

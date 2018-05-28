@@ -36,6 +36,22 @@ class ErrorPluginSpec extends ObjectBehavior
         $promise->shouldThrow('Http\Client\Common\Exception\ClientErrorException')->duringWait();
     }
 
+    function it_does_not_throw_client_error_exception_on_4xx_error_if_only_server_exception(RequestInterface $request, ResponseInterface $response)
+    {
+        $this->beConstructedWith(['only_server_exception' => true]);
+
+        $response->getStatusCode()->willReturn('400');
+        $response->getReasonPhrase()->willReturn('Bad request');
+
+        $next = function (RequestInterface $receivedRequest) use($request, $response) {
+            if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
+                return new HttpFulfilledPromise($response->getWrappedObject());
+            }
+        };
+
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
+    }
+
     function it_throw_server_error_exception_on_5xx_error(RequestInterface $request, ResponseInterface $response)
     {
         $response->getStatusCode()->willReturn('500');

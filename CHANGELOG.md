@@ -2,6 +2,10 @@
 
 ## 1.8 (unreleased)
 
+### Added
+
+ - Add an option on ErrorPlugin to only throw exception on response with 5XX status code.
+
 ### Changed
 
 - AddPathPlugin no longer add prefix multiple times if a request is restarted - it now only adds the prefix if that request chain has not yet passed through the AddPathPlugin
