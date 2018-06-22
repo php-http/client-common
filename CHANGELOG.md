@@ -9,6 +9,7 @@
 ### Changed
 
 - AddPathPlugin no longer add prefix multiple times if a request is restarted - it now only adds the prefix if that request chain has not yet passed through the AddPathPlugin
+- RetryPlugin no longer wait for retried requests and use a deferred promise instead
 
 ### Fixed
 

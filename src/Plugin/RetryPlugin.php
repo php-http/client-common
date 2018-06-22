@@ -2,6 +2,7 @@
 
 namespace Http\Client\Common\Plugin;
 
+use Http\Client\Common\Deferred;
 use Http\Client\Common\Plugin;
 use Http\Client\Exception;
 use Psr\Http\Message\RequestInterface;
@@ -76,19 +77,30 @@ final class RetryPlugin implements Plugin
     {
         $chainIdentifier = spl_object_hash((object) $first);
 
-        return $next($request)->then(function (ResponseInterface $response) use ($request, $chainIdentifier) {
+        $promise = $next($request);
+        $deferred = new Deferred(function () use ($promise) {
+            $promise->wait(false);
+        });
+
+        $onFulfilled = function (ResponseInterface $response) use ($chainIdentifier, $deferred) {
             if (array_key_exists($chainIdentifier, $this->retryStorage)) {
                 unset($this->retryStorage[$chainIdentifier]);
             }
 
+            $deferred->resolve($response);
+
             return $response;
-        }, function (Exception $exception) use ($request, $next, $first, $chainIdentifier) {
+        };
+
+        $onRejected = function (Exception $exception) use ($request, $next, $onFulfilled, &$onRejected, $chainIdentifier, $deferred) {
             if (!array_key_exists($chainIdentifier, $this->retryStorage)) {
                 $this->retryStorage[$chainIdentifier] = 0;
             }
 
             if ($this->retryStorage[$chainIdentifier] >= $this->retry) {
                 unset($this->retryStorage[$chainIdentifier]);
+
+                $deferred->reject($exception);
 
                 throw $exception;
             }
@@ -102,10 +114,15 @@ final class RetryPlugin implements Plugin
 
             // Retry in synchrone
             ++$this->retryStorage[$chainIdentifier];
-            $promise = $this->handleRequest($request, $next, $first);
 
-            return $promise->wait();
-        });
+            $next($request)->then($onFulfilled, $onRejected);
+
+            throw $exception;
+        };
+
+        $promise->then($onFulfilled, $onRejected);
+
+        return $deferred;
     }
 
     /**
