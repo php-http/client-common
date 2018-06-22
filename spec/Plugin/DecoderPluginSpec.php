@@ -38,7 +38,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $response->getHeader('Transfer-Encoding')->willReturn(['chunked']);
         $response->getBody()->willReturn($stream);
         $response->withBody(Argument::type('Http\Message\Encoding\DechunkStream'))->willReturn($response);
-        $response->withHeader('Transfer-Encoding', [])->willReturn($response);
+        $response->withoutHeader('Transfer-Encoding')->willReturn($response);
         $response->hasHeader('Content-Encoding')->willReturn(false);
 
         $stream->isReadable()->willReturn(true);
@@ -61,7 +61,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $response->getHeader('Content-Encoding')->willReturn(['gzip']);
         $response->getBody()->willReturn($stream);
         $response->withBody(Argument::type('Http\Message\Encoding\GzipDecodeStream'))->willReturn($response);
-        $response->withHeader('Content-Encoding', [])->willReturn($response);
+        $response->withoutHeader('Content-Encoding')->willReturn($response);
 
         $stream->isReadable()->willReturn(true);
         $stream->isWritable()->willReturn(false);
@@ -83,7 +83,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $response->getHeader('Content-Encoding')->willReturn(['deflate']);
         $response->getBody()->willReturn($stream);
         $response->withBody(Argument::type('Http\Message\Encoding\DecompressStream'))->willReturn($response);
-        $response->withHeader('Content-Encoding', [])->willReturn($response);
+        $response->withoutHeader('Content-Encoding')->willReturn($response);
 
         $stream->isReadable()->willReturn(true);
         $stream->isWritable()->willReturn(false);

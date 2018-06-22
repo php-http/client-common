@@ -107,7 +107,11 @@ final class DecoderPlugin implements Plugin
                 $response = $response->withBody($stream);
             }
 
-            $response = $response->withHeader($headerName, $newEncodings);
+            if (\count($newEncodings) > 0) {
+                $response = $response->withHeader($headerName, $newEncodings);
+            } else {
+                $response = $response->withoutHeader($headerName);
+            }
         }
 
         return $response;

@@ -10,6 +10,10 @@
 
 - AddPathPlugin no longer add prefix multiple times if a request is restarted - it now only adds the prefix if that request chain has not yet passed through the AddPathPlugin
 
+### Fixed
+
+- Decoder plugin will now remove header when there is no more encoding, instead of setting to an empty array
+
 ## 1.7.0 - 2017-11-30
 
 ### Added 
