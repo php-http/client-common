@@ -3,6 +3,8 @@
 namespace Http\Client\Common;
 
 use Http\Client\Exception;
+use Http\Client\Promise\HttpFulfilledPromise;
+use Http\Client\Promise\HttpRejectedPromise;
 use Http\Promise\Promise;
 use Psr\Http\Message\ResponseInterface;
 
@@ -36,6 +38,14 @@ class Deferred implements Promise
      */
     public function then(callable $onFulfilled = null, callable $onRejected = null)
     {
+        if ($this->state === self::FULFILLED) {
+            return (new HttpFulfilledPromise($this->value))->then($onFulfilled, $onRejected);
+        }
+
+        if ($this->state === self::REJECTED) {
+            return (new HttpRejectedPromise($this->failure))->then($onFulfilled, $onRejected);
+        }
+
         $deferred = new self($this->waitCallback);
 
         $this->onFulfilledCallbacks[] = function (ResponseInterface $response) use ($onFulfilled, $deferred) {
