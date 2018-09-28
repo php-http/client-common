@@ -30,9 +30,7 @@ class RetryPluginSpec extends ObjectBehavior
             }
         };
 
-        $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Common\Deferred');
-        $promise->wait()->shouldReturn($response);
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 
     function it_throws_exception_on_multiple_exceptions(RequestInterface $request)
@@ -55,7 +53,7 @@ class RetryPluginSpec extends ObjectBehavior
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Common\Deferred');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
         $promise->shouldThrow($exception2)->duringWait();
     }
 
@@ -78,7 +76,7 @@ class RetryPluginSpec extends ObjectBehavior
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Common\Deferred');
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
         $promise->wait()->shouldReturn($response);
     }
 
@@ -100,13 +98,8 @@ class RetryPluginSpec extends ObjectBehavior
             }
         };
 
-        $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Common\Deferred');
-        $promise->wait()->shouldReturn($response);
-
-        $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Common\Deferred');
-        $promise->wait()->shouldReturn($response);
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 
     function it_has_an_exponential_default_delay(RequestInterface $request, Exception\HttpException $exception)
