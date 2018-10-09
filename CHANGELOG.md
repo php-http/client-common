@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.8.1 - 2018-10-09
+
+### Fixed
+
+- Reverted change to RetryPlugin so it again waits when retrying to avoid "can only throw objects" error.
 
 ## 1.8.0 - 2018-09-21
 
