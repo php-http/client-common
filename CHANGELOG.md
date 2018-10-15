@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.8.2 (unreleased)
+
+### Changed
+
+- When multiple cookies exist, a single header with all cookies is sent as per RFC 6265 Section 5.4
+
 ## 1.8.1 - 2018-10-09
 
 ### Fixed
