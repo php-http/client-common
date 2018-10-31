@@ -40,6 +40,7 @@ matrix:
 
     allow_failures:
         - php: 7.3
+          sudo: required
         - env: STABILITY="dev"
 
 before_install:
