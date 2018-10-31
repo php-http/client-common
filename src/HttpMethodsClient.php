@@ -198,7 +198,7 @@ class HttpMethodsClient implements HttpClient
      *
      * {@inheritdoc}
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
         return $this->httpClient->sendRequest($request);
     }
