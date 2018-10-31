@@ -23,6 +23,7 @@
         "guzzlehttp/psr7": "^1.4"
     },
     "conflict": {
+        "doctrine/instantiator": "<1.0.5",
         "sebastian/comparator": "<2"
     },
     "suggest": {
