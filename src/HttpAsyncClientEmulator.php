@@ -5,6 +5,7 @@ namespace Http\Client\Common;
 use Http\Client\Exception;
 use Http\Client\Promise;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Emulates an HTTP Async Client in an HTTP Client.
@@ -18,7 +19,7 @@ trait HttpAsyncClientEmulator
      *
      * @see HttpClient::sendRequest
      */
-    abstract public function sendRequest(RequestInterface $request);
+    abstract public function sendRequest(RequestInterface $request): ResponseInterface;
 
     /**
      * {@inheritdoc}

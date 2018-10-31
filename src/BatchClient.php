@@ -6,6 +6,7 @@ use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Http\Client\Common\Exception\BatchException;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * BatchClient allow to sends multiple request and retrieve a Batch Result.
@@ -32,7 +33,7 @@ class BatchClient implements HttpClient
     /**
      * {@inheritdoc}
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
         return $this->client->sendRequest($request);
     }
