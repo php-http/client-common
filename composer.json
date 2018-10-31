@@ -19,11 +19,11 @@
     },
     "require-dev": {
         "phpspec/phpspec": "^3.4 || ^4.2",
-        "phpspec/prophecy": "^1.8",
         "guzzlehttp/psr7": "^1.4"
     },
     "conflict": {
         "doctrine/instantiator": "<1.0.5",
+        "phpspec/prophecy": "<1.8",
         "sebastian/comparator": "<2"
     },
     "suggest": {
