@@ -23,6 +23,7 @@ matrix:
         - php: 7.0
         - php: 7.1
         - php: 7.2
+        - php: 7.2
           env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^3.0"
 
           # Test LTS versions
@@ -38,9 +39,9 @@ matrix:
           env: STABILITY="dev"
 
     allow_failures:
-          # Latest dev is allowed to fail.
+        - php: 7.3
         - env: STABILITY="dev"
-          
+
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
