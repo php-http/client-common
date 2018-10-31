@@ -24,7 +24,7 @@ matrix:
         - php: 7.1
         - php: 7.2
         - php: 7.2
-          env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^3.0"
+          env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="leanphp/phpspec-code-coverage"
 
           # Test LTS versions
         - php: 7.1
