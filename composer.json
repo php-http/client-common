@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "phpspec/phpspec": "^3.4 || ^4.2",
-        "phpspec/prophecy": "^1.7",
+        "phpspec/prophecy": "^1.8",
         "guzzlehttp/psr7": "^1.4"
     },
     "conflict": {
