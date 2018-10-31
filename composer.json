@@ -19,7 +19,11 @@
     },
     "require-dev": {
         "phpspec/phpspec": "^3.4 || ^4.2",
+        "phpspec/prophecy": "^1.7",
         "guzzlehttp/psr7": "^1.4"
+    },
+    "conflict": {
+        "sebastian/comparator": "<2"
     },
     "suggest": {
         "php-http/logger-plugin": "PSR-3 Logger plugin",
