@@ -3,6 +3,7 @@
 namespace Http\Client\Common;
 
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Emulates an HTTP Client in an HTTP Async Client.
@@ -16,7 +17,7 @@ trait HttpClientEmulator
      *
      * @see HttpClient::sendRequest
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $promise = $this->sendAsyncRequest($request);
 

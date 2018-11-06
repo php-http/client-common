@@ -1,8 +1,5 @@
 language: php
-
 sudo: false
-
-dist: trusty
 
 cache:
     directories:
@@ -19,17 +16,15 @@ branches:
 matrix:
     fast_finish: true
     include:
-        - php: 7.1
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" DEPENDENCIES="doctrine/instantiator:^1.1"
+        - php: 7.0
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
 
           # Test the latest stable release
-        - php: 5.4
-        - php: 5.5
-        - php: 5.6
         - php: 7.0
         - php: 7.1
         - php: 7.2
-          env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^1.0"
+        - php: 7.2
+          env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="leanphp/phpspec-code-coverage"
 
           # Test LTS versions
         - php: 7.1
@@ -44,9 +39,10 @@ matrix:
           env: STABILITY="dev"
 
     allow_failures:
-          # Latest dev is allowed to fail.
+        - php: 7.3
+          sudo: required
         - env: STABILITY="dev"
-          
+
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;

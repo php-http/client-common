@@ -6,6 +6,7 @@ use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 use Http\Client\Exception;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * A HttpClientPoolItem represent a HttpClient inside a Pool.
@@ -50,7 +51,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * {@inheritdoc}
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
         if ($this->isDisabled()) {
             throw new Exception\RequestException('Cannot send the request as this client has been disabled', $request);

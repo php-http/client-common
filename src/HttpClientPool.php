@@ -6,6 +6,7 @@ use Http\Client\Common\Exception\HttpClientNotFoundException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * A http client pool allows to send requests on a pool of different http client using a specific strategy (least used,
@@ -52,7 +53,7 @@ abstract class HttpClientPool implements HttpAsyncClient, HttpClient
     /**
      * {@inheritdoc}
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
         return $this->chooseHttpClient()->sendRequest($request);
     }
