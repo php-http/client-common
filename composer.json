@@ -18,13 +18,11 @@
         "symfony/options-resolver": "^2.6 || ^3.0 || ^4.0"
     },
     "require-dev": {
+        "doctrine/instantiator": ">=1.0.5",
+        "guzzlehttp/psr7": "^1.4",
         "phpspec/phpspec": "^3.4 || ^4.2",
-        "guzzlehttp/psr7": "^1.4"
-    },
-    "conflict": {
-        "doctrine/instantiator": "<1.0.5",
-        "phpspec/prophecy": "<1.8",
-        "sebastian/comparator": "<2"
+        "phpspec/prophecy": ">=1.8",
+        "sebastian/comparator": ">=2"
     },
     "suggest": {
         "php-http/logger-plugin": "PSR-3 Logger plugin",
