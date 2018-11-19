@@ -3,6 +3,7 @@
 namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**

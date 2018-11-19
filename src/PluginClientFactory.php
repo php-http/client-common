@@ -47,7 +47,7 @@ final class PluginClientFactory
      *
      * @return PluginClient
      */
-    public function createClient($client, array $plugins = [], array $options = [])
+    public function createClient($client, array $plugins = [], array $options = []): PluginClient
     {
         if (static::$factory) {
             $factory = static::$factory;

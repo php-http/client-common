@@ -17,7 +17,7 @@ final class HeaderSetPlugin implements Plugin
     /**
      * @var array
      */
-    private $headers = [];
+    private $headers;
 
     /**
      * @param array $headers Hashmap of header name to header value

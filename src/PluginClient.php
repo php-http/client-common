@@ -107,7 +107,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      *
      * @return array
      */
-    private function configure(array $options = [])
+    private function configure(array $options = []): array
     {
         if (isset($options['debug_plugins'])) {
             @trigger_error('The "debug_plugins" option is deprecated since 1.5 and will be removed in 2.0.', E_USER_DEPRECATED);
@@ -143,7 +143,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      *
      * @return callable
      */
-    private function createPluginChain($pluginList, callable $clientCallable)
+    private function createPluginChain(array $pluginList, callable $clientCallable): callable
     {
         $firstCallable = $lastCallable = $clientCallable;
 

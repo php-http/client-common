@@ -56,7 +56,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function get($uri, array $headers = [])
+    public function get($uri, array $headers = []): ResponseInterface
     {
         return $this->send('GET', $uri, $headers, null);
     }
@@ -71,7 +71,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function head($uri, array $headers = [])
+    public function head($uri, array $headers = []): ResponseInterface
     {
         return $this->send('HEAD', $uri, $headers, null);
     }
@@ -86,7 +86,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function trace($uri, array $headers = [])
+    public function trace($uri, array $headers = []): ResponseInterface
     {
         return $this->send('TRACE', $uri, $headers, null);
     }
@@ -102,7 +102,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function post($uri, array $headers = [], $body = null)
+    public function post($uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->send('POST', $uri, $headers, $body);
     }
@@ -118,7 +118,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function put($uri, array $headers = [], $body = null)
+    public function put($uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->send('PUT', $uri, $headers, $body);
     }
@@ -134,7 +134,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function patch($uri, array $headers = [], $body = null)
+    public function patch($uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->send('PATCH', $uri, $headers, $body);
     }
@@ -150,7 +150,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function delete($uri, array $headers = [], $body = null)
+    public function delete($uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->send('DELETE', $uri, $headers, $body);
     }
@@ -166,7 +166,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function options($uri, array $headers = [], $body = null)
+    public function options($uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->send('OPTIONS', $uri, $headers, $body);
     }
@@ -183,7 +183,7 @@ class HttpMethodsClient implements HttpClient
      *
      * @return ResponseInterface
      */
-    public function send($method, $uri, array $headers = [], $body = null)
+    public function send($method, $uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->sendRequest($this->requestFactory->createRequest(
             $method,

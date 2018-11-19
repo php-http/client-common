@@ -66,7 +66,7 @@ final class ErrorPlugin implements Plugin
      *
      * @return ResponseInterface If status code is not in 4xx or 5xx return response
      */
-    protected function transformResponseToException(RequestInterface $request, ResponseInterface $response)
+    private function transformResponseToException(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         if (!$this->onlyServerException && $response->getStatusCode() >= 400 && $response->getStatusCode() < 500) {
             throw new ClientErrorException($response->getReasonPhrase(), $request, $response);

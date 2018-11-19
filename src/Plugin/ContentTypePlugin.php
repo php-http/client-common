@@ -22,14 +22,14 @@ final class ContentTypePlugin implements Plugin
      * true     skip the content type detection
      * false    detect the content type (default value)
      */
-    protected $skipDetection;
+    private $skipDetection;
 
     /**
      * Determine the size stream limit for which the detection as to be skipped (default to 16Mb).
      *
      * @var int
      */
-    protected $sizeLimit;
+    private $sizeLimit;
 
     /**
      * @param array $config {
@@ -96,7 +96,7 @@ final class ContentTypePlugin implements Plugin
      *
      * @return bool
      */
-    private function isJson($stream)
+    private function isJson($stream): bool
     {
         $stream->rewind();
 

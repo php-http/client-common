@@ -218,7 +218,7 @@ class RedirectPlugin implements Plugin
      *
      * @return UriInterface
      */
-    private function createUri(ResponseInterface $response, RequestInterface $request)
+    private function createUri(ResponseInterface $response, RequestInterface $request): UriInterface
     {
         if ($this->redirectCodes[$response->getStatusCode()]['multiple'] && (!$this->useDefaultForMultiple || !$response->hasHeader('Location'))) {
             throw new MultipleRedirectionException('Cannot choose a redirection', $request, $response);

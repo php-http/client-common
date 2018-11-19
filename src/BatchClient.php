@@ -52,7 +52,7 @@ class BatchClient implements HttpClient
      *                        BatchResult with a map of request to result for success, request to
      *                        exception for failures
      */
-    public function sendRequests(array $requests)
+    public function sendRequests(array $requests): BatchResult
     {
         $batchResult = new BatchResult();
 

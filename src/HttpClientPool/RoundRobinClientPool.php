@@ -15,7 +15,7 @@ final class RoundRobinClientPool extends HttpClientPool
     /**
      * {@inheritdoc}
      */
-    protected function chooseHttpClient()
+    protected function chooseHttpClient(): HttpClientPoolItem
     {
         $last = current($this->clientPool);
 

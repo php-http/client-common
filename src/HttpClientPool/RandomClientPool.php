@@ -16,7 +16,7 @@ final class RandomClientPool extends HttpClientPool
     /**
      * {@inheritdoc}
      */
-    protected function chooseHttpClient()
+    protected function chooseHttpClient(): HttpClientPoolItem
     {
         $clientPool = array_filter($this->clientPool, function (HttpClientPoolItem $clientPoolItem) {
             return !$clientPoolItem->isDisabled();

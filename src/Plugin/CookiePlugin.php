@@ -103,7 +103,7 @@ final class CookiePlugin implements Plugin
         $parts = array_map('trim', explode(';', $setCookie));
 
         if (empty($parts) || !strpos($parts[0], '=')) {
-            return;
+            return null;
         }
 
         list($name, $cookieValue) = $this->createValueKey(array_shift($parts));
