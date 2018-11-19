@@ -109,28 +109,12 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      */
     private function configure(array $options = [])
     {
-        if (isset($options['debug_plugins'])) {
-            @trigger_error('The "debug_plugins" option is deprecated since 1.5 and will be removed in 2.0.', E_USER_DEPRECATED);
-        }
-
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'max_restarts' => 10,
-            'debug_plugins' => [],
         ]);
 
-        $resolver
-            ->setAllowedTypes('debug_plugins', 'array')
-            ->setAllowedValues('debug_plugins', function (array $plugins) {
-                foreach ($plugins as $plugin) {
-                    // Make sure each object passed with the `debug_plugins` is an instance of Plugin.
-                    if (!$plugin instanceof Plugin) {
-                        return false;
-                    }
-                }
-
-                return true;
-            });
+        $resolver->setAllowedTypes('max_restarts', 'int');
 
         return $resolver->resolve($options);
     }
