@@ -4,7 +4,6 @@ namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
-use Psr\Http\Client\ClientInterface;
 
 /**
  * A flexible http client, which implements both interface and will emulate

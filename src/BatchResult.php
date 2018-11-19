@@ -93,7 +93,7 @@ final class BatchResult
      *
      * @return BatchResult the new BatchResult with this request-response pair added to it
      */
-    public function addResponse(RequestInterface $request, ResponseInterface $response): BatchResult
+    public function addResponse(RequestInterface $request, ResponseInterface $response): self
     {
         $new = clone $this;
         $new->responses->attach($request, $response);
@@ -165,7 +165,7 @@ final class BatchResult
      *
      * @return BatchResult the new BatchResult with this request-exception pair added to it
      */
-    public function addException(RequestInterface $request, Exception $exception): BatchResult
+    public function addException(RequestInterface $request, Exception $exception): self
     {
         $new = clone $this;
         $new->exceptions->attach($request, $exception);
