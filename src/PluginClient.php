@@ -44,6 +44,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      * @param HttpClient|HttpAsyncClient $client
      * @param Plugin[]                   $plugins
      * @param array                      $options {
+     *
      *     @var int      $max_restarts
      * }
      *
