@@ -9,27 +9,27 @@ use PhpSpec\ObjectBehavior;
 
 class EmulatedHttpAsyncClientSpec extends ObjectBehavior
 {
-    function let(HttpClient $httpClient)
+    public function let(HttpClient $httpClient)
     {
         $this->beConstructedWith($httpClient);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Http\Client\Common\EmulatedHttpAsyncClient');
     }
 
-    function it_is_an_http_client()
+    public function it_is_an_http_client()
     {
         $this->shouldImplement('Http\Client\HttpClient');
     }
 
-    function it_is_an_async_http_client()
+    public function it_is_an_async_http_client()
     {
         $this->shouldImplement('Http\Client\HttpAsyncClient');
     }
 
-    function it_emulates_a_successful_request(
+    public function it_emulates_a_successful_request(
         HttpClient $httpClient,
         RequestInterface $request,
         ResponseInterface $response
@@ -39,14 +39,14 @@ class EmulatedHttpAsyncClientSpec extends ObjectBehavior
         $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
     }
 
-    function it_emulates_a_failed_request(HttpClient $httpClient, RequestInterface $request)
+    public function it_emulates_a_failed_request(HttpClient $httpClient, RequestInterface $request)
     {
         $httpClient->sendRequest($request)->willThrow('Http\Client\Exception\TransferException');
 
         $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
     }
 
-    function it_decorates_the_underlying_client(
+    public function it_decorates_the_underlying_client(
         HttpClient $httpClient,
         RequestInterface $request,
         ResponseInterface $response

@@ -11,22 +11,22 @@ use Prophecy\Argument;
 
 class RequestMatcherPluginSpec extends ObjectBehavior
 {
-    function let(RequestMatcher $requestMatcher, Plugin $plugin)
+    public function let(RequestMatcher $requestMatcher, Plugin $plugin)
     {
         $this->beConstructedWith($requestMatcher, $plugin);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Http\Client\Common\Plugin\RequestMatcherPlugin');
     }
 
-    function it_is_a_plugin()
+    public function it_is_a_plugin()
     {
         $this->shouldImplement('Http\Client\Common\Plugin');
     }
 
-    function it_matches_a_request_and_delegates_to_plugin(
+    public function it_matches_a_request_and_delegates_to_plugin(
         RequestInterface $request,
         RequestMatcher $requestMatcher,
         Plugin $plugin
@@ -37,7 +37,7 @@ class RequestMatcherPluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
-    function it_does_not_match_a_request(
+    public function it_does_not_match_a_request(
         RequestInterface $request,
         RequestMatcher $requestMatcher,
         Plugin $plugin,
@@ -46,7 +46,7 @@ class RequestMatcherPluginSpec extends ObjectBehavior
         $requestMatcher->matches($request)->willReturn(false);
         $plugin->handleRequest($request, Argument::type('callable'), Argument::type('callable'))->shouldNotBeCalled();
 
-        $next = function (RequestInterface $request) use($promise) {
+        $next = function (RequestInterface $request) use ($promise) {
             return $promise->getWrappedObject();
         };
 

@@ -26,8 +26,6 @@ final class PluginClientFactory
      * application execution.
      *
      * @internal
-     *
-     * @param callable $factory
      */
     public static function setFactory(callable $factory)
     {

@@ -22,7 +22,8 @@
         "guzzlehttp/psr7": "^1.4",
         "phpspec/phpspec": "^3.4 || ^4.2",
         "phpspec/prophecy": ">=1.8",
-        "sebastian/comparator": ">=2"
+        "sebastian/comparator": ">=2",
+        "friendsofphp/php-cs-fixer": "^2.2"
     },
     "suggest": {
         "php-http/logger-plugin": "PSR-3 Logger plugin",
@@ -35,6 +36,8 @@
         }
     },
     "scripts": {
+        "cs-check": "vendor/bin/php-cs-fixer fix --dry-run",
+        "cs-fix": "vendor/bin/php-cs-fixer fix",
         "test": "vendor/bin/phpspec run",
         "test-ci": "vendor/bin/phpspec run -c phpspec.ci.yml"
     },

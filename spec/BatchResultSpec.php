@@ -9,12 +9,12 @@ use PhpSpec\ObjectBehavior;
 
 class BatchResultSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->beAnInstanceOf('Http\Client\Common\BatchResult');
     }
 
-    function it_is_immutable(RequestInterface $request, ResponseInterface $response)
+    public function it_is_immutable(RequestInterface $request, ResponseInterface $response)
     {
         $new = $this->addResponse($request, $response);
 
@@ -23,7 +23,7 @@ class BatchResultSpec extends ObjectBehavior
         $new->getResponses()->shouldReturn([$response]);
     }
 
-    function it_has_a_responses(RequestInterface $request, ResponseInterface $response)
+    public function it_has_a_responses(RequestInterface $request, ResponseInterface $response)
     {
         $new = $this->addResponse($request, $response);
 
@@ -33,7 +33,7 @@ class BatchResultSpec extends ObjectBehavior
         $new->getResponses()->shouldReturn([$response]);
     }
 
-    function it_has_a_response_for_a_request(RequestInterface $request, ResponseInterface $response)
+    public function it_has_a_response_for_a_request(RequestInterface $request, ResponseInterface $response)
     {
         $new = $this->addResponse($request, $response);
 
@@ -43,7 +43,7 @@ class BatchResultSpec extends ObjectBehavior
         $new->isSuccessful($request)->shouldReturn(true);
     }
 
-    function it_keeps_exception_after_add_request(RequestInterface $request1, Exception $exception, RequestInterface $request2, ResponseInterface $response)
+    public function it_keeps_exception_after_add_request(RequestInterface $request1, Exception $exception, RequestInterface $request2, ResponseInterface $response)
     {
         $new = $this->addException($request1, $exception);
         $new = $new->addResponse($request2, $response);
