@@ -25,9 +25,6 @@ final class AddPathPlugin implements Plugin
      */
     private $alteredRequests = [];
 
-    /**
-     * @param UriInterface $uri
-     */
     public function __construct(UriInterface $uri)
     {
         if ('' === $uri->getPath()) {

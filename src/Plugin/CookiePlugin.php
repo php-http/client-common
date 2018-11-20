@@ -25,9 +25,6 @@ final class CookiePlugin implements Plugin
      */
     private $cookieJar;
 
-    /**
-     * @param CookieJar $cookieJar
-     */
     public function __construct(CookieJar $cookieJar)
     {
         $this->cookieJar = $cookieJar;
@@ -91,7 +88,6 @@ final class CookiePlugin implements Plugin
     /**
      * Creates a cookie from a string.
      *
-     * @param RequestInterface $request
      * @param $setCookie
      *
      * @return Cookie|null

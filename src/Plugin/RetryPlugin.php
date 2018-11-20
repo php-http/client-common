@@ -109,9 +109,7 @@ final class RetryPlugin implements Plugin
     }
 
     /**
-     * @param RequestInterface $request
-     * @param Exception        $e
-     * @param int              $retries The number of retries we made before. First time this get called it will be 0.
+     * @param int $retries The number of retries we made before. First time this get called it will be 0.
      *
      * @return int
      */
