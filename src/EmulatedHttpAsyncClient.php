@@ -17,9 +17,6 @@ class EmulatedHttpAsyncClient implements HttpClient, HttpAsyncClient
     use HttpAsyncClientEmulator;
     use HttpClientDecorator;
 
-    /**
-     * @param HttpClient $httpClient
-     */
     public function __construct(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;

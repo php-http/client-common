@@ -20,24 +20,24 @@ class CookiePluginSpec extends ObjectBehavior
 {
     private $cookieJar;
 
-    function let()
+    public function let()
     {
         $this->cookieJar = new CookieJar();
 
         $this->beConstructedWith($this->cookieJar);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(CookiePlugin::class);
     }
 
-    function it_is_a_plugin()
+    public function it_is_a_plugin()
     {
         $this->shouldImplement(Plugin::class);
     }
 
-    function it_loads_cookie(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_loads_cookie(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com');
         $this->cookieJar->addCookie($cookie);
@@ -55,7 +55,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_combines_multiple_cookies_into_one_header(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_combines_multiple_cookies_into_one_header(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com');
         $cookie2 = new Cookie('name2', 'value2', 86400, 'test.com');
@@ -76,7 +76,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_does_not_load_cookie_if_expired(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_does_not_load_cookie_if_expired(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', null, 'test.com', false, false, null, (new \DateTime())->modify('-1 day'));
         $this->cookieJar->addCookie($cookie);
@@ -90,7 +90,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_does_not_load_cookie_if_domain_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_does_not_load_cookie_if_domain_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test2.com');
         $this->cookieJar->addCookie($cookie);
@@ -107,7 +107,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_does_not_load_cookie_on_hackish_domains(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_does_not_load_cookie_on_hackish_domains(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $hackishDomains = [
             'hacktest.com',
@@ -130,7 +130,7 @@ class CookiePluginSpec extends ObjectBehavior
         }
     }
 
-    function it_loads_cookie_on_subdomains(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_loads_cookie_on_subdomains(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com');
         $this->cookieJar->addCookie($cookie);
@@ -148,7 +148,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_does_not_load_cookie_if_path_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_does_not_load_cookie_if_path_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com', '/sub');
         $this->cookieJar->addCookie($cookie);
@@ -166,7 +166,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_does_not_load_cookie_when_cookie_is_secure(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_does_not_load_cookie_when_cookie_is_secure(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com', null, true);
         $this->cookieJar->addCookie($cookie);
@@ -185,7 +185,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_loads_cookie_when_cookie_is_secure(RequestInterface $request, UriInterface $uri, Promise $promise)
+    public function it_loads_cookie_when_cookie_is_secure(RequestInterface $request, UriInterface $uri, Promise $promise)
     {
         $cookie = new Cookie('name', 'value', 86400, 'test.com', null, true);
         $this->cookieJar->addCookie($cookie);
@@ -204,7 +204,7 @@ class CookiePluginSpec extends ObjectBehavior
         }, function () {});
     }
 
-    function it_saves_cookie(RequestInterface $request, ResponseInterface $response, UriInterface $uri)
+    public function it_saves_cookie(RequestInterface $request, ResponseInterface $response, UriInterface $uri)
     {
         $next = function () use ($response) {
             return new HttpFulfilledPromise($response->getWrappedObject());
@@ -212,7 +212,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $response->hasHeader('Set-Cookie')->willReturn(true);
         $response->getHeader('Set-Cookie')->willReturn([
-            'cookie=value; expires=Tuesday, 31-Mar-99 07:42:12 GMT; Max-Age=60; path=/; domain=test.com; secure; HttpOnly'
+            'cookie=value; expires=Tuesday, 31-Mar-99 07:42:12 GMT; Max-Age=60; path=/; domain=test.com; secure; HttpOnly',
         ]);
 
         $request->getUri()->willReturn($uri);
@@ -224,7 +224,7 @@ class CookiePluginSpec extends ObjectBehavior
         $promise->wait()->shouldReturnAnInstanceOf(ResponseInterface::class);
     }
 
-    function it_throws_exception_on_invalid_expires_date(
+    public function it_throws_exception_on_invalid_expires_date(
         RequestInterface $request,
         ResponseInterface $response,
         UriInterface $uri
@@ -235,7 +235,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $response->hasHeader('Set-Cookie')->willReturn(true);
         $response->getHeader('Set-Cookie')->willReturn([
-            'cookie=value; expires=i-am-an-invalid-date;'
+            'cookie=value; expires=i-am-an-invalid-date;',
         ]);
 
         $request->getUri()->willReturn($uri);

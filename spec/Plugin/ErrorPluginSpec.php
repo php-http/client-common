@@ -15,22 +15,22 @@ use Http\Client\Common\Exception\ServerErrorException;
 
 class ErrorPluginSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->beAnInstanceOf(ErrorPlugin::class);
     }
 
-    function it_is_a_plugin()
+    public function it_is_a_plugin()
     {
         $this->shouldImplement(Plugin::class);
     }
 
-    function it_throw_client_error_exception_on_4xx_error(RequestInterface $request, ResponseInterface $response)
+    public function it_throw_client_error_exception_on_4xx_error(RequestInterface $request, ResponseInterface $response)
     {
         $response->getStatusCode()->willReturn('400');
         $response->getReasonPhrase()->willReturn('Bad request');
 
-        $next = function (RequestInterface $receivedRequest) use($request, $response) {
+        $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 return new HttpFulfilledPromise($response->getWrappedObject());
             }
@@ -41,14 +41,14 @@ class ErrorPluginSpec extends ObjectBehavior
         $promise->shouldThrow(ClientErrorException::class)->duringWait();
     }
 
-    function it_does_not_throw_client_error_exception_on_4xx_error_if_only_server_exception(RequestInterface $request, ResponseInterface $response)
+    public function it_does_not_throw_client_error_exception_on_4xx_error_if_only_server_exception(RequestInterface $request, ResponseInterface $response)
     {
         $this->beConstructedWith(['only_server_exception' => true]);
 
         $response->getStatusCode()->willReturn('400');
         $response->getReasonPhrase()->willReturn('Bad request');
 
-        $next = function (RequestInterface $receivedRequest) use($request, $response) {
+        $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 return new HttpFulfilledPromise($response->getWrappedObject());
             }
@@ -57,12 +57,12 @@ class ErrorPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf(HttpFulfilledPromise::class);
     }
 
-    function it_throw_server_error_exception_on_5xx_error(RequestInterface $request, ResponseInterface $response)
+    public function it_throw_server_error_exception_on_5xx_error(RequestInterface $request, ResponseInterface $response)
     {
         $response->getStatusCode()->willReturn('500');
         $response->getReasonPhrase()->willReturn('Server error');
 
-        $next = function (RequestInterface $receivedRequest) use($request, $response) {
+        $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 return new HttpFulfilledPromise($response->getWrappedObject());
             }
@@ -73,11 +73,11 @@ class ErrorPluginSpec extends ObjectBehavior
         $promise->shouldThrow(ServerErrorException::class)->duringWait();
     }
 
-    function it_returns_response(RequestInterface $request, ResponseInterface $response)
+    public function it_returns_response(RequestInterface $request, ResponseInterface $response)
     {
         $response->getStatusCode()->willReturn('200');
 
-        $next = function (RequestInterface $receivedRequest) use($request, $response) {
+        $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 return new HttpFulfilledPromise($response->getWrappedObject());
             }

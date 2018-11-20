@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0 (unreleased)
+
+### Removed
+- Deprecated option `debug_plugins` has been removed from `PluginClient`
+
 ## 1.8.2 (unreleased)
 
 ### Changed

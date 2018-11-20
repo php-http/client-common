@@ -23,10 +23,6 @@ final class RequestMatcherPlugin implements Plugin
      */
     private $delegatedPlugin;
 
-    /**
-     * @param RequestMatcher $requestMatcher
-     * @param Plugin         $delegatedPlugin
-     */
     public function __construct(RequestMatcher $requestMatcher, Plugin $delegatedPlugin)
     {
         $this->requestMatcher = $requestMatcher;

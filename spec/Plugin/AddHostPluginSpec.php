@@ -2,8 +2,6 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Message\StreamFactory;
-use Http\Message\UriFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
@@ -12,26 +10,26 @@ use Http\Client\Common\Plugin;
 
 class AddHostPluginSpec extends ObjectBehavior
 {
-    function let(UriInterface $uri)
+    public function let(UriInterface $uri)
     {
         $this->beConstructedWith($uri);
     }
 
-    function it_is_initializable(UriInterface $uri)
+    public function it_is_initializable(UriInterface $uri)
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
 
         $this->shouldHaveType(AddHostPlugin::class);
     }
 
-    function it_is_a_plugin(UriInterface $uri)
+    public function it_is_a_plugin(UriInterface $uri)
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
 
         $this->shouldImplement(Plugin::class);
     }
 
-    function it_adds_domain(
+    public function it_adds_domain(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $uri
@@ -52,7 +50,7 @@ class AddHostPluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
-    function it_replaces_domain(
+    public function it_replaces_domain(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $uri
@@ -72,7 +70,7 @@ class AddHostPluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
-    function it_does_nothing_when_domain_exists(
+    public function it_does_nothing_when_domain_exists(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $uri

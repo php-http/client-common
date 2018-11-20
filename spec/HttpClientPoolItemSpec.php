@@ -157,7 +157,7 @@ class NotResolvingPromise implements Promise
 
     public function wait($unwrap = true)
     {
-        if ($this->state === Promise::FULFILLED) {
+        if (Promise::FULFILLED === $this->state) {
             if (!$unwrap) {
                 return;
             }
@@ -165,7 +165,7 @@ class NotResolvingPromise implements Promise
             return $this->response;
         }
 
-        if ($this->state === Promise::REJECTED) {
+        if (Promise::REJECTED === $this->state) {
             if (!$unwrap) {
                 return;
             }
@@ -176,7 +176,7 @@ class NotResolvingPromise implements Promise
         while (count($this->queue) > 0) {
             $callbacks = array_shift($this->queue);
 
-            if ($this->response !== null) {
+            if (null !== $this->response) {
                 try {
                     $this->response = $callbacks[0]($this->response);
                     $this->exception = null;
@@ -184,7 +184,7 @@ class NotResolvingPromise implements Promise
                     $this->response = null;
                     $this->exception = $exception;
                 }
-            } elseif ($this->exception !== null) {
+            } elseif (null !== $this->exception) {
                 try {
                     $this->response = $callbacks[1]($this->exception);
                     $this->exception = null;
@@ -195,7 +195,7 @@ class NotResolvingPromise implements Promise
             }
         }
 
-        if ($this->response !== null) {
+        if (null !== $this->response) {
             $this->state = Promise::FULFILLED;
 
             if ($unwrap) {
@@ -203,7 +203,7 @@ class NotResolvingPromise implements Promise
             }
         }
 
-        if ($this->exception !== null) {
+        if (null !== $this->exception) {
             $this->state = Promise::REJECTED;
 
             if ($unwrap) {

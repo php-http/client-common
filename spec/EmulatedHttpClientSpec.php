@@ -3,7 +3,6 @@
 namespace spec\Http\Client\Common;
 
 use Http\Client\Exception\TransferException;
-use Http\Client\HttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
@@ -14,27 +13,27 @@ use Http\Client\Exception;
 
 class EmulatedHttpClientSpec extends ObjectBehavior
 {
-    function let(HttpAsyncClient $httpAsyncClient)
+    public function let(HttpAsyncClient $httpAsyncClient)
     {
         $this->beConstructedWith($httpAsyncClient);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(EmulatedHttpClient::class);
     }
 
-    function it_is_an_http_client()
+    public function it_is_an_http_client()
     {
         $this->shouldImplement(HttpClient::class);
     }
 
-    function it_is_an_async_http_client()
+    public function it_is_an_async_http_client()
     {
         $this->shouldImplement(HttpAsyncClient::class);
     }
 
-    function it_emulates_a_successful_request(
+    public function it_emulates_a_successful_request(
         HttpAsyncClient $httpAsyncClient,
         RequestInterface $request,
         Promise $promise,
@@ -49,7 +48,7 @@ class EmulatedHttpClientSpec extends ObjectBehavior
         $this->sendRequest($request)->shouldReturn($response);
     }
 
-    function it_emulates_a_failed_request(HttpAsyncClient $httpAsyncClient, RequestInterface $request, Promise $promise)
+    public function it_emulates_a_failed_request(HttpAsyncClient $httpAsyncClient, RequestInterface $request, Promise $promise)
     {
         $promise->wait()->shouldBeCalled();
         $promise->getState()->willReturn(Promise::REJECTED);
@@ -60,7 +59,7 @@ class EmulatedHttpClientSpec extends ObjectBehavior
         $this->shouldThrow(Exception::class)->duringSendRequest($request);
     }
 
-    function it_decorates_the_underlying_client(
+    public function it_decorates_the_underlying_client(
         HttpAsyncClient $httpAsyncClient,
         RequestInterface $request,
         Promise $promise

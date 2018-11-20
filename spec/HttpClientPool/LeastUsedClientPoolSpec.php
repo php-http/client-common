@@ -6,7 +6,6 @@ use Http\Client\Common\HttpClientPoolItem;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
-use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;

@@ -2,8 +2,6 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Message\StreamFactory;
-use Http\Message\UriFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
@@ -12,12 +10,12 @@ use Http\Client\Common\Plugin;
 
 class BaseUriPluginSpec extends ObjectBehavior
 {
-    function let(UriInterface $uri)
+    public function let(UriInterface $uri)
     {
         $this->beConstructedWith($uri);
     }
 
-    function it_is_initializable(UriInterface $uri)
+    public function it_is_initializable(UriInterface $uri)
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
         $uri->getPath()->shouldBeCalled()->willReturn('/api');
@@ -25,7 +23,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $this->shouldHaveType(BaseUriPlugin::class);
     }
 
-    function it_is_a_plugin(UriInterface $uri)
+    public function it_is_a_plugin(UriInterface $uri)
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
         $uri->getPath()->shouldBeCalled()->willReturn('/api');
@@ -33,7 +31,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $this->shouldImplement(Plugin::class);
     }
 
-    function it_adds_domain_and_path(
+    public function it_adds_domain_and_path(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $uri
@@ -57,7 +55,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
-    function it_adds_domain(
+    public function it_adds_domain(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $uri
@@ -79,7 +77,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
-    function it_replaces_domain_and_adds_path(
+    public function it_replaces_domain_and_adds_path(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $uri

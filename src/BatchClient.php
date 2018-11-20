@@ -22,9 +22,6 @@ class BatchClient implements HttpClient
      */
     private $client;
 
-    /**
-     * @param HttpClient $client
-     */
     public function __construct(HttpClient $client)
     {
         $this->client = $client;

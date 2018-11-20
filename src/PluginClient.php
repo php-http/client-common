@@ -46,7 +46,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      * @param array                      $options {
      *
      *     @var int      $max_restarts
-     *     @var Plugin[] $debug_plugins an array of plugins that are injected between each normal plugin
      * }
      *
      * @throws \RuntimeException if client is not an instance of HttpClient or HttpAsyncClient
@@ -103,34 +102,16 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * Configure the plugin client.
      *
-     * @param array $options
-     *
      * @return array
      */
     private function configure(array $options = []): array
     {
-        if (isset($options['debug_plugins'])) {
-            @trigger_error('The "debug_plugins" option is deprecated since 1.5 and will be removed in 2.0.', E_USER_DEPRECATED);
-        }
-
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'max_restarts' => 10,
-            'debug_plugins' => [],
         ]);
 
-        $resolver
-            ->setAllowedTypes('debug_plugins', 'array')
-            ->setAllowedValues('debug_plugins', function (array $plugins) {
-                foreach ($plugins as $plugin) {
-                    // Make sure each object passed with the `debug_plugins` is an instance of Plugin.
-                    if (!$plugin instanceof Plugin) {
-                        return false;
-                    }
-                }
-
-                return true;
-            });
+        $resolver->setAllowedTypes('max_restarts', 'int');
 
         return $resolver->resolve($options);
     }
@@ -147,16 +128,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     {
         $firstCallable = $lastCallable = $clientCallable;
 
-        /*
-         * Inject debug plugins between each plugin.
-         */
-        $pluginListWithDebug = $this->options['debug_plugins'];
-        foreach ($pluginList as $plugin) {
-            $pluginListWithDebug[] = $plugin;
-            $pluginListWithDebug = array_merge($pluginListWithDebug, $this->options['debug_plugins']);
-        }
-
-        while ($plugin = array_pop($pluginListWithDebug)) {
+        while ($plugin = array_pop($pluginList)) {
             $lastCallable = function (RequestInterface $request) use ($plugin, $lastCallable, &$firstCallable) {
                 return $plugin->handleRequest($request, $lastCallable, $firstCallable);
             };

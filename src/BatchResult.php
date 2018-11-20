@@ -58,8 +58,6 @@ final class BatchResult
     /**
      * Checks if there is a successful response for a request.
      *
-     * @param RequestInterface $request
-     *
      * @return bool
      */
     public function isSuccessful(RequestInterface $request): bool
@@ -69,8 +67,6 @@ final class BatchResult
 
     /**
      * Returns the response for a successful request.
-     *
-     * @param RequestInterface $request
      *
      * @return ResponseInterface
      *
@@ -87,9 +83,6 @@ final class BatchResult
 
     /**
      * Adds a response in an immutable way.
-     *
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
      *
      * @return BatchResult the new BatchResult with this request-response pair added to it
      */
@@ -130,8 +123,6 @@ final class BatchResult
     /**
      * Checks if there is an exception for a request, meaning the request failed.
      *
-     * @param RequestInterface $request
-     *
      * @return bool
      */
     public function isFailed(RequestInterface $request): bool
@@ -141,8 +132,6 @@ final class BatchResult
 
     /**
      * Returns the exception for a failed request.
-     *
-     * @param RequestInterface $request
      *
      * @return Exception
      *
@@ -159,9 +148,6 @@ final class BatchResult
 
     /**
      * Adds an exception in an immutable way.
-     *
-     * @param RequestInterface $request
-     * @param Exception        $exception
      *
      * @return BatchResult the new BatchResult with this request-exception pair added to it
      */
