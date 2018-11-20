@@ -2,62 +2,64 @@ language: php
 sudo: false
 
 cache:
-    directories:
-        - $HOME/.composer/cache/files
+  directories:
+  - $HOME/.composer/cache/files
 
 env:
-    global:
-        - TEST_COMMAND="composer test"
+  global:
+  - TEST_COMMAND="composer test"
 
 branches:
-    except:
-        - /^analysis-.*$/
+  except:
+  - /^analysis-.*$/
+
+php:
+- 7.0
+- 7.1
+- 7.2
 
 matrix:
-    fast_finish: true
-    include:
-        - php: 7.0
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+  fast_finish: true
+  allow_failures:
+  - php: 7.3
+  - env: 
+      STABILITY: "dev"
 
-          # Test the latest stable release
-        - php: 7.0
-        - php: 7.1
-        - php: 7.2
-        - php: 7.2
-          env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="leanphp/phpspec-code-coverage"
+jobs:
+  include:
+  - php: 7.0
+    env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+  - php: 7.2
+    env: COVERAGE=true DEPENDENCIES="leanphp/phpspec-code-coverage"
+    script:
+    - composer test-ci
+    after_success:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml --revision=$TRAVIS_COMMIT
+    # Test LTS versions
+  - php: 7.1
+    env: DEPENDENCIES="dunglas/symfony-lock:^2"
+  - php: 7.1
+    env: DEPENDENCIES="dunglas/symfony-lock:^3"
+  - php: 7.1
+    env: DEPENDENCIES="dunglas/symfony-lock:^4" STABILITY="rc"
 
-          # Test LTS versions
-        - php: 7.1
-          env: DEPENDENCIES="dunglas/symfony-lock:^2"
-        - php: 7.1
-          env: DEPENDENCIES="dunglas/symfony-lock:^3"
-        - php: 7.1
-          env: DEPENDENCIES="dunglas/symfony-lock:^4" STABILITY="rc"
-
-          # Latest dev release
-        - php: 7.1
-          env: STABILITY="dev"
-
-    allow_failures:
-        - php: 7.3
-          sudo: required
-        - env: STABILITY="dev"
+    # Latest dev release
+  - php: 7.3
+    sudo: required
+  - env: STABILITY="dev"
 
 before_install:
-    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-    - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+- if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+- if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+- if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
 install:
-    - cat composer.json
-    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
-    - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+- cat composer.json
+# To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+- if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+- composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
 
 script:
-    - composer validate --strict --no-check-lock
-    - $TEST_COMMAND
-
-after_success:
-    - if [[ $COVERAGE = true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-    - if [[ $COVERAGE = true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml; fi
+- composer validate --strict --no-check-lock
+- composer test
