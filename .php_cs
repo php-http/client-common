@@ -7,6 +7,8 @@ $config->setRules([
     'array_syntax' => [
         'syntax' => 'short',
     ],
+    'no_empty_phpdoc' => true,
+    'no_superfluous_phpdoc_tags' => true,
 ]);
 
 $finder = PhpCsFixer\Finder::create();
