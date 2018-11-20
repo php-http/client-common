@@ -7,19 +7,21 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\HeaderSetPlugin;
+use Http\Client\Common\Plugin;
 
 class HeaderSetPluginSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
         $this->beConstructedWith([]);
-        $this->shouldHaveType('Http\Client\Common\Plugin\HeaderSetPlugin');
+        $this->shouldHaveType(HeaderSetPlugin::class);
     }
 
     public function it_is_a_plugin()
     {
         $this->beConstructedWith([]);
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_set_the_header(RequestInterface $request)

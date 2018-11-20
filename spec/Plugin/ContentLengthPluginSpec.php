@@ -7,17 +7,19 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\ContentLengthPlugin;
+use Http\Client\Common\Plugin;
 
 class ContentLengthPluginSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Plugin\ContentLengthPlugin');
+        $this->shouldHaveType(ContentLengthPlugin::class);
     }
 
     function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     function it_adds_content_length_header(RequestInterface $request, StreamInterface $stream)

@@ -11,6 +11,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\CookiePlugin;
+use Http\Client\Common\Plugin;
+use Http\Client\Promise\HttpRejectedPromise;
+use Http\Client\Exception\TransferException;
 
 class CookiePluginSpec extends ObjectBehavior
 {
@@ -25,12 +29,12 @@ class CookiePluginSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Plugin\CookiePlugin');
+        $this->shouldHaveType(CookiePlugin::class);
     }
 
     function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     function it_loads_cookie(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -216,8 +220,8 @@ class CookiePluginSpec extends ObjectBehavior
         $uri->getPath()->willReturn('/');
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldHaveType('Http\Promise\Promise');
-        $promise->wait()->shouldReturnAnInstanceOf('Psr\Http\Message\ResponseInterface');
+        $promise->shouldHaveType(Promise::class);
+        $promise->wait()->shouldReturnAnInstanceOf(ResponseInterface::class);
     }
 
     function it_throws_exception_on_invalid_expires_date(
@@ -239,7 +243,7 @@ class CookiePluginSpec extends ObjectBehavior
         $uri->getPath()->willReturn('/');
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
-        $promise->shouldThrow('Http\Client\Exception\TransferException')->duringWait();
+        $promise->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
+        $promise->shouldThrow(TransferException::class)->duringWait();
     }
 }

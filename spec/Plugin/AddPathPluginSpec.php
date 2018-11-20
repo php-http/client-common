@@ -7,6 +7,8 @@ use Http\Message\UriFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\Plugin\AddPathPlugin;
+use Http\Client\Common\Plugin;
 
 class AddPathPluginSpec extends ObjectBehavior
 {
@@ -19,14 +21,14 @@ class AddPathPluginSpec extends ObjectBehavior
     {
         $uri->getPath()->shouldBeCalled()->willReturn('/api');
 
-        $this->shouldHaveType('Http\Client\Common\Plugin\AddPathPlugin');
+        $this->shouldHaveType(AddPathPlugin::class);
     }
 
     function it_is_a_plugin(UriInterface $uri)
     {
         $uri->getPath()->shouldBeCalled()->willReturn('/api');
 
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     function it_adds_path(
@@ -51,7 +53,7 @@ class AddPathPluginSpec extends ObjectBehavior
         $host->getPath()->shouldBeCalled()->willReturn('/api/');
 
         $this->beConstructedWith($host);
-        $this->shouldThrow('\LogicException')->duringInstantiation();
+        $this->shouldThrow(\LogicException::class)->duringInstantiation();
     }
 
     function it_throws_exception_on_empty_path(UriInterface $host)
@@ -59,6 +61,6 @@ class AddPathPluginSpec extends ObjectBehavior
         $host->getPath()->shouldBeCalled()->willReturn('');
 
         $this->beConstructedWith($host);
-        $this->shouldThrow('\LogicException')->duringInstantiation();
+        $this->shouldThrow(\LogicException::class)->duringInstantiation();
     }
 }

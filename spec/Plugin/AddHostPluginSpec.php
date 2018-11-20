@@ -7,6 +7,8 @@ use Http\Message\UriFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\Plugin\AddHostPlugin;
+use Http\Client\Common\Plugin;
 
 class AddHostPluginSpec extends ObjectBehavior
 {
@@ -19,14 +21,14 @@ class AddHostPluginSpec extends ObjectBehavior
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
 
-        $this->shouldHaveType('Http\Client\Common\Plugin\AddHostPlugin');
+        $this->shouldHaveType(AddHostPlugin::class);
     }
 
     function it_is_a_plugin(UriInterface $uri)
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
 
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     function it_adds_domain(

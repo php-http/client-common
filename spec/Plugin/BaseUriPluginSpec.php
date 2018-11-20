@@ -7,6 +7,8 @@ use Http\Message\UriFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\Plugin\BaseUriPlugin;
+use Http\Client\Common\Plugin;
 
 class BaseUriPluginSpec extends ObjectBehavior
 {
@@ -20,7 +22,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
         $uri->getPath()->shouldBeCalled()->willReturn('/api');
 
-        $this->shouldHaveType('Http\Client\Common\Plugin\BaseUriPlugin');
+        $this->shouldHaveType(BaseUriPlugin::class);
     }
 
     function it_is_a_plugin(UriInterface $uri)
@@ -28,7 +30,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
         $uri->getPath()->shouldBeCalled()->willReturn('/api');
 
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     function it_adds_domain_and_path(

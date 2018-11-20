@@ -12,6 +12,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Http\Client\Exception\RequestException;
 
 class HttpClientPoolItemSpec extends ObjectBehavior
 {
@@ -22,12 +23,12 @@ class HttpClientPoolItemSpec extends ObjectBehavior
 
     public function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
     public function it_is_an_async_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
     public function it_sends_request(HttpClient $httpClient, RequestInterface $request, ResponseInterface $response)
@@ -53,7 +54,7 @@ class HttpClientPoolItemSpec extends ObjectBehavior
         $httpClient->sendRequest($request)->willThrow($exception);
         $this->shouldThrow($exception)->duringSendRequest($request);
         $this->isDisabled()->shouldReturn(true);
-        $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendRequest($request);
+        $this->shouldThrow(RequestException::class)->duringSendRequest($request);
     }
 
     public function it_disable_himself_on_send_async_request(HttpAsyncClient $httpAsyncClient, RequestInterface $request)
@@ -63,9 +64,9 @@ class HttpClientPoolItemSpec extends ObjectBehavior
         $promise = new HttpRejectedPromise(new TransferException());
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
         $this->isDisabled()->shouldReturn(true);
-        $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendAsyncRequest($request);
+        $this->shouldThrow(RequestException::class)->duringSendAsyncRequest($request);
     }
 
     public function it_reactivate_himself_on_send_request(HttpClient $httpClient, RequestInterface $request)
@@ -87,9 +88,9 @@ class HttpClientPoolItemSpec extends ObjectBehavior
         $promise = new HttpRejectedPromise(new TransferException());
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
         $this->isDisabled()->shouldReturn(false);
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
     }
 
     public function it_increments_request_count(HttpAsyncClient $httpAsyncClient, RequestInterface $request, ResponseInterface $response)

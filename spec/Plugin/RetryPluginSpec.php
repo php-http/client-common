@@ -9,17 +9,19 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\RetryPlugin;
+use Http\Client\Common\Plugin;
 
 class RetryPluginSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Plugin\RetryPlugin');
+        $this->shouldHaveType(RetryPlugin::class);
     }
 
     function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     function it_returns_response(RequestInterface $request, ResponseInterface $response)
@@ -30,7 +32,7 @@ class RetryPluginSpec extends ObjectBehavior
             }
         };
 
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf(HttpFulfilledPromise::class);
     }
 
     function it_throws_exception_on_multiple_exceptions(RequestInterface $request)
@@ -53,7 +55,7 @@ class RetryPluginSpec extends ObjectBehavior
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $promise->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
         $promise->shouldThrow($exception2)->duringWait();
     }
 
@@ -76,7 +78,7 @@ class RetryPluginSpec extends ObjectBehavior
         };
 
         $promise = $this->handleRequest($request, $next, function () {});
-        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
+        $promise->shouldReturnAnInstanceOf(HttpFulfilledPromise::class);
         $promise->wait()->shouldReturn($response);
     }
 
@@ -98,8 +100,8 @@ class RetryPluginSpec extends ObjectBehavior
             }
         };
 
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
-        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf('Http\Client\Promise\HttpFulfilledPromise');
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf(HttpFulfilledPromise::class);
+        $this->handleRequest($request, $next, function () {})->shouldReturnAnInstanceOf(HttpFulfilledPromise::class);
     }
 
     function it_has_an_exponential_default_delay(RequestInterface $request, Exception\HttpException $exception)

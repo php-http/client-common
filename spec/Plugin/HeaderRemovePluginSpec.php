@@ -7,19 +7,21 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\HeaderRemovePlugin;
+use Http\Client\Common\Plugin;
 
 class HeaderRemovePluginSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
         $this->beConstructedWith([]);
-        $this->shouldHaveType('Http\Client\Common\Plugin\HeaderRemovePlugin');
+        $this->shouldHaveType(HeaderRemovePlugin::class);
     }
 
     public function it_is_a_plugin()
     {
         $this->beConstructedWith([]);
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_removes_the_header(RequestInterface $request)

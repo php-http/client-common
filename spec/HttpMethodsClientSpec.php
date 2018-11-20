@@ -2,7 +2,6 @@
 
 namespace spec\Http\Client\Common;
 
-use Http\Client\BatchResult;
 use Http\Client\HttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Message\MessageFactory;
@@ -15,7 +14,7 @@ class HttpMethodsClientSpec extends ObjectBehavior
     function let(HttpClient $client, MessageFactory $messageFactory)
     {
         $this->beAnInstanceOf(
-            'spec\Http\Client\Common\HttpMethodsClientStub', [
+            HttpMethodsClientStub::class, [
                 $client,
                 $messageFactory
             ]

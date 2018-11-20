@@ -9,22 +9,24 @@ use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\HttpClientRouter;
+use Http\Client\Exception\RequestException;
 
 class HttpClientRouterSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\HttpClientRouter');
+        $this->shouldHaveType(HttpClientRouter::class);
     }
 
     function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
     function it_is_an_async_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
     function it_send_request(RequestMatcher $matcher, HttpClient $client, RequestInterface $request, ResponseInterface $response)
@@ -50,7 +52,7 @@ class HttpClientRouterSpec extends ObjectBehavior
         $this->addClient($client, $matcher);
         $matcher->matches($request)->willReturn(false);
 
-        $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendRequest($request);
+        $this->shouldThrow(RequestException::class)->duringSendRequest($request);
     }
 
     function it_throw_exception_on_send_async_request(RequestMatcher $matcher, HttpAsyncClient $client, RequestInterface $request)
@@ -58,6 +60,6 @@ class HttpClientRouterSpec extends ObjectBehavior
         $this->addClient($client, $matcher);
         $matcher->matches($request)->willReturn(false);
 
-        $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendAsyncRequest($request);
+        $this->shouldThrow(RequestException::class)->duringSendAsyncRequest($request);
     }
 }
