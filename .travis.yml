@@ -22,8 +22,6 @@ matrix:
   fast_finish: true
   allow_failures:
   - php: 7.3
-  - env: 
-      STABILITY: "dev"
 
 jobs:
   include:
@@ -47,6 +45,8 @@ jobs:
     # Latest dev release
   - php: 7.3
     sudo: required
+    before_install:
+    - composer remove --dev friendsofphp/php-cs-fixer 
   - env: STABILITY="dev"
 
 before_install:
