@@ -13,24 +13,24 @@ use Prophecy\Argument;
 
 class HistoryPluginSpec extends ObjectBehavior
 {
-    function let(Journal $journal)
+    public function let(Journal $journal)
     {
         $this->beConstructedWith($journal);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->beAnInstanceOf('Http\Client\Common\Plugin\JournalPlugin');
     }
 
-    function it_is_a_plugin()
+    public function it_is_a_plugin()
     {
         $this->shouldImplement('Http\Client\Common\Plugin');
     }
 
-    function it_records_success(Journal $journal, RequestInterface $request, ResponseInterface $response)
+    public function it_records_success(Journal $journal, RequestInterface $request, ResponseInterface $response)
     {
-        $next = function (RequestInterface $receivedRequest) use($request, $response) {
+        $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 return new HttpFulfilledPromise($response->getWrappedObject());
             }
@@ -41,10 +41,10 @@ class HistoryPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, function () {});
     }
 
-    function it_records_failure(Journal $journal, RequestInterface $request)
+    public function it_records_failure(Journal $journal, RequestInterface $request)
     {
         $exception = new TransferException();
-        $next = function (RequestInterface $receivedRequest) use($request, $exception) {
+        $next = function (RequestInterface $receivedRequest) use ($request, $exception) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
                 return new HttpRejectedPromise($exception);
             }

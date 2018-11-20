@@ -12,25 +12,25 @@ use Prophecy\Argument;
 
 class DecoderPluginSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Http\Client\Common\Plugin\DecoderPlugin');
     }
 
-    function it_is_a_plugin()
+    public function it_is_a_plugin()
     {
         $this->shouldImplement('Http\Client\Common\Plugin');
     }
 
-    function it_decodes(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
+    public function it_decodes(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
     {
-        if(defined('HHVM_VERSION')) {
+        if (defined('HHVM_VERSION')) {
             throw new SkippingException('Skipping test on hhvm, as there is no chunk encoding on hhvm');
         }
 
         $request->withHeader('TE', ['gzip', 'deflate', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate'])->shouldBeCalled()->willReturn($request);
-        $next = function () use($response) {
+        $next = function () use ($response) {
             return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
@@ -48,11 +48,11 @@ class DecoderPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, function () {});
     }
 
-    function it_decodes_gzip(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
+    public function it_decodes_gzip(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
     {
         $request->withHeader('TE', ['gzip', 'deflate', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate'])->shouldBeCalled()->willReturn($request);
-        $next = function () use($response) {
+        $next = function () use ($response) {
             return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
@@ -70,11 +70,11 @@ class DecoderPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, function () {});
     }
 
-    function it_decodes_deflate(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
+    public function it_decodes_deflate(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
     {
         $request->withHeader('TE', ['gzip', 'deflate', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate'])->shouldBeCalled()->willReturn($request);
-        $next = function () use($response) {
+        $next = function () use ($response) {
             return new HttpFulfilledPromise($response->getWrappedObject());
         };
 
@@ -92,13 +92,13 @@ class DecoderPluginSpec extends ObjectBehavior
         $this->handleRequest($request, $next, function () {});
     }
 
-    function it_does_not_decode_with_content_encoding(RequestInterface $request, ResponseInterface $response)
+    public function it_does_not_decode_with_content_encoding(RequestInterface $request, ResponseInterface $response)
     {
         $this->beConstructedWith(['use_content_encoding' => false]);
 
         $request->withHeader('TE', ['gzip', 'deflate', 'chunked'])->shouldBeCalled()->willReturn($request);
         $request->withHeader('Accept-Encoding', ['gzip', 'deflate'])->shouldNotBeCalled();
-        $next = function () use($response) {
+        $next = function () use ($response) {
             return new HttpFulfilledPromise($response->getWrappedObject());
         };
 

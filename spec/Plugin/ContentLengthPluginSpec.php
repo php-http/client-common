@@ -10,17 +10,17 @@ use Prophecy\Argument;
 
 class ContentLengthPluginSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Http\Client\Common\Plugin\ContentLengthPlugin');
     }
 
-    function it_is_a_plugin()
+    public function it_is_a_plugin()
     {
         $this->shouldImplement('Http\Client\Common\Plugin');
     }
 
-    function it_adds_content_length_header(RequestInterface $request, StreamInterface $stream)
+    public function it_adds_content_length_header(RequestInterface $request, StreamInterface $stream)
     {
         $request->hasHeader('Content-Length')->shouldBeCalled()->willReturn(false);
         $request->getBody()->shouldBeCalled()->willReturn($stream);
@@ -30,9 +30,9 @@ class ContentLengthPluginSpec extends ObjectBehavior
         $this->handleRequest($request, function () {}, function () {});
     }
 
-    function it_streams_chunked_if_no_size(RequestInterface $request, StreamInterface $stream)
+    public function it_streams_chunked_if_no_size(RequestInterface $request, StreamInterface $stream)
     {
-        if(defined('HHVM_VERSION')) {
+        if (defined('HHVM_VERSION')) {
             throw new SkippingException('Skipping test on hhvm, as there is no chunk encoding on hhvm');
         }
 

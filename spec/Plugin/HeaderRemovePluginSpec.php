@@ -2,11 +2,8 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use PhpSpec\Exception\Example\SkippingException;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class HeaderRemovePluginSpec extends ObjectBehavior
 {
@@ -26,7 +23,7 @@ class HeaderRemovePluginSpec extends ObjectBehavior
     {
         $this->beConstructedWith([
             'foo',
-            'baz'
+            'baz',
         ]);
 
         $request->hasHeader('foo')->shouldBeCalled()->willReturn(false);

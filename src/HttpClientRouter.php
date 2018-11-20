@@ -62,7 +62,7 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
      *
      * @return HttpClient|HttpAsyncClient
      */
-    protected function chooseHttpClient(RequestInterface $request)
+    private function chooseHttpClient(RequestInterface $request)
     {
         foreach ($this->clients as $client) {
             if ($client['matcher']->matches($request)) {
