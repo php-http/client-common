@@ -52,8 +52,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|UriInterface $uri
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function get($uri, array $headers = []): ResponseInterface
     {
@@ -66,8 +64,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|UriInterface $uri
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function head($uri, array $headers = []): ResponseInterface
     {
@@ -80,8 +76,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|UriInterface $uri
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function trace($uri, array $headers = []): ResponseInterface
     {
@@ -95,8 +89,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function post($uri, array $headers = [], $body = null): ResponseInterface
     {
@@ -110,8 +102,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function put($uri, array $headers = [], $body = null): ResponseInterface
     {
@@ -125,8 +115,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function patch($uri, array $headers = [], $body = null): ResponseInterface
     {
@@ -140,8 +128,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function delete($uri, array $headers = [], $body = null): ResponseInterface
     {
@@ -155,8 +141,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function options($uri, array $headers = [], $body = null): ResponseInterface
     {
@@ -171,8 +155,6 @@ class HttpMethodsClient implements HttpClient
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
-     *
-     * @return ResponseInterface
      */
     public function send($method, $uri, array $headers = [], $body = null): ResponseInterface
     {

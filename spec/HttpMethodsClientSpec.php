@@ -103,18 +103,18 @@ class HttpMethodsClientStub extends HttpMethodsClient
     public function send($method, $uri, array $headers = [], $body = null): ResponseInterface
     {
         if ($uri !== self::$requestData['uri']) {
-            throw new \InvalidArgumentException('Invalid URI: ' . $uri);
+            throw new \InvalidArgumentException('Invalid URI: '.$uri);
         }
 
         if ($headers !== self::$requestData['headers']) {
-            throw new \InvalidArgumentException('Invalid headers: ' . print_r($headers, true));
+            throw new \InvalidArgumentException('Invalid headers: '.print_r($headers, true));
         }
 
         switch ($method) {
             case 'GET':
             case 'HEAD':
             case 'TRACE':
-                if ($body !== null) {
+                if (null !== $body) {
                     throw new \InvalidArgumentException('Non-empty body');
                 }
 
@@ -125,12 +125,12 @@ class HttpMethodsClientStub extends HttpMethodsClient
             case 'DELETE':
             case 'OPTIONS':
                 if ($body !== self::$requestData['body']) {
-                    throw new \InvalidArgumentException('Invalid body: ' . print_r($body, true));
+                    throw new \InvalidArgumentException('Invalid body: '.print_r($body, true));
                 }
 
                 return new Response();
             default:
-                throw new \InvalidArgumentException('Invalid method: ' . $method);
+                throw new \InvalidArgumentException('Invalid method: '.$method);
         }
     }
 }

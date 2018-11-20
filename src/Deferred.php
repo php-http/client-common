@@ -76,8 +76,6 @@ class Deferred implements Promise
 
     /**
      * Resolve this deferred with a Response.
-     *
-     * @param ResponseInterface $response
      */
     public function resolve(ResponseInterface $response)
     {
@@ -95,8 +93,6 @@ class Deferred implements Promise
 
     /**
      * Reject this deferred with an Exception.
-     *
-     * @param Exception $exception
      */
     public function reject(Exception $exception)
     {

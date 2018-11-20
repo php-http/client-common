@@ -42,8 +42,6 @@ final class PluginClientFactory
      * }
      *
      * @see PluginClient constructor for PluginClient specific $options.
-     *
-     * @return PluginClient
      */
     public function createClient($client, array $plugins = [], array $options = []): PluginClient
     {

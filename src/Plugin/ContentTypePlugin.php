@@ -93,8 +93,6 @@ final class ContentTypePlugin implements Plugin
 
     /**
      * @param $stream StreamInterface
-     *
-     * @return bool
      */
     private function isJson($stream): bool
     {

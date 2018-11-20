@@ -215,8 +215,6 @@ class RedirectPlugin implements Plugin
      *
      * @throws HttpException                If location header is not usable (missing or incorrect)
      * @throws MultipleRedirectionException If a 300 status code is received and default location cannot be resolved (doesn't use the location header or not present)
-     *
-     * @return UriInterface
      */
     private function createUri(ResponseInterface $response, RequestInterface $request): UriInterface
     {

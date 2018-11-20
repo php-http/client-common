@@ -101,8 +101,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
 
     /**
      * Configure the plugin client.
-     *
-     * @return array
      */
     private function configure(array $options = []): array
     {
@@ -121,8 +119,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      *
      * @param Plugin[] $pluginList     A list of plugins
      * @param callable $clientCallable Callable making the HTTP call
-     *
-     * @return callable
      */
     private function createPluginChain(array $pluginList, callable $clientCallable): callable
     {

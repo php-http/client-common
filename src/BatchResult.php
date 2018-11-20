@@ -31,8 +31,6 @@ final class BatchResult
 
     /**
      * Checks if there are any successful responses at all.
-     *
-     * @return bool
      */
     public function hasResponses(): bool
     {
@@ -57,8 +55,6 @@ final class BatchResult
 
     /**
      * Checks if there is a successful response for a request.
-     *
-     * @return bool
      */
     public function isSuccessful(RequestInterface $request): bool
     {
@@ -68,7 +64,6 @@ final class BatchResult
     /**
      * Returns the response for a successful request.
      *
-     * @return ResponseInterface
      *
      * @throws \UnexpectedValueException If request was not part of the batch or failed
      */
@@ -96,8 +91,6 @@ final class BatchResult
 
     /**
      * Checks if there are any unsuccessful requests at all.
-     *
-     * @return bool
      */
     public function hasExceptions(): bool
     {
@@ -122,8 +115,6 @@ final class BatchResult
 
     /**
      * Checks if there is an exception for a request, meaning the request failed.
-     *
-     * @return bool
      */
     public function isFailed(RequestInterface $request): bool
     {
@@ -133,7 +124,6 @@ final class BatchResult
     /**
      * Returns the exception for a failed request.
      *
-     * @return Exception
      *
      * @throws \UnexpectedValueException If request was not part of the batch or was successful
      */
