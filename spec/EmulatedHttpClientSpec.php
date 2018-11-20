@@ -4,6 +4,7 @@ namespace spec\Http\Client\Common;
 
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpAsyncClient;
+use Http\Client\HttpClient;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
