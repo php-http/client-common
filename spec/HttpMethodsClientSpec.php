@@ -100,7 +100,7 @@ class HttpMethodsClientStub extends HttpMethodsClient
     /**
      * {@inheritdoc}
      */
-    public function send($method, $uri, array $headers = [], $body = null)
+    public function send($method, $uri, array $headers = [], $body = null): ResponseInterface
     {
         if (in_array($method, ['GET', 'HEAD', 'TRACE'])) {
             return $uri === self::$requestData['uri'] &&
