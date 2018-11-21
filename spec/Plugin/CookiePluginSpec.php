@@ -48,11 +48,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->willReturn($request);
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_combines_multiple_cookies_into_one_header(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -69,11 +65,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value; name2=value2')->willReturn($request);
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_load_cookie_if_expired(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -83,11 +75,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->shouldNotBeCalled();
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_load_cookie_if_domain_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -100,11 +88,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->shouldNotBeCalled();
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_load_cookie_on_hackish_domains(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -122,11 +106,7 @@ class CookiePluginSpec extends ObjectBehavior
 
             $request->withAddedHeader('Cookie', 'name=value')->shouldNotBeCalled();
 
-            $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-                if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                    return $promise->getWrappedObject();
-                }
-            }, function () {});
+            $this->handleRequest($request, PluginStub::next(), function () {});
         }
     }
 
@@ -141,11 +121,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->willReturn($request);
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_load_cookie_if_path_does_not_match(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -159,11 +135,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->shouldNotBeCalled();
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_load_cookie_when_cookie_is_secure(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -178,11 +150,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->shouldNotBeCalled();
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_loads_cookie_when_cookie_is_secure(RequestInterface $request, UriInterface $uri, Promise $promise)
@@ -197,11 +165,7 @@ class CookiePluginSpec extends ObjectBehavior
 
         $request->withAddedHeader('Cookie', 'name=value')->willReturn($request);
 
-        $this->handleRequest($request, function (RequestInterface $requestReceived) use ($request, $promise) {
-            if (Argument::is($requestReceived)->scoreArgument($request->getWrappedObject())) {
-                return $promise->getWrappedObject();
-            }
-        }, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_saves_cookie(RequestInterface $request, ResponseInterface $response, UriInterface $uri)
