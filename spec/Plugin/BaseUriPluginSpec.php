@@ -52,7 +52,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $uri->getPath()->shouldBeCalled()->willReturn('/users');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_adds_domain(
@@ -74,7 +74,7 @@ class BaseUriPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_replaces_domain_and_adds_path(
@@ -97,6 +97,6 @@ class BaseUriPluginSpec extends ObjectBehavior
         $uri->getPath()->shouldBeCalled()->willReturn('/users');
 
         $this->beConstructedWith($host, ['replace' => true]);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

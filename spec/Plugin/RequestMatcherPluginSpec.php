@@ -35,7 +35,7 @@ class RequestMatcherPluginSpec extends ObjectBehavior
         $requestMatcher->matches($request)->willReturn(true);
         $plugin->handleRequest($request, Argument::type('callable'), Argument::type('callable'))->shouldBeCalled();
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_match_a_request(

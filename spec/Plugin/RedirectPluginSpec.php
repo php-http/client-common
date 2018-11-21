@@ -91,7 +91,7 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $uriRedirect->__toString()->willReturn('/redirect');
 
-        $this->handleRequest($request, $next, function () {});
+        $this->handleRequest($request, $next, PluginStub::first());
     }
 
     public function it_stores_a_301(

@@ -31,6 +31,6 @@ class HeaderAppendPluginSpec extends ObjectBehavior
         $request->withAddedHeader('foo', 'bar')->shouldBeCalled()->willReturn($request);
         $request->withAddedHeader('baz', 'qux')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

@@ -32,6 +32,6 @@ class HeaderDefaultsPluginSpec extends ObjectBehavior
         $request->withHeader('foo', 'bar')->shouldBeCalled()->willReturn($request);
         $request->hasHeader('baz')->shouldBeCalled()->willReturn(true);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

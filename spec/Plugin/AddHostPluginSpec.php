@@ -47,7 +47,7 @@ class AddHostPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_replaces_domain(
@@ -67,7 +67,7 @@ class AddHostPluginSpec extends ObjectBehavior
         $uri->withPort(8000)->shouldBeCalled()->willReturn($uri);
 
         $this->beConstructedWith($host, ['replace' => true]);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_nothing_when_domain_exists(
@@ -79,6 +79,6 @@ class AddHostPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('default.com');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

@@ -33,6 +33,6 @@ class HeaderRemovePluginSpec extends ObjectBehavior
         $request->hasHeader('baz')->shouldBeCalled()->willReturn(true);
         $request->withoutHeader('baz')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

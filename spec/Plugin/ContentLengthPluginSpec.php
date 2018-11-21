@@ -29,7 +29,7 @@ class ContentLengthPluginSpec extends ObjectBehavior
         $stream->getSize()->shouldBeCalled()->willReturn(100);
         $request->withHeader('Content-Length', '100')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_streams_chunked_if_no_size(RequestInterface $request, StreamInterface $stream)
@@ -45,6 +45,6 @@ class ContentLengthPluginSpec extends ObjectBehavior
         $request->withBody(Argument::type('Http\Message\Encoding\ChunkStream'))->shouldBeCalled()->willReturn($request);
         $request->withAddedHeader('Transfer-Encoding', 'chunked')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

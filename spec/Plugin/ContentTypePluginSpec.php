@@ -25,7 +25,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for(json_encode(['foo' => 'bar'])));
         $request->withHeader('Content-Type', 'application/json')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_adds_xml_content_type_header(RequestInterface $request)
@@ -34,7 +34,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
         $request->withHeader('Content-Type', 'application/xml')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_set_content_type_header(RequestInterface $request)
@@ -43,7 +43,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('foo'));
         $request->withHeader('Content-Type', null)->shouldNotBeCalled();
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_set_content_type_header_if_already_one(RequestInterface $request)
@@ -52,7 +52,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldNotBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('foo'));
         $request->withHeader('Content-Type', null)->shouldNotBeCalled();
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_set_content_type_header_if_size_0_or_unknown(RequestInterface $request)
@@ -61,7 +61,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for());
         $request->withHeader('Content-Type', null)->shouldNotBeCalled();
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_adds_xml_content_type_header_if_size_limit_is_not_reached_using_default_value(RequestInterface $request)
@@ -74,7 +74,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
         $request->withHeader('Content-Type', 'application/xml')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_adds_xml_content_type_header_if_size_limit_is_not_reached(RequestInterface $request)
@@ -88,7 +88,7 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
         $request->withHeader('Content-Type', 'application/xml')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_set_content_type_header_if_size_limit_is_reached(RequestInterface $request)
@@ -102,6 +102,6 @@ class ContentTypePluginSpec extends ObjectBehavior
         $request->getBody()->shouldBeCalled()->willReturn(\GuzzleHttp\Psr7\stream_for('<foo>bar</foo>'));
         $request->withHeader('Content-Type', null)->shouldNotBeCalled();
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }
