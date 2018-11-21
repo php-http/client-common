@@ -10,7 +10,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Http\Client\Common\Plugin\CookiePlugin;
 use Http\Client\Common\Plugin;
 use Http\Client\Promise\HttpRejectedPromise;
