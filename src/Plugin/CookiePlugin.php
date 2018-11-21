@@ -8,6 +8,7 @@ use Http\Message\Cookie;
 use Http\Message\CookieJar;
 use Http\Message\CookieUtil;
 use Http\Message\Exception\UnexpectedValueException;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,7 +34,7 @@ final class CookiePlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         $cookies = [];
         foreach ($this->cookieJar->getCookies() as $cookie) {

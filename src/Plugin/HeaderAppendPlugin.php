@@ -3,6 +3,7 @@
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -34,7 +35,7 @@ final class HeaderAppendPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         foreach ($this->headers as $header => $headerValue) {
             $request = $request->withAddedHeader($header, $headerValue);

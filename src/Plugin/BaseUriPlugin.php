@@ -3,6 +3,7 @@
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -39,7 +40,7 @@ final class BaseUriPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         $addHostNext = function (RequestInterface $request) use ($next, $first) {
             return $this->addHostPlugin->handleRequest($request, $next, $first);
