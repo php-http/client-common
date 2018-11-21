@@ -11,16 +11,14 @@ class PluginStub
 {
     public static function next(): callable
     {
-        return function (RequestInterface $request): Promise
-        {
+        return function (RequestInterface $request): Promise {
             return new FulfilledPromise(new Response());
         };
     }
 
     public static function first(): callable
     {
-        return function (RequestInterface $request): Promise
-        {
+        return function (RequestInterface $request): Promise {
             return new FulfilledPromise(new Response());
         };
     }
