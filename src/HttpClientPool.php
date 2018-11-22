@@ -40,7 +40,7 @@ abstract class HttpClientPool implements HttpAsyncClient, HttpClient
      *
      * @return HttpClientPoolItem Return a http client that can do both sync or async
      */
-    abstract protected function chooseHttpClient();
+    abstract protected function chooseHttpClient(): HttpClientPoolItem;
 
     /**
      * {@inheritdoc}

@@ -27,5 +27,5 @@ interface Plugin
      *
      * @return Promise Resolves a PSR-7 Response or fails with an Http\Client\Exception (The same as HttpAsyncClient)
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first);
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise;
 }

@@ -3,6 +3,7 @@
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -28,7 +29,7 @@ final class HeaderRemovePlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         foreach ($this->headers as $header) {
             if ($request->hasHeader($header)) {

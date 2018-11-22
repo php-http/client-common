@@ -6,12 +6,13 @@ use Http\Client\Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\BatchResult;
 
 class BatchResultSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->beAnInstanceOf('Http\Client\Common\BatchResult');
+        $this->beAnInstanceOf(BatchResult::class);
     }
 
     public function it_is_immutable(RequestInterface $request, ResponseInterface $response)
@@ -19,7 +20,7 @@ class BatchResultSpec extends ObjectBehavior
         $new = $this->addResponse($request, $response);
 
         $this->getResponses()->shouldReturn([]);
-        $new->shouldHaveType('Http\Client\Common\BatchResult');
+        $new->shouldHaveType(BatchResult::class);
         $new->getResponses()->shouldReturn([$response]);
     }
 
@@ -37,7 +38,7 @@ class BatchResultSpec extends ObjectBehavior
     {
         $new = $this->addResponse($request, $response);
 
-        $this->shouldThrow('UnexpectedValueException')->duringGetResponseFor($request);
+        $this->shouldThrow(\UnexpectedValueException::class)->duringGetResponseFor($request);
         $this->isSuccessful($request)->shouldReturn(false);
         $new->getResponseFor($request)->shouldReturn($response);
         $new->isSuccessful($request)->shouldReturn(true);

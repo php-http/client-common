@@ -2,6 +2,10 @@
 
 ## 2.0 (unreleased)
 
+### Changed
+- Abstract method `HttpClientPool::chooseHttpClient()` has now an explicit return type (`Http\Client\Common\HttpClientPoolItem`)
+- Interface method `Plugin::handleRequest(...)` has now an explicit return type (`Http\Promise\Promise`)
+
 ### Removed
 - Deprecated option `debug_plugins` has been removed from `PluginClient`
 

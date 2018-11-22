@@ -35,6 +35,11 @@
             "Http\\Client\\Common\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Http\\Client\\Common\\": "spec/"
+        }
+    },
     "scripts": {
         "cs-check": "vendor/bin/php-cs-fixer fix --dry-run",
         "cs-fix": "vendor/bin/php-cs-fixer fix",

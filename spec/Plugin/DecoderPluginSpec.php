@@ -9,17 +9,21 @@ use Psr\Http\Message\StreamInterface;
 use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\DecoderPlugin;
+use Http\Client\Common\Plugin;
+use Http\Message\Encoding\GzipDecodeStream;
+use Http\Message\Encoding\DecompressStream;
 
 class DecoderPluginSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Plugin\DecoderPlugin');
+        $this->shouldHaveType(DecoderPlugin::class);
     }
 
     public function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_decodes(RequestInterface $request, ResponseInterface $response, StreamInterface $stream)
@@ -60,7 +64,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $response->hasHeader('Content-Encoding')->willReturn(true);
         $response->getHeader('Content-Encoding')->willReturn(['gzip']);
         $response->getBody()->willReturn($stream);
-        $response->withBody(Argument::type('Http\Message\Encoding\GzipDecodeStream'))->willReturn($response);
+        $response->withBody(Argument::type(GzipDecodeStream::class))->willReturn($response);
         $response->withoutHeader('Content-Encoding')->willReturn($response);
 
         $stream->isReadable()->willReturn(true);
@@ -82,7 +86,7 @@ class DecoderPluginSpec extends ObjectBehavior
         $response->hasHeader('Content-Encoding')->willReturn(true);
         $response->getHeader('Content-Encoding')->willReturn(['deflate']);
         $response->getBody()->willReturn($stream);
-        $response->withBody(Argument::type('Http\Message\Encoding\DecompressStream'))->willReturn($response);
+        $response->withBody(Argument::type(DecompressStream::class))->willReturn($response);
         $response->withoutHeader('Content-Encoding')->willReturn($response);
 
         $stream->isReadable()->willReturn(true);

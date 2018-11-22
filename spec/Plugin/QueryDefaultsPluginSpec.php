@@ -2,9 +2,11 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\UriInterface;
+use Http\Client\Common\Plugin\QueryDefaultsPlugin;
 
 class QueryDefaultsPluginSpec extends ObjectBehavior
 {
@@ -15,12 +17,12 @@ class QueryDefaultsPluginSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Plugin\QueryDefaultsPlugin');
+        $this->shouldHaveType(QueryDefaultsPlugin::class);
     }
 
     public function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_sets_the_default_header(RequestInterface $request, UriInterface $uri)
@@ -34,9 +36,7 @@ class QueryDefaultsPluginSpec extends ObjectBehavior
         $uri->withQuery('test=true&foo=bar')->shouldBeCalled()->willReturn($uri);
         $request->withUri($uri)->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {
-        }, function () {
-        });
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_replace_existing_request_value(RequestInterface $request, UriInterface $uri)
@@ -51,8 +51,6 @@ class QueryDefaultsPluginSpec extends ObjectBehavior
         $uri->withQuery('foo=new&bar=barDefault')->shouldBeCalled()->willReturn($uri);
         $request->withUri($uri)->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {
-        }, function () {
-        });
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

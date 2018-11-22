@@ -34,7 +34,7 @@ class Deferred implements Promise
     /**
      * {@inheritdoc}
      */
-    public function then(callable $onFulfilled = null, callable $onRejected = null)
+    public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
     {
         $deferred = new self($this->waitCallback);
 
@@ -69,7 +69,7 @@ class Deferred implements Promise
     /**
      * {@inheritdoc}
      */
-    public function getState()
+    public function getState(): string
     {
         return $this->state;
     }

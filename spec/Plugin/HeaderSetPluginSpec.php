@@ -2,21 +2,23 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Psr\Http\Message\RequestInterface;
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\HeaderSetPlugin;
 use PhpSpec\ObjectBehavior;
+use Psr\Http\Message\RequestInterface;
 
 class HeaderSetPluginSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
         $this->beConstructedWith([]);
-        $this->shouldHaveType('Http\Client\Common\Plugin\HeaderSetPlugin');
+        $this->shouldHaveType(HeaderSetPlugin::class);
     }
 
     public function it_is_a_plugin()
     {
         $this->beConstructedWith([]);
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_set_the_header(RequestInterface $request)
@@ -29,6 +31,6 @@ class HeaderSetPluginSpec extends ObjectBehavior
         $request->withHeader('foo', 'bar')->shouldBeCalled()->willReturn($request);
         $request->withHeader('baz', 'qux')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

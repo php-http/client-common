@@ -3,6 +3,7 @@
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -57,7 +58,7 @@ final class ContentTypePlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         if (!$request->hasHeader('Content-Type')) {
             $stream = $request->getBody();
@@ -93,10 +94,8 @@ final class ContentTypePlugin implements Plugin
 
     /**
      * @param $stream StreamInterface
-     *
-     * @return bool
      */
-    private function isJson($stream)
+    private function isJson($stream): bool
     {
         $stream->rewind();
 

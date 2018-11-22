@@ -6,6 +6,7 @@ use Http\Client\Common\Exception\CircularRedirectionException;
 use Http\Client\Common\Exception\MultipleRedirectionException;
 use Http\Client\Common\Plugin;
 use Http\Client\Exception\HttpException;
+use Http\Promise\Promise;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -131,7 +132,7 @@ class RedirectPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         // Check in storage
         if (array_key_exists((string) $request->getUri(), $this->redirectStorage)) {
@@ -215,10 +216,8 @@ class RedirectPlugin implements Plugin
      *
      * @throws HttpException                If location header is not usable (missing or incorrect)
      * @throws MultipleRedirectionException If a 300 status code is received and default location cannot be resolved (doesn't use the location header or not present)
-     *
-     * @return UriInterface
      */
-    private function createUri(ResponseInterface $response, RequestInterface $request)
+    private function createUri(ResponseInterface $response, RequestInterface $request): UriInterface
     {
         if ($this->redirectCodes[$response->getStatusCode()]['multiple'] && (!$this->useDefaultForMultiple || !$response->hasHeader('Location'))) {
             throw new MultipleRedirectionException('Cannot choose a redirection', $request, $response);

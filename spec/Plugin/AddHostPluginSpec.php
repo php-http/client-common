@@ -5,6 +5,8 @@ namespace spec\Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\Plugin\AddHostPlugin;
+use Http\Client\Common\Plugin;
 
 class AddHostPluginSpec extends ObjectBehavior
 {
@@ -17,14 +19,14 @@ class AddHostPluginSpec extends ObjectBehavior
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
 
-        $this->shouldHaveType('Http\Client\Common\Plugin\AddHostPlugin');
+        $this->shouldHaveType(AddHostPlugin::class);
     }
 
     public function it_is_a_plugin(UriInterface $uri)
     {
         $uri->getHost()->shouldBeCalled()->willReturn('example.com');
 
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_adds_domain(
@@ -45,7 +47,7 @@ class AddHostPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_replaces_domain(
@@ -65,7 +67,7 @@ class AddHostPluginSpec extends ObjectBehavior
         $uri->withPort(8000)->shouldBeCalled()->willReturn($uri);
 
         $this->beConstructedWith($host, ['replace' => true]);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_nothing_when_domain_exists(
@@ -77,6 +79,6 @@ class AddHostPluginSpec extends ObjectBehavior
         $uri->getHost()->shouldBeCalled()->willReturn('default.com');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

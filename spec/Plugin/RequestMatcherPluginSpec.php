@@ -8,6 +8,7 @@ use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin\RequestMatcherPlugin;
 
 class RequestMatcherPluginSpec extends ObjectBehavior
 {
@@ -18,12 +19,12 @@ class RequestMatcherPluginSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Plugin\RequestMatcherPlugin');
+        $this->shouldHaveType(RequestMatcherPlugin::class);
     }
 
     public function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_matches_a_request_and_delegates_to_plugin(
@@ -34,7 +35,7 @@ class RequestMatcherPluginSpec extends ObjectBehavior
         $requestMatcher->matches($request)->willReturn(true);
         $plugin->handleRequest($request, Argument::type('callable'), Argument::type('callable'))->shouldBeCalled();
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_does_not_match_a_request(

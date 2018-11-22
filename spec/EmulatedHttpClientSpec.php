@@ -4,10 +4,13 @@ namespace spec\Http\Client\Common;
 
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpAsyncClient;
+use Http\Client\HttpClient;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\EmulatedHttpClient;
+use Http\Client\Exception;
 
 class EmulatedHttpClientSpec extends ObjectBehavior
 {
@@ -18,17 +21,17 @@ class EmulatedHttpClientSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\EmulatedHttpClient');
+        $this->shouldHaveType(EmulatedHttpClient::class);
     }
 
     public function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
     public function it_is_an_async_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
     public function it_emulates_a_successful_request(
@@ -54,7 +57,7 @@ class EmulatedHttpClientSpec extends ObjectBehavior
 
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->shouldThrow('Http\Client\Exception')->duringSendRequest($request);
+        $this->shouldThrow(Exception::class)->duringSendRequest($request);
     }
 
     public function it_decorates_the_underlying_client(

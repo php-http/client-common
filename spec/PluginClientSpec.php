@@ -10,6 +10,8 @@ use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\Exception\LoopException;
+use Http\Client\Common\PluginClient;
 
 class PluginClientSpec extends ObjectBehavior
 {
@@ -20,17 +22,17 @@ class PluginClientSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\PluginClient');
+        $this->shouldHaveType(PluginClient::class);
     }
 
     public function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
     public function it_is_an_http_async_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
     public function it_sends_request_with_underlying_client(HttpClient $httpClient, RequestInterface $request, ResponseInterface $response)
@@ -59,8 +61,8 @@ class PluginClientSpec extends ObjectBehavior
 
     public function it_prefers_send_request($client, RequestInterface $request, ResponseInterface $response)
     {
-        $client->implement('Http\Client\HttpClient');
-        $client->implement('Http\Client\HttpAsyncClient');
+        $client->implement(HttpClient::class);
+        $client->implement(HttpAsyncClient::class);
 
         $client->sendRequest($request)->willReturn($response);
 
@@ -84,6 +86,6 @@ class PluginClientSpec extends ObjectBehavior
 
         $this->beConstructedWith($httpClient, [$plugin]);
 
-        $this->shouldThrow('Http\Client\Common\Exception\LoopException')->duringSendRequest($request);
+        $this->shouldThrow(LoopException::class)->duringSendRequest($request);
     }
 }

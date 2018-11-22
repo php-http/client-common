@@ -3,7 +3,9 @@
 namespace spec\Http\Client\Common\Exception;
 
 use Http\Client\Common\BatchResult;
+use Http\Client\Exception;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\Exception\BatchException;
 
 class BatchExceptionSpec extends ObjectBehavior
 {
@@ -15,21 +17,21 @@ class BatchExceptionSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\Exception\BatchException');
+        $this->shouldHaveType(BatchException::class);
     }
 
     public function it_is_a_runtime_exception()
     {
-        $this->shouldHaveType('RuntimeException');
+        $this->shouldHaveType(\RuntimeException::class);
     }
 
     public function it_is_an_exception()
     {
-        $this->shouldImplement('Http\Client\Exception');
+        $this->shouldImplement(Exception::class);
     }
 
     public function it_has_a_batch_result()
     {
-        $this->getResult()->shouldHaveType('Http\Client\Common\BatchResult');
+        $this->getResult()->shouldHaveType(BatchResult::class);
     }
 }

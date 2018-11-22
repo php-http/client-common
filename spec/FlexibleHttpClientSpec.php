@@ -8,6 +8,7 @@ use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\FlexibleHttpClient;
 
 class FlexibleHttpClientSpec extends ObjectBehavior
 {
@@ -18,24 +19,24 @@ class FlexibleHttpClientSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\FlexibleHttpClient');
+        $this->shouldHaveType(FlexibleHttpClient::class);
     }
 
     public function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
     public function it_is_an_async_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
     public function it_throw_exception_if_invalid_client()
     {
         $this->beConstructedWith(null);
 
-        $this->shouldThrow('\LogicException')->duringInstantiation();
+        $this->shouldThrow(\LogicException::class)->duringInstantiation();
     }
 
     public function it_emulates_an_async_client(
@@ -53,7 +54,7 @@ class FlexibleHttpClientSpec extends ObjectBehavior
         $this->sendRequest($syncRequest)->shouldReturn($syncResponse);
         $promise = $this->sendAsyncRequest($asyncRequest);
 
-        $promise->shouldHaveType('Http\Promise\Promise');
+        $promise->shouldHaveType(Promise::class);
         $promise->wait()->shouldReturn($asyncResponse);
     }
 
@@ -77,8 +78,8 @@ class FlexibleHttpClientSpec extends ObjectBehavior
 
     public function it_does_not_emulate_a_client($client, RequestInterface $syncRequest, RequestInterface $asyncRequest)
     {
-        $client->implement('Http\Client\HttpClient');
-        $client->implement('Http\Client\HttpAsyncClient');
+        $client->implement(HttpClient::class);
+        $client->implement(HttpAsyncClient::class);
 
         $client->sendRequest($syncRequest)->shouldBeCalled();
         $client->sendRequest($asyncRequest)->shouldNotBeCalled();

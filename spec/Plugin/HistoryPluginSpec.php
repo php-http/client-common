@@ -10,6 +10,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Http\Client\Common\Plugin;
 
 class HistoryPluginSpec extends ObjectBehavior
 {
@@ -25,7 +26,7 @@ class HistoryPluginSpec extends ObjectBehavior
 
     public function it_is_a_plugin()
     {
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_records_success(Journal $journal, RequestInterface $request, ResponseInterface $response)
