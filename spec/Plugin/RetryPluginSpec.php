@@ -59,6 +59,28 @@ class RetryPluginSpec extends ObjectBehavior
         $promise->shouldThrow($exception2)->duringWait();
     }
 
+    public function it_does_not_retry_client_errors(RequestInterface $request, ResponseInterface $response)
+    {
+        $exception = new Exception\HttpException('Exception', $request->getWrappedObject(), $response->getWrappedObject());
+
+        $seen = false;
+        $next = function (RequestInterface $receivedRequest) use ($request, $exception, &$seen) {
+            if (!Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
+                throw new \Exception('Unexpected request received');
+            }
+            if ($seen) {
+                throw new \Exception('This should only be called once');
+            }
+            $seen = true;
+
+            return new HttpRejectedPromise($exception);
+        };
+
+        $promise = $this->handleRequest($request, $next, function () {});
+        $promise->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
+        $promise->shouldThrow($exception)->duringWait();
+    }
+
     public function it_returns_response_on_second_try(RequestInterface $request, ResponseInterface $response)
     {
         $exception = new Exception\NetworkException('Exception 1', $request->getWrappedObject());

@@ -4,6 +4,7 @@ namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
 use Http\Client\Exception;
+use Http\Client\Exception\HttpException;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -56,7 +57,8 @@ final class RetryPlugin implements Plugin
         $resolver->setDefaults([
             'retries' => 1,
             'decider' => function (RequestInterface $request, Exception $e) {
-                return true;
+                // do not retry client errors
+                return !$e instanceof HttpException || $e->getCode() >= 500;
             },
             'delay' => __CLASS__.'::defaultDelay',
         ]);
@@ -101,7 +103,7 @@ final class RetryPlugin implements Plugin
             $time = call_user_func($this->delay, $request, $exception, $this->retryStorage[$chainIdentifier]);
             usleep($time);
 
-            // Retry in synchrone
+            // Retry synchronously
             ++$this->retryStorage[$chainIdentifier];
             $promise = $this->handleRequest($request, $next, $first);
 
