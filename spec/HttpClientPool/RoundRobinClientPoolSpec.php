@@ -2,7 +2,7 @@
 
 namespace spec\Http\Client\Common\HttpClientPool;
 
-use Http\Client\Common\HttpClientPoolItem;
+use Http\Client\Common\HttpClientPool\HttpClientPoolItem;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;

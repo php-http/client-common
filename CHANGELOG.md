@@ -6,6 +6,10 @@
 - RetryPlugin will no longer retry requests when the response failed with a HTTP code < 500.
 - Abstract method `HttpClientPool::chooseHttpClient()` has now an explicit return type (`Http\Client\Common\HttpClientPoolItem`)
 - Interface method `Plugin::handleRequest(...)` has now an explicit return type (`Http\Promise\Promise`)
+- Made  classes final that are not intended to be extended.
+  Added interfaces for BatchClient, HttpClientRouter and HttpMethodsClient.
+  (These interfaces use the `Interface` suffix to avoid name collisions.)
+- Added an interface for HttpClientPool and moved the abstract class to the HttpClientPool sub namespace.
 
 ### Removed
 - Deprecated option `debug_plugins` has been removed from `PluginClient`

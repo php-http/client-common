@@ -3,8 +3,6 @@
 namespace Http\Client\Common\HttpClientPool;
 
 use Http\Client\Common\Exception\HttpClientNotFoundException;
-use Http\Client\Common\HttpClientPool;
-use Http\Client\Common\HttpClientPoolItem;
 
 /**
  * LeastUsedClientPool will choose the client with the less current request in the pool.
