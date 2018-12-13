@@ -18,14 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class RedirectPlugin implements Plugin
+final class RedirectPlugin implements Plugin
 {
     /**
      * Rule on how to redirect, change method for the new request.
      *
      * @var array
      */
-    protected $redirectCodes = [
+    private $redirectCodes = [
         300 => [
             'switch' => [
                 'unless' => ['GET', 'HEAD'],
@@ -79,26 +79,26 @@ class RedirectPlugin implements Plugin
      * false    will ditch all previous headers
      * string[] will keep only headers with the specified names
      */
-    protected $preserveHeader;
+    private $preserveHeader;
 
     /**
      * Store all previous redirect from 301 / 308 status code.
      *
      * @var array
      */
-    protected $redirectStorage = [];
+    private $redirectStorage = [];
 
     /**
      * Whether the location header must be directly used for a multiple redirection status code (300).
      *
      * @var bool
      */
-    protected $useDefaultForMultiple;
+    private $useDefaultForMultiple;
 
     /**
      * @var array
      */
-    protected $circularDetection = [];
+    private $circularDetection = [];
 
     /**
      * @param array $config {
@@ -143,7 +143,7 @@ class RedirectPlugin implements Plugin
             return $first($redirectRequest);
         }
 
-        return $next($request)->then(function (ResponseInterface $response) use ($request, $first) {
+        return $next($request)->then(function (ResponseInterface $response) use ($request, $first): ResponseInterface {
             $statusCode = $response->getStatusCode();
 
             if (!array_key_exists($statusCode, $this->redirectCodes)) {
@@ -171,7 +171,7 @@ class RedirectPlugin implements Plugin
                 ];
             }
 
-            // Call redirect request in synchrone
+            // Call redirect request synchronously
             $redirectPromise = $first($redirectRequest);
 
             return $redirectPromise->wait();
@@ -187,7 +187,7 @@ class RedirectPlugin implements Plugin
      *
      * @return MessageInterface|RequestInterface
      */
-    protected function buildRedirectRequest(RequestInterface $request, UriInterface $uri, $statusCode)
+    private function buildRedirectRequest(RequestInterface $request, UriInterface $uri, $statusCode)
     {
         $request = $request->withUri($uri);
 
