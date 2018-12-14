@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.8.2 (unreleased)
+## 1.8.2 - 2018-12-14
 
 ### Changed
 
