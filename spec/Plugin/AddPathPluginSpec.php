@@ -63,7 +63,7 @@ class AddPathPluginSpec extends ObjectBehavior
         $uri->getPath()->shouldBeCalled()->willReturn('/users');
 
         $this->beConstructedWith($host);
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
     public function it_throws_exception_on_empty_path(UriInterface $host)
