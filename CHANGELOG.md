@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+### Fixed
+- Fix AddPathPlugin not checking if the *request* was already altered
+
 ## 1.8.2 - 2018-12-14
 
 ### Changed
