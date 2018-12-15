@@ -21,7 +21,7 @@ final class AddPathPlugin implements Plugin
     /**
      * Stores identifiers of the already altered requests.
      *
-     * @var array
+     * @var bool[]
      */
     private $alteredRequests = [];
 
@@ -53,7 +53,7 @@ final class AddPathPlugin implements Plugin
             $request = $request->withUri($request->getUri()
                 ->withPath($this->uri->getPath().$request->getUri()->getPath())
             );
-            $this->alteredRequests[$identifier] = $identifier;
+            $this->alteredRequests[$identifier] = true;
         }
 
         return $next($request);
