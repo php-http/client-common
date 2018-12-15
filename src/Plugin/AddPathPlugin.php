@@ -46,8 +46,9 @@ final class AddPathPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $identifier = spl_object_hash((object) $first);
+        $identifier = spl_object_hash($request);
 
+        // Only add path prefix if we did not yet add the prefix on this request 
         if (!array_key_exists($identifier, $this->alteredRequests)) {
             $request = $request->withUri($request->getUri()
                 ->withPath($this->uri->getPath().$request->getUri()->getPath())
