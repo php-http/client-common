@@ -46,7 +46,7 @@ class AddPathPluginSpec extends ObjectBehavior
         $this->handleRequest($request, PluginStub::next(), function () {});
     }
 
-    function it_removes_ending_slashes(
+    public function it_removes_ending_slashes(
         RequestInterface $request,
         UriInterface $host,
         UriInterface $host2,

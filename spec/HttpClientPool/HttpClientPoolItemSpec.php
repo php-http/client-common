@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Http\Client\Common;
+namespace spec\Http\Client\Common\HttpClientPool;
 
 use Http\Client\Exception;
 use Http\Client\Exception\TransferException;

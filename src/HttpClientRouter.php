@@ -10,11 +10,11 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Route a request to a specific client in the stack based using a RequestMatcher.
+ * {@inheritdoc}
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-final class HttpClientRouter implements HttpClient, HttpAsyncClient
+final class HttpClientRouter implements HttpClientRouterInterface
 {
     /**
      * @var array
@@ -26,9 +26,7 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $client = $this->chooseHttpClient($request);
-
-        return $client->sendRequest($request);
+        return $this->chooseHttpClient($request)->sendRequest($request);
     }
 
     /**
@@ -36,9 +34,7 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
      */
     public function sendAsyncRequest(RequestInterface $request)
     {
-        $client = $this->chooseHttpClient($request);
-
-        return $client->sendAsyncRequest($request);
+        return $this->chooseHttpClient($request)->sendAsyncRequest($request);
     }
 
     /**

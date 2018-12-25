@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * A deferred allow to return a promise which has not been resolved yet.
  */
-class Deferred implements Promise
+final class Deferred implements Promise
 {
     private $value;
 

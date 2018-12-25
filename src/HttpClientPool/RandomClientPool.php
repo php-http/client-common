@@ -3,8 +3,6 @@
 namespace Http\Client\Common\HttpClientPool;
 
 use Http\Client\Common\Exception\HttpClientNotFoundException;
-use Http\Client\Common\HttpClientPool;
-use Http\Client\Common\HttpClientPoolItem;
 
 /**
  * RoundRobinClientPool will choose the next client in the pool.

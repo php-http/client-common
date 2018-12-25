@@ -2,6 +2,7 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\HttpClientRouter;
 use Http\Message\RequestMatcher;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
@@ -9,7 +10,7 @@ use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
-use Http\Client\Common\HttpClientRouter;
+use Http\Client\Common\HttpClientRouterInterface;
 use Http\Client\Exception\RequestException;
 
 class HttpClientRouterSpec extends ObjectBehavior
@@ -17,6 +18,11 @@ class HttpClientRouterSpec extends ObjectBehavior
     public function it_is_initializable()
     {
         $this->shouldHaveType(HttpClientRouter::class);
+    }
+
+    public function it_is_an_http_client_router()
+    {
+        $this->shouldImplement(HttpClientRouterInterface::class);
     }
 
     public function it_is_an_http_client()
