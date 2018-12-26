@@ -5,23 +5,14 @@ cache:
   directories:
   - $HOME/.composer/cache/files
 
-env:
-  global:
-  - TEST_COMMAND="composer test"
-
-branches:
-  except:
-  - /^analysis-.*$/
-
 php:
 - 7.0
 - 7.1
 - 7.2
+- 7.3
 
 matrix:
   fast_finish: true
-  allow_failures:
-  - php: 7.3
 
 jobs:
   include:
@@ -35,19 +26,16 @@ jobs:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml --revision=$TRAVIS_COMMIT
     # Test LTS versions
-  - php: 7.1
+  - php: 7.2
     env: DEPENDENCIES="dunglas/symfony-lock:^2"
-  - php: 7.1
+  - php: 7.2
     env: DEPENDENCIES="dunglas/symfony-lock:^3"
-  - php: 7.1
-    env: DEPENDENCIES="dunglas/symfony-lock:^4" STABILITY="rc"
+  - php: 7.2
+    env: DEPENDENCIES="dunglas/symfony-lock:^4"
 
     # Latest dev release
   - php: 7.3
-    sudo: required
-    before_install:
-    - composer remove --dev friendsofphp/php-cs-fixer 
-  - env: STABILITY="dev"
+    env: STABILITY="dev"
 
 before_install:
 - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
