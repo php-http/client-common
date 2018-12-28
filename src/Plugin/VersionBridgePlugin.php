@@ -15,9 +15,6 @@ abstract class VersionBridgePlugin implements Plugin
 {
     abstract protected function doHandleRequest(RequestInterface $request, callable $next, callable $first);
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         return $this->doHandleRequest($request, $next, $first);

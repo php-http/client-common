@@ -1,11 +1,9 @@
 <?php
 
-namespace Http\Client\Common\Plugin;
+namespace Http\Client\Common;
 
-use Http\Client\Common\Plugin;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * A client that helps you migrate from php-http/httplug 1.x to 2.x. This
