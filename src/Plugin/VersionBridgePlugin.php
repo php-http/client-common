@@ -13,7 +13,7 @@ use Psr\Http\Message\RequestInterface;
  */
 abstract class VersionBridgePlugin implements Plugin
 {
-    abstract function doHandleRequest(RequestInterface $request, callable $next, callable $first);
+    abstract protected function doHandleRequest(RequestInterface $request, callable $next, callable $first);
 
     /**
      * {@inheritdoc}

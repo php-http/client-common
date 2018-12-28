@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class VersionBridgeClient implements HttpClient
 {
-    abstract public function doSendRequest(RequestInterface $request);
+    abstract protected function doSendRequest(RequestInterface $request);
 
     public function sendRequest(RequestInterface $request)
     {
