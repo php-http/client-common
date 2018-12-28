@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-abstract class ForwardCompatibilityPlugin implements Plugin
+abstract class VersionBridgePlugin implements Plugin
 {
     abstract function doHandleRequest(RequestInterface $request, callable $next, callable $first);
 
