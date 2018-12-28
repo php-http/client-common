@@ -47,7 +47,8 @@ final class AddPathPlugin implements Plugin
         $identifier = spl_object_hash((object) $first);
 
         if (!array_key_exists($identifier, $this->alteredRequests)) {
-            $request = $request->withUri($request->getUri()
+            $request = $request->withUri(
+                $request->getUri()
                 ->withPath($this->uri->getPath().$request->getUri()->getPath())
             );
             $this->alteredRequests[$identifier] = $identifier;
