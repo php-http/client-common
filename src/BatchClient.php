@@ -3,19 +3,19 @@
 namespace Http\Client\Common;
 
 use Http\Client\Exception;
-use Http\Client\HttpClient;
 use Http\Client\Common\Exception\BatchException;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class BatchClient implements BatchClientInterface
 {
     /**
-     * @var HttpClient
+     * @var ClientInterface
      */
     private $client;
 
-    public function __construct(HttpClient $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }

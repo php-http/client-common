@@ -2,15 +2,15 @@
 
 namespace Http\Client\Common;
 
-use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class HttpMethodsClient implements HttpMethodsClientInterface
 {
     /**
-     * @var HttpClient
+     * @var ClientInterface
      */
     private $httpClient;
 
@@ -20,10 +20,10 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
     private $requestFactory;
 
     /**
-     * @param HttpClient     $httpClient     The client to send requests with
-     * @param RequestFactory $requestFactory The message factory to create requests
+     * @param ClientInterface $httpClient     The client to send requests with
+     * @param RequestFactory  $requestFactory The message factory to create requests
      */
-    public function __construct(HttpClient $httpClient, RequestFactory $requestFactory)
+    public function __construct(ClientInterface $httpClient, RequestFactory $requestFactory)
     {
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;

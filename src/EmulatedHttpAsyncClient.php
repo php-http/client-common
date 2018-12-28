@@ -3,7 +3,7 @@
 namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * Emulates an async HTTP client with the help of a synchronous client.
@@ -15,7 +15,7 @@ final class EmulatedHttpAsyncClient implements HttpClient, HttpAsyncClient
     use HttpAsyncClientEmulator;
     use HttpClientDecorator;
 
-    public function __construct(HttpClient $httpClient)
+    public function __construct(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }

@@ -5,6 +5,7 @@ namespace Http\Client\Common;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Message\RequestMatcher;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * Route a request to a specific client in the stack based using a RequestMatcher.
@@ -18,7 +19,7 @@ interface HttpClientRouterInterface extends HttpClient, HttpAsyncClient
     /**
      * Add a client to the router.
      *
-     * @param HttpClient|HttpAsyncClient $client
+     * @param ClientInterface|HttpAsyncClient $client
      */
     public function addClient($client, RequestMatcher $requestMatcher);
 }
