@@ -130,7 +130,7 @@ final class CookiePlugin implements Plugin
                                 $name,
                                 $value
                             ),
-                            null,
+                            0,
                             $e
                         );
                     }
