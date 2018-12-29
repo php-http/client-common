@@ -3,6 +3,7 @@
 namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * Factory to create PluginClient instances. Using this factory instead of calling PluginClient constructor will enable
