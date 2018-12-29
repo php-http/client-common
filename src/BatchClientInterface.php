@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common;
 
-use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Http\Client\Common\Exception\BatchException;
 use Psr\Http\Message\RequestInterface;
