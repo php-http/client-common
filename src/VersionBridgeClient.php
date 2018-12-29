@@ -2,7 +2,6 @@
 
 namespace Http\Client\Common;
 
-use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 
 /**
