@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
@@ -127,7 +129,7 @@ final class CookiePlugin implements Plugin
                                 $name,
                                 $value
                             ),
-                            null,
+                            0,
                             $e
                         );
                     }
