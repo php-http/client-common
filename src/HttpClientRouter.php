@@ -6,6 +6,7 @@ use Http\Client\Exception\RequestException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Message\RequestMatcher;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -53,7 +54,7 @@ final class HttpClientRouter implements HttpClientRouterInterface
     /**
      * Choose an HTTP client given a specific request.
      *
-     * @return HttpClient|HttpAsyncClient
+     * @return ClientInterface|HttpAsyncClient
      */
     private function chooseHttpClient(RequestInterface $request)
     {

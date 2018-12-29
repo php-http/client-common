@@ -2,7 +2,7 @@
 
 namespace Http\Client\Common;
 
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -14,14 +14,14 @@ use Psr\Http\Message\ResponseInterface;
 trait HttpClientDecorator
 {
     /**
-     * @var HttpClient
+     * @var ClientInterface
      */
     protected $httpClient;
 
     /**
      * {@inheritdoc}
      *
-     * @see HttpClient::sendRequest
+     * @see ClientInterface::sendRequest
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {

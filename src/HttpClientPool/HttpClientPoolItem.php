@@ -5,6 +5,7 @@ namespace Http\Client\Common\HttpClientPool;
 use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Http\Client\Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -51,8 +52,8 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     private $client;
 
     /**
-     * @param HttpClient|HttpAsyncClient $client
-     * @param null|int                   $reenableAfter Number of seconds until this client is enabled again after an error
+     * @param ClientInterface|HttpAsyncClient $client
+     * @param null|int                        $reenableAfter Number of seconds until this client is enabled again after an error
      */
     public function __construct($client, $reenableAfter = null)
     {
