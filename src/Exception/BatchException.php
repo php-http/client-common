@@ -19,9 +19,6 @@ final class BatchException extends TransferException
      */
     private $result;
 
-    /**
-     * @param BatchResult $result
-     */
     public function __construct(BatchResult $result)
     {
         $this->result = $result;

@@ -21,9 +21,6 @@ final class HistoryPlugin implements Plugin
      */
     private $journal;
 
-    /**
-     * @param Journal $journal
-     */
     public function __construct(Journal $journal)
     {
         $this->journal = $journal;

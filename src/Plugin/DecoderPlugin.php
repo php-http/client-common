@@ -120,8 +120,7 @@ final class DecoderPlugin implements Plugin
     /**
      * Decorate a stream given an encoding.
      *
-     * @param string          $encoding
-     * @param StreamInterface $stream
+     * @param string $encoding
      *
      * @return StreamInterface|false A new stream interface or false if encoding is not supported
      */

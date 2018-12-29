@@ -25,8 +25,7 @@ final class AddHostPlugin implements Plugin
     private $replace;
 
     /**
-     * @param UriInterface $host
-     * @param array        $config {
+     * @param array $config {
      *
      *     @var bool $replace True will replace all hosts, false will only add host when none is specified.
      * }
@@ -64,9 +63,6 @@ final class AddHostPlugin implements Plugin
         return $next($request);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     private function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

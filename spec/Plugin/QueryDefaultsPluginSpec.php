@@ -2,7 +2,6 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\UriInterface;

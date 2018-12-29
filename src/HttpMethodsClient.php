@@ -50,7 +50,6 @@ class HttpMethodsClient implements HttpClient
      * Sends a GET request.
      *
      * @param string|UriInterface $uri
-     * @param array               $headers
      *
      * @throws Exception
      *
@@ -65,7 +64,6 @@ class HttpMethodsClient implements HttpClient
      * Sends an HEAD request.
      *
      * @param string|UriInterface $uri
-     * @param array               $headers
      *
      * @throws Exception
      *
@@ -80,7 +78,6 @@ class HttpMethodsClient implements HttpClient
      * Sends a TRACE request.
      *
      * @param string|UriInterface $uri
-     * @param array               $headers
      *
      * @throws Exception
      *
@@ -95,7 +92,6 @@ class HttpMethodsClient implements HttpClient
      * Sends a POST request.
      *
      * @param string|UriInterface         $uri
-     * @param array                       $headers
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
@@ -111,7 +107,6 @@ class HttpMethodsClient implements HttpClient
      * Sends a PUT request.
      *
      * @param string|UriInterface         $uri
-     * @param array                       $headers
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
@@ -127,7 +122,6 @@ class HttpMethodsClient implements HttpClient
      * Sends a PATCH request.
      *
      * @param string|UriInterface         $uri
-     * @param array                       $headers
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
@@ -143,7 +137,6 @@ class HttpMethodsClient implements HttpClient
      * Sends a DELETE request.
      *
      * @param string|UriInterface         $uri
-     * @param array                       $headers
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
@@ -159,7 +152,6 @@ class HttpMethodsClient implements HttpClient
      * Sends an OPTIONS request.
      *
      * @param string|UriInterface         $uri
-     * @param array                       $headers
      * @param string|StreamInterface|null $body
      *
      * @throws Exception
@@ -174,9 +166,8 @@ class HttpMethodsClient implements HttpClient
     /**
      * Sends a request with any HTTP method.
      *
-     * @param string                      $method  HTTP method to use
+     * @param string                      $method HTTP method to use
      * @param string|UriInterface         $uri
-     * @param array                       $headers
      * @param string|StreamInterface|null $body
      *
      * @throws Exception

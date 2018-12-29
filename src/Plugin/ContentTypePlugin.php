@@ -22,19 +22,19 @@ final class ContentTypePlugin implements Plugin
      * true     skip the content type detection
      * false    detect the content type (default value)
      */
-    protected $skipDetection;
+    private $skipDetection;
 
     /**
      * Determine the size stream limit for which the detection as to be skipped (default to 16Mb).
      *
      * @var int
      */
-    protected $sizeLimit;
+    private $sizeLimit;
 
     /**
      * @param array $config {
      *
-     *     @var bool $skip_detection True skip detection if stream size is bigger than $size_limit.
+     *     @var bool $skip_detection true skip detection if stream size is bigger than $size_limit
      *     @var int $size_limit size stream limit for which the detection as to be skipped.
      * }
      */

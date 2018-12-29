@@ -102,7 +102,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * Configure the plugin client.
      *
-     * @param array $options
      *
      * @return array
      */

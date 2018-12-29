@@ -18,9 +18,6 @@ final class AuthenticationPlugin implements Plugin
      */
     private $authentication;
 
-    /**
-     * @param Authentication $authentication
-     */
     public function __construct(Authentication $authentication)
     {
         $this->authentication = $authentication;

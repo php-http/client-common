@@ -44,7 +44,6 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
      * Add a client to the router.
      *
      * @param HttpClient|HttpAsyncClient $client
-     * @param RequestMatcher             $requestMatcher
      */
     public function addClient($client, RequestMatcher $requestMatcher)
     {
@@ -57,11 +56,10 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
     /**
      * Choose an HTTP client given a specific request.
      *
-     * @param RequestInterface $request
      *
      * @return HttpClient|HttpAsyncClient
      */
-    protected function chooseHttpClient(RequestInterface $request)
+    private function chooseHttpClient(RequestInterface $request)
     {
         foreach ($this->clients as $client) {
             if ($client['matcher']->matches($request)) {
