@@ -104,6 +104,30 @@ class RetryPluginSpec extends ObjectBehavior
         $promise->wait()->shouldReturn($response);
     }
 
+    public function it_respects_custom_exception_decider(RequestInterface $request, ResponseInterface $response)
+    {
+        $this->beConstructedWith([
+            'exception_decider' => function (RequestInterface $request, Exception $e) {
+                return false;
+            }
+        ]);
+        $exception = new Exception\NetworkException('Exception', $request->getWrappedObject());
+
+        $called = false;
+        $next  = function (RequestInterface $receivedRequest) use($exception, &$called) {
+            if ($called) {
+                throw new \RuntimeException('Did not expect to be called multiple times');
+            }
+            $called = true;
+
+            return new HttpRejectedPromise($exception);
+        };
+
+        $promise = $this->handleRequest($request, $next, function () {});
+        $promise->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $promise->shouldThrow($exception)->duringWait();
+    }
+
     public function it_does_not_keep_history_of_old_failure(RequestInterface $request, ResponseInterface $response)
     {
         $exception = new Exception\NetworkException('Exception 1', $request->getWrappedObject());
