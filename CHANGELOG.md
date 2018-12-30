@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.9.0 - [unreleased]
+
+### Changed
+
+- [RetryPlugin] Renamed the configuration options for the exception retry callback from `decider` to `exception_decider`
+  and `delay` to `exception_delay`. The old names still work but are deprecated.
+
 ## 1.8.2 - 2018-12-14
 
 ### Changed
