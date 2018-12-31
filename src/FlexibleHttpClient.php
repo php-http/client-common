@@ -18,7 +18,7 @@ final class FlexibleHttpClient implements HttpClient, HttpAsyncClient
     use HttpAsyncClientDecorator;
 
     /**
-     * @param HttpClient|HttpAsyncClient $client
+     * @param HttpClient|HttpAsyncClient|ClientInterface $client
      */
     public function __construct($client)
     {
