@@ -33,31 +33,34 @@ class PluginClientTest extends TestCase
 
     public function clientAndMethodProvider()
     {
-        $syncClient = new class implements ClientInterface {
+        $syncClient = new class() implements ClientInterface {
             public function sendRequest(RequestInterface $request): ResponseInterface
             {
                 return new Response();
             }
         };
 
-        $asyncClient = new class implements HttpAsyncClient {
+        $asyncClient = new class() implements HttpAsyncClient {
             public function sendAsyncRequest(RequestInterface $request)
             {
                 return new HttpFulfilledPromise(new Response());
             }
         };
 
-        $headerAppendPlugin = new HeaderAppendPlugin(['Content-Type'=>'text/html']);
+        $headerAppendPlugin = new HeaderAppendPlugin(['Content-Type' => 'text/html']);
         $redirectPlugin = new RedirectPlugin();
-        $restartOncePlugin = new class implements Plugin {
+        $restartOncePlugin = new class() implements Plugin {
             private $firstRun = true;
 
             public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
             {
                 if ($this->firstRun) {
                     $this->firstRun = false;
-                    return $first($request)->wait();
+
+                    return $first($request);
                 }
+                $this->firstRun = true;
+
                 return $next($request);
             }
         };
