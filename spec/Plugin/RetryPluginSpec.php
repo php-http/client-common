@@ -109,12 +109,12 @@ class RetryPluginSpec extends ObjectBehavior
         $this->beConstructedWith([
             'exception_decider' => function (RequestInterface $request, Exception $e) {
                 return false;
-            }
+            },
         ]);
         $exception = new Exception\NetworkException('Exception', $request->getWrappedObject());
 
         $called = false;
-        $next  = function (RequestInterface $receivedRequest) use($exception, &$called) {
+        $next = function (RequestInterface $receivedRequest) use ($exception, &$called) {
             if ($called) {
                 throw new \RuntimeException('Did not expect to be called multiple times');
             }
