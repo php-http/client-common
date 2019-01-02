@@ -25,6 +25,8 @@
         "sebastian/comparator": ">=2"
     },
     "suggest": {
+        "ext-json": "To detect JSON responses with the ContentTypePlugin",
+        "ext-libxml": "To detect XML responses with the ContentTypePlugin",
         "php-http/logger-plugin": "PSR-3 Logger plugin",
         "php-http/cache-plugin": "PSR-6 Cache plugin",
         "php-http/stopwatch-plugin": "Symfony Stopwatch plugin"

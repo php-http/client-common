@@ -68,12 +68,8 @@ final class DecoderPlugin implements Plugin
 
     /**
      * Decode a response body given its Transfer-Encoding or Content-Encoding value.
-     *
-     * @param ResponseInterface $response Response to decode
-     *
-     * @return ResponseInterface New response decoded
      */
-    private function decodeResponse(ResponseInterface $response)
+    private function decodeResponse(ResponseInterface $response): ResponseInterface
     {
         $response = $this->decodeOnEncodingHeader('Transfer-Encoding', $response);
 
@@ -86,13 +82,8 @@ final class DecoderPlugin implements Plugin
 
     /**
      * Decode a response on a specific header (content encoding or transfer encoding mainly).
-     *
-     * @param string            $headerName Name of the header
-     * @param ResponseInterface $response   Response
-     *
-     * @return ResponseInterface A new instance of the response decoded
      */
-    private function decodeOnEncodingHeader($headerName, ResponseInterface $response)
+    private function decodeOnEncodingHeader(string $headerName, ResponseInterface $response): ResponseInterface
     {
         if ($response->hasHeader($headerName)) {
             $encodings = $response->getHeader($headerName);
@@ -123,11 +114,9 @@ final class DecoderPlugin implements Plugin
     /**
      * Decorate a stream given an encoding.
      *
-     * @param string $encoding
-     *
      * @return StreamInterface|false A new stream interface or false if encoding is not supported
      */
-    private function decorateStream($encoding, StreamInterface $stream)
+    private function decorateStream(string $encoding, StreamInterface $stream)
     {
         if ('chunked' === strtolower($encoding)) {
             return new Encoding\DechunkStream($stream);
