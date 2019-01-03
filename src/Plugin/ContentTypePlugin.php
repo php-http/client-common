@@ -94,11 +94,11 @@ final class ContentTypePlugin implements Plugin
         return $next($request);
     }
 
-    /**
-     * @param $stream StreamInterface
-     */
-    private function isJson($stream): bool
+    private function isJson(StreamInterface $stream): bool
     {
+        if (!function_exists('json_decode')) {
+            return false;
+        }
         $stream->rewind();
 
         json_decode($stream->getContents());
@@ -108,17 +108,18 @@ final class ContentTypePlugin implements Plugin
 
     /**
      * @param $stream StreamInterface
-     *
-     * @return \SimpleXMLElement|false
      */
-    private function isXml($stream)
+    private function isXml(StreamInterface $stream): bool
     {
+        if (!function_exists('simplexml_load_string')) {
+            return false;
+        }
         $stream->rewind();
 
         $previousValue = libxml_use_internal_errors(true);
         $isXml = simplexml_load_string($stream->getContents());
         libxml_use_internal_errors($previousValue);
 
-        return $isXml;
+        return false !== $isXml;
     }
 }
