@@ -37,9 +37,9 @@ class AddPathPluginSpec extends ObjectBehavior
         $host->getPath()->shouldBeCalled()->willReturn('/api');
 
         $request->getUri()->shouldBeCalled()->willReturn($uri);
-        $request->withUri($uri)->shouldBeCalled()->willReturn($request);
+        $request->withUri($uri)->shouldBeCalledTimes(1)->willReturn($request);
 
-        $uri->withPath('/api/users')->shouldBeCalled()->willReturn($uri);
+        $uri->withPath('/api/users')->shouldBeCalledTimes(1)->willReturn($uri);
         $uri->getPath()->shouldBeCalled()->willReturn('/users');
 
         $this->beConstructedWith($host);
