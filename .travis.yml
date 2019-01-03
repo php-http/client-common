@@ -32,6 +32,8 @@ jobs:
     env: DEPENDENCIES="dunglas/symfony-lock:^3"
   - php: 7.2
     env: DEPENDENCIES="dunglas/symfony-lock:^4"
+  - php: 7.2
+    env: TEST_COMMAND="./vendor/bin/phpunit" DEPENDENCIES="phpunit/phpunit:^7.5 nyholm/psr7:^1.0"
 
     # Latest dev release
   - php: 7.3
