@@ -10,6 +10,7 @@
   Added interfaces for BatchClient, HttpClientRouter and HttpMethodsClient.
   (These interfaces use the `Interface` suffix to avoid name collisions.)
 - Added an interface for HttpClientPool and moved the abstract class to the HttpClientPool sub namespace.
+- AddPathPlugin: Do not add the prefix if the URL already has the same prefix.
 
 ### Removed
 - Deprecated option `debug_plugins` has been removed from `PluginClient`
@@ -20,8 +21,6 @@
 
 - RetryPlugin: Renamed the configuration options for the exception retry callback from `decider` to `exception_decider`
   and `delay` to `exception_delay`. The old names still work but are deprecated.
-- AddPathPlugin: Do not add the prefix if the URL already has the same prefix.
-
 
 ## 1.8.2 - 2018-12-14
 
