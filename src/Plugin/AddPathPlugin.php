@@ -21,9 +21,6 @@ final class AddPathPlugin implements Plugin
      */
     private $uri;
 
-    /**
-     * @param UriInterface $uri
-     */
     public function __construct(UriInterface $uri)
     {
         if ('' === $uri->getPath()) {
@@ -67,14 +64,14 @@ final class AddPathPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
-         $prepend = $this->uri->getPath();
-         $path = $request->getUri()->getPath();
+        $prepend = $this->uri->getPath();
+        $path = $request->getUri()->getPath();
 
-         if (substr($path, 0, strlen($prepend)) !== $prepend) {
-             $request = $request->withUri($request->getUri()
+        if (substr($path, 0, strlen($prepend)) !== $prepend) {
+            $request = $request->withUri($request->getUri()
                  ->withPath($prepend.$path)
              );
-         }
+        }
 
         return $next($request);
     }
