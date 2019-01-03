@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Exception\CircularRedirectionException;
 use Http\Client\Common\Exception\MultipleRedirectionException;
 use Http\Client\Common\Plugin;
 use Http\Client\Exception\HttpException;
+use Http\Promise\Promise;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -17,14 +20,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class RedirectPlugin implements Plugin
+final class RedirectPlugin implements Plugin
 {
     /**
      * Rule on how to redirect, change method for the new request.
      *
      * @var array
      */
-    protected $redirectCodes = [
+    private $redirectCodes = [
         300 => [
             'switch' => [
                 'unless' => ['GET', 'HEAD'],
@@ -78,26 +81,26 @@ class RedirectPlugin implements Plugin
      * false    will ditch all previous headers
      * string[] will keep only headers with the specified names
      */
-    protected $preserveHeader;
+    private $preserveHeader;
 
     /**
      * Store all previous redirect from 301 / 308 status code.
      *
      * @var array
      */
-    protected $redirectStorage = [];
+    private $redirectStorage = [];
 
     /**
      * Whether the location header must be directly used for a multiple redirection status code (300).
      *
      * @var bool
      */
-    protected $useDefaultForMultiple;
+    private $useDefaultForMultiple;
 
     /**
      * @var array
      */
-    protected $circularDetection = [];
+    private $circularDetection = [];
 
     /**
      * @param array $config {
@@ -131,7 +134,7 @@ class RedirectPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         // Check in storage
         if (array_key_exists((string) $request->getUri(), $this->redirectStorage)) {
@@ -142,7 +145,7 @@ class RedirectPlugin implements Plugin
             return $first($redirectRequest);
         }
 
-        return $next($request)->then(function (ResponseInterface $response) use ($request, $first) {
+        return $next($request)->then(function (ResponseInterface $response) use ($request, $first): ResponseInterface {
             $statusCode = $response->getStatusCode();
 
             if (!array_key_exists($statusCode, $this->redirectCodes)) {
@@ -170,7 +173,7 @@ class RedirectPlugin implements Plugin
                 ];
             }
 
-            // Call redirect request in synchrone
+            // Call redirect request synchronously
             $redirectPromise = $first($redirectRequest);
 
             return $redirectPromise->wait();
@@ -186,7 +189,7 @@ class RedirectPlugin implements Plugin
      *
      * @return MessageInterface|RequestInterface
      */
-    protected function buildRedirectRequest(RequestInterface $request, UriInterface $uri, $statusCode)
+    private function buildRedirectRequest(RequestInterface $request, UriInterface $uri, $statusCode)
     {
         $request = $request->withUri($uri);
 
@@ -215,10 +218,8 @@ class RedirectPlugin implements Plugin
      *
      * @throws HttpException                If location header is not usable (missing or incorrect)
      * @throws MultipleRedirectionException If a 300 status code is received and default location cannot be resolved (doesn't use the location header or not present)
-     *
-     * @return UriInterface
      */
-    private function createUri(ResponseInterface $response, RequestInterface $request)
+    private function createUri(ResponseInterface $response, RequestInterface $request): UriInterface
     {
         if ($this->redirectCodes[$response->getStatusCode()]['multiple'] && (!$this->useDefaultForMultiple || !$response->hasHeader('Location'))) {
             throw new MultipleRedirectionException('Cannot choose a redirection', $request, $response);

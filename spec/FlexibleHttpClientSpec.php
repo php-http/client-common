@@ -8,37 +8,38 @@ use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\FlexibleHttpClient;
 
 class FlexibleHttpClientSpec extends ObjectBehavior
 {
-    function let(HttpClient $httpClient)
+    public function let(HttpClient $httpClient)
     {
         $this->beConstructedWith($httpClient);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Http\Client\Common\FlexibleHttpClient');
+        $this->shouldHaveType(FlexibleHttpClient::class);
     }
 
-    function it_is_an_http_client()
+    public function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
-    function it_is_an_async_http_client()
+    public function it_is_an_async_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
-    function it_throw_exception_if_invalid_client()
+    public function it_throw_exception_if_invalid_client()
     {
         $this->beConstructedWith(null);
 
-        $this->shouldThrow('\LogicException')->duringInstantiation();
+        $this->shouldThrow(\LogicException::class)->duringInstantiation();
     }
 
-    function it_emulates_an_async_client(
+    public function it_emulates_an_async_client(
         HttpClient $httpClient,
         RequestInterface $syncRequest,
         ResponseInterface $syncResponse,
@@ -53,11 +54,11 @@ class FlexibleHttpClientSpec extends ObjectBehavior
         $this->sendRequest($syncRequest)->shouldReturn($syncResponse);
         $promise = $this->sendAsyncRequest($asyncRequest);
 
-        $promise->shouldHaveType('Http\Promise\Promise');
+        $promise->shouldHaveType(Promise::class);
         $promise->wait()->shouldReturn($asyncResponse);
     }
 
-    function it_emulates_a_client(
+    public function it_emulates_a_client(
         HttpAsyncClient $httpAsyncClient,
         RequestInterface $asyncRequest,
         Promise $promise,
@@ -75,10 +76,10 @@ class FlexibleHttpClientSpec extends ObjectBehavior
         $this->sendRequest($syncRequest)->shouldReturn($syncResponse);
     }
 
-    function it_does_not_emulate_a_client($client, RequestInterface $syncRequest, RequestInterface $asyncRequest)
+    public function it_does_not_emulate_a_client($client, RequestInterface $syncRequest, RequestInterface $asyncRequest)
     {
-        $client->implement('Http\Client\HttpClient');
-        $client->implement('Http\Client\HttpAsyncClient');
+        $client->implement(HttpClient::class);
+        $client->implement(HttpAsyncClient::class);
 
         $client->sendRequest($syncRequest)->shouldBeCalled();
         $client->sendRequest($asyncRequest)->shouldNotBeCalled();

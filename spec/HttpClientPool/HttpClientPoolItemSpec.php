@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Http\Client\Common;
+namespace spec\Http\Client\Common\HttpClientPool;
 
 use Http\Client\Exception;
 use Http\Client\Exception\TransferException;
@@ -12,6 +12,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Http\Client\Exception\RequestException;
 
 class HttpClientPoolItemSpec extends ObjectBehavior
 {
@@ -22,12 +23,12 @@ class HttpClientPoolItemSpec extends ObjectBehavior
 
     public function it_is_an_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpClient');
+        $this->shouldImplement(HttpClient::class);
     }
 
     public function it_is_an_async_http_client()
     {
-        $this->shouldImplement('Http\Client\HttpAsyncClient');
+        $this->shouldImplement(HttpAsyncClient::class);
     }
 
     public function it_sends_request(HttpClient $httpClient, RequestInterface $request, ResponseInterface $response)
@@ -53,7 +54,7 @@ class HttpClientPoolItemSpec extends ObjectBehavior
         $httpClient->sendRequest($request)->willThrow($exception);
         $this->shouldThrow($exception)->duringSendRequest($request);
         $this->isDisabled()->shouldReturn(true);
-        $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendRequest($request);
+        $this->shouldThrow(RequestException::class)->duringSendRequest($request);
     }
 
     public function it_disable_himself_on_send_async_request(HttpAsyncClient $httpAsyncClient, RequestInterface $request)
@@ -63,9 +64,9 @@ class HttpClientPoolItemSpec extends ObjectBehavior
         $promise = new HttpRejectedPromise(new TransferException());
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
         $this->isDisabled()->shouldReturn(true);
-        $this->shouldThrow('Http\Client\Exception\RequestException')->duringSendAsyncRequest($request);
+        $this->shouldThrow(RequestException::class)->duringSendAsyncRequest($request);
     }
 
     public function it_reactivate_himself_on_send_request(HttpClient $httpClient, RequestInterface $request)
@@ -87,9 +88,9 @@ class HttpClientPoolItemSpec extends ObjectBehavior
         $promise = new HttpRejectedPromise(new TransferException());
         $httpAsyncClient->sendAsyncRequest($request)->willReturn($promise);
 
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
         $this->isDisabled()->shouldReturn(false);
-        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf('Http\Client\Promise\HttpRejectedPromise');
+        $this->sendAsyncRequest($request)->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
     }
 
     public function it_increments_request_count(HttpAsyncClient $httpAsyncClient, RequestInterface $request, ResponseInterface $response)
@@ -156,7 +157,7 @@ class NotResolvingPromise implements Promise
 
     public function wait($unwrap = true)
     {
-        if ($this->state === Promise::FULFILLED) {
+        if (Promise::FULFILLED === $this->state) {
             if (!$unwrap) {
                 return;
             }
@@ -164,7 +165,7 @@ class NotResolvingPromise implements Promise
             return $this->response;
         }
 
-        if ($this->state === Promise::REJECTED) {
+        if (Promise::REJECTED === $this->state) {
             if (!$unwrap) {
                 return;
             }
@@ -175,7 +176,7 @@ class NotResolvingPromise implements Promise
         while (count($this->queue) > 0) {
             $callbacks = array_shift($this->queue);
 
-            if ($this->response !== null) {
+            if (null !== $this->response) {
                 try {
                     $this->response = $callbacks[0]($this->response);
                     $this->exception = null;
@@ -183,7 +184,7 @@ class NotResolvingPromise implements Promise
                     $this->response = null;
                     $this->exception = $exception;
                 }
-            } elseif ($this->exception !== null) {
+            } elseif (null !== $this->exception) {
                 try {
                     $this->response = $callbacks[1]($this->exception);
                     $this->exception = null;
@@ -194,7 +195,7 @@ class NotResolvingPromise implements Promise
             }
         }
 
-        if ($this->response !== null) {
+        if (null !== $this->response) {
             $this->state = Promise::FULFILLED;
 
             if ($unwrap) {
@@ -202,7 +203,7 @@ class NotResolvingPromise implements Promise
             }
         }
 
-        if ($this->exception !== null) {
+        if (null !== $this->exception) {
             $this->state = Promise::REJECTED;
 
             if ($unwrap) {

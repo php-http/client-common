@@ -2,115 +2,88 @@
 
 namespace spec\Http\Client\Common;
 
-use Http\Client\BatchResult;
-use Http\Client\HttpClient;
 use Http\Client\Common\HttpMethodsClient;
-use Http\Message\MessageFactory;
+use Http\Client\HttpClient;
+use Http\Message\RequestFactory;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
 
 class HttpMethodsClientSpec extends ObjectBehavior
 {
-    function let(HttpClient $client, MessageFactory $messageFactory)
+    private static $requestData = [
+        'uri' => '/uri',
+        'headers' => [
+            'Content-Type' => 'text/plain',
+        ],
+        'body' => 'body',
+    ];
+
+    public function let(HttpClient $client, RequestFactory $requestFactory)
     {
         $this->beAnInstanceOf(
-            'spec\Http\Client\Common\HttpMethodsClientStub', [
+            HttpMethodsClient::class, [
                 $client,
-                $messageFactory
+                $requestFactory,
             ]
         );
     }
 
-    function it_sends_a_get_request()
+    public function it_sends_a_get_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->get($data['uri'], $data['headers'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'get');
     }
 
-    function it_sends_a_head_request()
+    public function it_sends_a_head_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->head($data['uri'], $data['headers'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'head');
     }
 
-    function it_sends_a_trace_request()
+    public function it_sends_a_trace_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->trace($data['uri'], $data['headers'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'trace');
     }
 
-    function it_sends_a_post_request()
+    public function it_sends_a_post_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->post($data['uri'], $data['headers'], $data['body'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'post', self::$requestData['body']);
     }
 
-    function it_sends_a_put_request()
+    public function it_sends_a_put_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->put($data['uri'], $data['headers'], $data['body'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'put', self::$requestData['body']);
     }
 
-    function it_sends_a_patch_request()
+    public function it_sends_a_patch_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->patch($data['uri'], $data['headers'], $data['body'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'patch', self::$requestData['body']);
     }
 
-    function it_sends_a_delete_request()
+    public function it_sends_a_delete_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->delete($data['uri'], $data['headers'], $data['body'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'delete', self::$requestData['body']);
     }
 
-    function it_sends_a_options_request()
+    public function it_sends_an_options_request(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response)
     {
-        $data = HttpMethodsClientStub::$requestData;
-
-        $this->options($data['uri'], $data['headers'], $data['body'])->shouldReturn(true);
+        $this->assert($client, $requestFactory, $request, $response, 'options', self::$requestData['body']);
     }
-
-    function it_sends_request_with_underlying_client(HttpClient $client, MessageFactory $messageFactory, RequestInterface $request, ResponseInterface $response)
-    {
-        $client->sendRequest($request)->shouldBeCalled()->willReturn($response);
-
-        $this->beConstructedWith($client, $messageFactory);
-        $this->sendRequest($request)->shouldReturn($response);
-    }
-}
-
-class HttpMethodsClientStub extends HttpMethodsClient
-{
-    public static $requestData = [
-        'uri'     => '/uri',
-        'headers' => [
-            'Content-Type' => 'text/plain',
-        ],
-        'body'    => 'body'
-    ];
 
     /**
-     * {@inheritdoc}
+     * Run the actual test.
+     *
+     * As there is no data provider in phpspec, we keep separate methods to get new mocks for each test.
      */
-    public function send($method, $uri, array $headers = [], $body = null)
+    private function assert(HttpClient $client, RequestFactory $requestFactory, RequestInterface $request, ResponseInterface $response, string $method, string $body = null)
     {
-        if (in_array($method, ['GET', 'HEAD', 'TRACE'])) {
-            return $uri === self::$requestData['uri'] &&
-            $headers === self::$requestData['headers'] &&
-            is_null($body);
-        }
+        $client->sendRequest($request)->shouldBeCalled()->willReturn($response);
+        $this->mockFactory($requestFactory, $request, strtoupper($method), $body);
 
-        return in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']) &&
-        $uri === self::$requestData['uri'] &&
-        $headers === self::$requestData['headers'] &&
-        $body === self::$requestData['body'];
+        $this->$method(self::$requestData['uri'], self::$requestData['headers'], self::$requestData['body'])->shouldReturnAnInstanceOf(ResponseInterface::class);
+    }
+
+    private function mockFactory(RequestFactory $requestFactory, RequestInterface $request, string $method, string $body = null)
+    {
+        $requestFactory->createRequest($method, self::$requestData['uri'], self::$requestData['headers'], $body)->willReturn($request);
     }
 }

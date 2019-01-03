@@ -11,17 +11,22 @@
         }
     ],
     "require": {
-        "php": "^5.4 || ^7.0",
-        "php-http/httplug": "^1.1",
+        "php": "^7.0",
+        "php-http/httplug": "^2.0",
         "php-http/message-factory": "^1.0",
         "php-http/message": "^1.6",
         "symfony/options-resolver": "^2.6 || ^3.0 || ^4.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.5 || ^3.4 || ^4.2",
-        "guzzlehttp/psr7": "^1.4"
+        "doctrine/instantiator": ">=1.0.5",
+        "guzzlehttp/psr7": "^1.4",
+        "phpspec/phpspec": "^3.4 || ^4.2",
+        "phpspec/prophecy": ">=1.8",
+        "sebastian/comparator": ">=2"
     },
     "suggest": {
+        "ext-json": "To detect JSON responses with the ContentTypePlugin",
+        "ext-libxml": "To detect XML responses with the ContentTypePlugin",
         "php-http/logger-plugin": "PSR-3 Logger plugin",
         "php-http/cache-plugin": "PSR-6 Cache plugin",
         "php-http/stopwatch-plugin": "Symfony Stopwatch plugin"
@@ -31,13 +36,18 @@
             "Http\\Client\\Common\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Http\\Client\\Common\\": "spec/"
+        }
+    },
     "scripts": {
         "test": "vendor/bin/phpspec run",
         "test-ci": "vendor/bin/phpspec run -c phpspec.ci.yml"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.9.x-dev"
+            "dev-master": "2.x-dev"
         }
     }
 }

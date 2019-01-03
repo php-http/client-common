@@ -1,19 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common;
 
 use Http\Client\Exception\RequestException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Message\RequestMatcher;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Route a request to a specific client in the stack based using a RequestMatcher.
+ * {@inheritdoc}
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-final class HttpClientRouter implements HttpClient, HttpAsyncClient
+final class HttpClientRouter implements HttpClientRouterInterface
 {
     /**
      * @var array
@@ -23,11 +27,9 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
     /**
      * {@inheritdoc}
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $client = $this->chooseHttpClient($request);
-
-        return $client->sendRequest($request);
+        return $this->chooseHttpClient($request)->sendRequest($request);
     }
 
     /**
@@ -35,16 +37,13 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
      */
     public function sendAsyncRequest(RequestInterface $request)
     {
-        $client = $this->chooseHttpClient($request);
-
-        return $client->sendAsyncRequest($request);
+        return $this->chooseHttpClient($request)->sendAsyncRequest($request);
     }
 
     /**
      * Add a client to the router.
      *
      * @param HttpClient|HttpAsyncClient $client
-     * @param RequestMatcher             $requestMatcher
      */
     public function addClient($client, RequestMatcher $requestMatcher)
     {
@@ -57,11 +56,9 @@ final class HttpClientRouter implements HttpClient, HttpAsyncClient
     /**
      * Choose an HTTP client given a specific request.
      *
-     * @param RequestInterface $request
-     *
-     * @return HttpClient|HttpAsyncClient
+     * @return ClientInterface|HttpAsyncClient
      */
-    protected function chooseHttpClient(RequestInterface $request)
+    private function chooseHttpClient(RequestInterface $request)
     {
         foreach ($this->clients as $client) {
             if ($client['matcher']->matches($request)) {

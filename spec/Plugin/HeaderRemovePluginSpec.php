@@ -2,31 +2,30 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use PhpSpec\Exception\Example\SkippingException;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\HeaderRemovePlugin;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use Psr\Http\Message\RequestInterface;
 
 class HeaderRemovePluginSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
         $this->beConstructedWith([]);
-        $this->shouldHaveType('Http\Client\Common\Plugin\HeaderRemovePlugin');
+        $this->shouldHaveType(HeaderRemovePlugin::class);
     }
 
     public function it_is_a_plugin()
     {
         $this->beConstructedWith([]);
-        $this->shouldImplement('Http\Client\Common\Plugin');
+        $this->shouldImplement(Plugin::class);
     }
 
     public function it_removes_the_header(RequestInterface $request)
     {
         $this->beConstructedWith([
             'foo',
-            'baz'
+            'baz',
         ]);
 
         $request->hasHeader('foo')->shouldBeCalled()->willReturn(false);
@@ -34,6 +33,6 @@ class HeaderRemovePluginSpec extends ObjectBehavior
         $request->hasHeader('baz')->shouldBeCalled()->willReturn(true);
         $request->withoutHeader('baz')->shouldBeCalled()->willReturn($request);
 
-        $this->handleRequest($request, function () {}, function () {});
+        $this->handleRequest($request, PluginStub::next(), function () {});
     }
 }

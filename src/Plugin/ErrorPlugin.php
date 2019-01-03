@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Exception\ClientErrorException;
 use Http\Client\Common\Exception\ServerErrorException;
 use Http\Client\Common\Plugin;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -46,7 +49,7 @@ final class ErrorPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         $promise = $next($request);
 
@@ -66,7 +69,7 @@ final class ErrorPlugin implements Plugin
      *
      * @return ResponseInterface If status code is not in 4xx or 5xx return response
      */
-    protected function transformResponseToException(RequestInterface $request, ResponseInterface $response)
+    private function transformResponseToException(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         if (!$this->onlyServerException && $response->getStatusCode() >= 400 && $response->getStatusCode() < 500) {
             throw new ClientErrorException($response->getReasonPhrase(), $request, $response);

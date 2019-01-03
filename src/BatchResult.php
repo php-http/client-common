@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common;
 
 use Http\Client\Exception;
@@ -31,10 +33,8 @@ final class BatchResult
 
     /**
      * Checks if there are any successful responses at all.
-     *
-     * @return bool
      */
-    public function hasResponses()
+    public function hasResponses(): bool
     {
         return $this->responses->count() > 0;
     }
@@ -44,7 +44,7 @@ final class BatchResult
      *
      * @return ResponseInterface[]
      */
-    public function getResponses()
+    public function getResponses(): array
     {
         $responses = [];
 
@@ -57,12 +57,8 @@ final class BatchResult
 
     /**
      * Checks if there is a successful response for a request.
-     *
-     * @param RequestInterface $request
-     *
-     * @return bool
      */
-    public function isSuccessful(RequestInterface $request)
+    public function isSuccessful(RequestInterface $request): bool
     {
         return $this->responses->contains($request);
     }
@@ -70,13 +66,10 @@ final class BatchResult
     /**
      * Returns the response for a successful request.
      *
-     * @param RequestInterface $request
-     *
-     * @return ResponseInterface
      *
      * @throws \UnexpectedValueException If request was not part of the batch or failed
      */
-    public function getResponseFor(RequestInterface $request)
+    public function getResponseFor(RequestInterface $request): ResponseInterface
     {
         try {
             return $this->responses[$request];
@@ -88,12 +81,9 @@ final class BatchResult
     /**
      * Adds a response in an immutable way.
      *
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
-     *
      * @return BatchResult the new BatchResult with this request-response pair added to it
      */
-    public function addResponse(RequestInterface $request, ResponseInterface $response)
+    public function addResponse(RequestInterface $request, ResponseInterface $response): self
     {
         $new = clone $this;
         $new->responses->attach($request, $response);
@@ -103,10 +93,8 @@ final class BatchResult
 
     /**
      * Checks if there are any unsuccessful requests at all.
-     *
-     * @return bool
      */
-    public function hasExceptions()
+    public function hasExceptions(): bool
     {
         return $this->exceptions->count() > 0;
     }
@@ -116,7 +104,7 @@ final class BatchResult
      *
      * @return Exception[]
      */
-    public function getExceptions()
+    public function getExceptions(): array
     {
         $exceptions = [];
 
@@ -129,12 +117,8 @@ final class BatchResult
 
     /**
      * Checks if there is an exception for a request, meaning the request failed.
-     *
-     * @param RequestInterface $request
-     *
-     * @return bool
      */
-    public function isFailed(RequestInterface $request)
+    public function isFailed(RequestInterface $request): bool
     {
         return $this->exceptions->contains($request);
     }
@@ -142,13 +126,10 @@ final class BatchResult
     /**
      * Returns the exception for a failed request.
      *
-     * @param RequestInterface $request
-     *
-     * @return Exception
      *
      * @throws \UnexpectedValueException If request was not part of the batch or was successful
      */
-    public function getExceptionFor(RequestInterface $request)
+    public function getExceptionFor(RequestInterface $request): Exception
     {
         try {
             return $this->exceptions[$request];
@@ -160,12 +141,9 @@ final class BatchResult
     /**
      * Adds an exception in an immutable way.
      *
-     * @param RequestInterface $request
-     * @param Exception        $exception
-     *
      * @return BatchResult the new BatchResult with this request-exception pair added to it
      */
-    public function addException(RequestInterface $request, Exception $exception)
+    public function addException(RequestInterface $request, Exception $exception): self
     {
         $new = clone $this;
         $new->exceptions->attach($request, $exception);

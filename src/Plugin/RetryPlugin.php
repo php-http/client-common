@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
 use Http\Client\Exception;
+use Http\Client\Exception\HttpException;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,9 +48,9 @@ final class RetryPlugin implements Plugin
     /**
      * @param array $config {
      *
-     *     @var int $retries Number of retries to attempt if an exception occurs before letting the exception bubble up.
-     *     @var callable $exception_decider A callback that gets a request and an exception to decide after a failure whether the request should be retried.
-     *     @var callable $exception_delay A callback that gets a request, an exception and the number of retries and returns how many microseconds we should wait before trying again.
+     *     @var int $retries Number of retries to attempt if an exception occurs before letting the exception bubble up
+     *     @var callable $exception_decider A callback that gets a request and an exception to decide after a failure whether the request should be retried
+     *     @var callable $exception_delay A callback that gets a request, an exception and the number of retries and returns how many microseconds we should wait before trying again
      * }
      */
     public function __construct(array $config = [])
@@ -72,7 +76,8 @@ final class RetryPlugin implements Plugin
         $resolver->setDefaults([
             'retries' => 1,
             'exception_decider' => function (RequestInterface $request, Exception $e) {
-                return true;
+                // do not retry client errors
+                return !$e instanceof HttpException || $e->getCode() >= 500;
             },
             'exception_delay' => __CLASS__.'::defaultDelay',
         ]);
@@ -89,7 +94,7 @@ final class RetryPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         $chainIdentifier = spl_object_hash((object) $first);
 
@@ -117,7 +122,7 @@ final class RetryPlugin implements Plugin
             $time = call_user_func($this->exceptionDelay, $request, $exception, $this->retryStorage[$chainIdentifier]);
             usleep($time);
 
-            // Retry in synchrone
+            // Retry synchronously
             ++$this->retryStorage[$chainIdentifier];
             $promise = $this->handleRequest($request, $next, $first);
 
@@ -126,9 +131,7 @@ final class RetryPlugin implements Plugin
     }
 
     /**
-     * @param RequestInterface $request
-     * @param Exception        $e
-     * @param int              $retries The number of retries we made before. First time this get called it will be 0.
+     * @param int $retries The number of retries we made before. First time this get called it will be 0.
      *
      * @return int
      */

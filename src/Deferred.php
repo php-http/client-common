@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common;
 
 use Http\Client\Exception;
@@ -9,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * A deferred allow to return a promise which has not been resolved yet.
  */
-class Deferred implements Promise
+final class Deferred implements Promise
 {
     private $value;
 
@@ -34,7 +36,7 @@ class Deferred implements Promise
     /**
      * {@inheritdoc}
      */
-    public function then(callable $onFulfilled = null, callable $onRejected = null)
+    public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
     {
         $deferred = new self($this->waitCallback);
 
@@ -69,7 +71,7 @@ class Deferred implements Promise
     /**
      * {@inheritdoc}
      */
-    public function getState()
+    public function getState(): string
     {
         return $this->state;
     }

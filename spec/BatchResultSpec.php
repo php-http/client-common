@@ -6,24 +6,25 @@ use Http\Client\Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
+use Http\Client\Common\BatchResult;
 
 class BatchResultSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->beAnInstanceOf('Http\Client\Common\BatchResult');
+        $this->beAnInstanceOf(BatchResult::class);
     }
 
-    function it_is_immutable(RequestInterface $request, ResponseInterface $response)
+    public function it_is_immutable(RequestInterface $request, ResponseInterface $response)
     {
         $new = $this->addResponse($request, $response);
 
         $this->getResponses()->shouldReturn([]);
-        $new->shouldHaveType('Http\Client\Common\BatchResult');
+        $new->shouldHaveType(BatchResult::class);
         $new->getResponses()->shouldReturn([$response]);
     }
 
-    function it_has_a_responses(RequestInterface $request, ResponseInterface $response)
+    public function it_has_a_responses(RequestInterface $request, ResponseInterface $response)
     {
         $new = $this->addResponse($request, $response);
 
@@ -33,17 +34,17 @@ class BatchResultSpec extends ObjectBehavior
         $new->getResponses()->shouldReturn([$response]);
     }
 
-    function it_has_a_response_for_a_request(RequestInterface $request, ResponseInterface $response)
+    public function it_has_a_response_for_a_request(RequestInterface $request, ResponseInterface $response)
     {
         $new = $this->addResponse($request, $response);
 
-        $this->shouldThrow('UnexpectedValueException')->duringGetResponseFor($request);
+        $this->shouldThrow(\UnexpectedValueException::class)->duringGetResponseFor($request);
         $this->isSuccessful($request)->shouldReturn(false);
         $new->getResponseFor($request)->shouldReturn($response);
         $new->isSuccessful($request)->shouldReturn(true);
     }
 
-    function it_keeps_exception_after_add_request(RequestInterface $request1, Exception $exception, RequestInterface $request2, ResponseInterface $response)
+    public function it_keeps_exception_after_add_request(RequestInterface $request1, Exception $exception, RequestInterface $request2, ResponseInterface $response)
     {
         $new = $this->addException($request1, $exception);
         $new = $new->addResponse($request2, $response);

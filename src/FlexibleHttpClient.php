@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
@@ -18,18 +20,18 @@ final class FlexibleHttpClient implements HttpClient, HttpAsyncClient
     use HttpAsyncClientDecorator;
 
     /**
-     * @param HttpClient|HttpAsyncClient|ClientInterface $client
+     * @param ClientInterface|HttpAsyncClient $client
      */
     public function __construct($client)
     {
-        if (!($client instanceof HttpClient) && !($client instanceof HttpAsyncClient) && !($client instanceof ClientInterface)) {
-            throw new \LogicException('Client must be an instance of Http\\Client\\HttpClient or Http\\Client\\HttpAsyncClient');
+        if (!($client instanceof ClientInterface) && !($client instanceof HttpAsyncClient)) {
+            throw new \LogicException('Client must be an instance of Psr\\Http\\Client\\ClientInterface or Http\\Client\\HttpAsyncClient');
         }
 
         $this->httpClient = $client;
         $this->httpAsyncClient = $client;
 
-        if (!($this->httpClient instanceof HttpClient) && !($client instanceof ClientInterface)) {
+        if (!($this->httpClient instanceof ClientInterface)) {
             $this->httpClient = new EmulatedHttpClient($this->httpClient);
         }
 
