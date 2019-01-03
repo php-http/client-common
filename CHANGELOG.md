@@ -15,7 +15,13 @@
 ### Removed
 - Deprecated option `debug_plugins` has been removed from `PluginClient`
 
-## 1.9.0 - [unreleased]
+## 1.9.0 - 2019-01-03
+
+### Added
+
+- Support for PSR-18 clients
+- Added traits `VersionBridgePlugin` and `VersionBridgeClient` to help plugins and clients to support both
+  1.x and 2.x version of `php-http/client-common` and `php-http/httplug`.
 
 ### Changed
 
