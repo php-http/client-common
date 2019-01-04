@@ -11,6 +11,6 @@ use Http\Client\Exception\HttpException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class ServerErrorException extends HttpException
+final class ServerErrorException extends HttpException
 {
 }

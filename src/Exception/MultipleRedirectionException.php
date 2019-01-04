@@ -11,6 +11,6 @@ use Http\Client\Exception\HttpException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class MultipleRedirectionException extends HttpException
+final class MultipleRedirectionException extends HttpException
 {
 }

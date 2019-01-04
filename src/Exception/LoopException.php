@@ -11,6 +11,6 @@ use Http\Client\Exception\RequestException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class LoopException extends RequestException
+final class LoopException extends RequestException
 {
 }
