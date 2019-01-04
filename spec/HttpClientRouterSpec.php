@@ -12,7 +12,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Http\Client\Common\HttpClientRouterInterface;
-use Http\Client\Exception\RequestException;
 
 class HttpClientRouterSpec extends ObjectBehavior
 {
