@@ -2,6 +2,7 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\Exception\HttpClientNoMatchException;
 use Http\Client\Common\HttpClientRouter;
 use Http\Message\RequestMatcher;
 use Http\Client\HttpAsyncClient;
@@ -11,7 +12,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Http\Client\Common\HttpClientRouterInterface;
-use Http\Client\Exception\RequestException;
 
 class HttpClientRouterSpec extends ObjectBehavior
 {
@@ -58,7 +58,7 @@ class HttpClientRouterSpec extends ObjectBehavior
         $this->addClient($client, $matcher);
         $matcher->matches($request)->willReturn(false);
 
-        $this->shouldThrow(RequestException::class)->duringSendRequest($request);
+        $this->shouldThrow(HttpClientNoMatchException::class)->duringSendRequest($request);
     }
 
     public function it_throw_exception_on_send_async_request(RequestMatcher $matcher, HttpAsyncClient $client, RequestInterface $request)
@@ -66,6 +66,6 @@ class HttpClientRouterSpec extends ObjectBehavior
         $this->addClient($client, $matcher);
         $matcher->matches($request)->willReturn(false);
 
-        $this->shouldThrow(RequestException::class)->duringSendAsyncRequest($request);
+        $this->shouldThrow(HttpClientNoMatchException::class)->duringSendAsyncRequest($request);
     }
 }

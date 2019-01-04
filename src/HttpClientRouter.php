@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Exception\RequestException;
+use Http\Client\Common\Exception\HttpClientNoMatchException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Message\RequestMatcher;
@@ -66,6 +66,6 @@ final class HttpClientRouter implements HttpClientRouterInterface
             }
         }
 
-        throw new RequestException('No client found for the specified request', $request);
+        throw new HttpClientNoMatchException('No client found for the specified request', $request);
     }
 }
