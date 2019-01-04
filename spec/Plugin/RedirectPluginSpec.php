@@ -37,7 +37,7 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('/redirect');
 
@@ -156,7 +156,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
 
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('https://server.com:8000/redirect?query#fragment');
 
@@ -203,7 +203,7 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(false);
 
         $promise = $this->handleRequest($request, $next, function () {});
@@ -223,7 +223,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $uri->__toString()->willReturn('/original');
         $responseRedirect->getHeaderLine('Location')->willReturn('scheme:///invalid');
 
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
 
         $promise = $this->handleRequest($request, $next, function () {});
@@ -240,7 +240,7 @@ class RedirectPluginSpec extends ObjectBehavior
         };
 
         $this->beConstructedWith(['preserve_header' => true, 'use_default_for_multiple' => false]);
-        $responseRedirect->getStatusCode()->willReturn('300');
+        $responseRedirect->getStatusCode()->willReturn(300);
 
         $promise = $this->handleRequest($request, $next, function () {});
         $promise->shouldReturnAnInstanceOf(HttpRejectedPromise::class);
@@ -255,7 +255,7 @@ class RedirectPluginSpec extends ObjectBehavior
             }
         };
 
-        $responseRedirect->getStatusCode()->willReturn('300');
+        $responseRedirect->getStatusCode()->willReturn(300);
         $responseRedirect->hasHeader('Location')->willReturn(false);
 
         $promise = $this->handleRequest($request, $next, function () {});
@@ -275,7 +275,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
 
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('/redirect');
 
@@ -324,7 +324,7 @@ class RedirectPluginSpec extends ObjectBehavior
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
 
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('/redirect');
 
@@ -468,7 +468,7 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
-        $responseRedirect->getStatusCode()->willReturn('302');
+        $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('https://my-site.com/original');
 

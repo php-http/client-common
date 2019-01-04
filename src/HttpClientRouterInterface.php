@@ -23,5 +23,5 @@ interface HttpClientRouterInterface extends HttpClient, HttpAsyncClient
      *
      * @param ClientInterface|HttpAsyncClient $client
      */
-    public function addClient($client, RequestMatcher $requestMatcher);
+    public function addClient($client, RequestMatcher $requestMatcher): void;
 }

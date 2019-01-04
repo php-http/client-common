@@ -27,7 +27,7 @@ abstract class HttpClientPool implements HttpClientPoolInterface
      *
      * @param ClientInterface|HttpAsyncClient|HttpClientPoolItem $client
      */
-    public function addHttpClient($client)
+    public function addHttpClient($client): void
     {
         if (!$client instanceof HttpClientPoolItem) {
             $client = new HttpClientPoolItem($client);

@@ -45,7 +45,7 @@ final class HttpClientRouter implements HttpClientRouterInterface
      *
      * @param HttpClient|HttpAsyncClient $client
      */
-    public function addClient($client, RequestMatcher $requestMatcher)
+    public function addClient($client, RequestMatcher $requestMatcher): void
     {
         $this->clients[] = [
             'matcher' => $requestMatcher,

@@ -66,7 +66,7 @@ final class AddHostPlugin implements Plugin
         return $next($request);
     }
 
-    private function configureOptions(OptionsResolver $resolver)
+    private function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'replace' => false,

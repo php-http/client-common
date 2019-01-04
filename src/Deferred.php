@@ -79,7 +79,7 @@ final class Deferred implements Promise
     /**
      * Resolve this deferred with a Response.
      */
-    public function resolve(ResponseInterface $response)
+    public function resolve(ResponseInterface $response): void
     {
         if (self::PENDING !== $this->state) {
             return;
@@ -96,7 +96,7 @@ final class Deferred implements Promise
     /**
      * Reject this deferred with an Exception.
      */
-    public function reject(Exception $exception)
+    public function reject(Exception $exception): void
     {
         if (self::PENDING !== $this->state) {
             return;

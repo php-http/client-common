@@ -91,11 +91,9 @@ final class CookiePlugin implements Plugin
     /**
      * Creates a cookie from a string.
      *
-     * @return Cookie|null
-     *
      * @throws TransferException
      */
-    private function createCookie(RequestInterface $request, string $setCookieHeader)
+    private function createCookie(RequestInterface $request, string $setCookieHeader): ?Cookie
     {
         $parts = array_map('trim', explode(';', $setCookieHeader));
 
@@ -168,6 +166,8 @@ final class CookiePlugin implements Plugin
      * Separates key/value pair from cookie.
      *
      * @param string $part A single cookie value in format key=value
+     *
+     * @return string[]
      */
     private function createValueKey(string $part): array
     {

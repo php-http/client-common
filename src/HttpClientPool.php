@@ -20,5 +20,5 @@ interface HttpClientPool extends HttpAsyncClient, HttpClient
      *
      * @param ClientInterface|HttpAsyncClient|HttpClientPoolItem $client
      */
-    public function addHttpClient($client);
+    public function addHttpClient($client): void;
 }

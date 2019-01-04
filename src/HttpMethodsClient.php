@@ -71,7 +71,7 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
         return $this->send('OPTIONS', $uri, $headers, $body);
     }
 
-    public function send($method, $uri, array $headers = [], $body = null): ResponseInterface
+    public function send(string $method, $uri, array $headers = [], $body = null): ResponseInterface
     {
         return $this->sendRequest($this->requestFactory->createRequest(
             $method,

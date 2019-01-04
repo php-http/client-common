@@ -27,7 +27,7 @@ class ErrorPluginSpec extends ObjectBehavior
 
     public function it_throw_client_error_exception_on_4xx_error(RequestInterface $request, ResponseInterface $response)
     {
-        $response->getStatusCode()->willReturn('400');
+        $response->getStatusCode()->willReturn(400);
         $response->getReasonPhrase()->willReturn('Bad request');
 
         $next = function (RequestInterface $receivedRequest) use ($request, $response) {
@@ -45,7 +45,7 @@ class ErrorPluginSpec extends ObjectBehavior
     {
         $this->beConstructedWith(['only_server_exception' => true]);
 
-        $response->getStatusCode()->willReturn('400');
+        $response->getStatusCode()->willReturn(400);
         $response->getReasonPhrase()->willReturn('Bad request');
 
         $next = function (RequestInterface $receivedRequest) use ($request, $response) {
@@ -59,7 +59,7 @@ class ErrorPluginSpec extends ObjectBehavior
 
     public function it_throw_server_error_exception_on_5xx_error(RequestInterface $request, ResponseInterface $response)
     {
-        $response->getStatusCode()->willReturn('500');
+        $response->getStatusCode()->willReturn(500);
         $response->getReasonPhrase()->willReturn('Server error');
 
         $next = function (RequestInterface $receivedRequest) use ($request, $response) {
@@ -75,7 +75,7 @@ class ErrorPluginSpec extends ObjectBehavior
 
     public function it_returns_response(RequestInterface $request, ResponseInterface $response)
     {
-        $response->getStatusCode()->willReturn('200');
+        $response->getStatusCode()->willReturn(200);
 
         $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
