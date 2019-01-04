@@ -11,6 +11,6 @@ use Http\Client\Exception\TransferException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class HttpClientNotFoundException extends TransferException
+final class HttpClientNotFoundException extends TransferException
 {
 }

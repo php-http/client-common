@@ -11,6 +11,7 @@
   (These interfaces use the `Interface` suffix to avoid name collisions.)
 - Added an interface for HttpClientPool and moved the abstract class to the HttpClientPool sub namespace.
 - AddPathPlugin: Do not add the prefix if the URL already has the same prefix.
+- All exceptions in `Http\Client\Common\Exception` are final.
 
 ### Removed
 - Deprecated option `debug_plugins` has been removed from `PluginClient`

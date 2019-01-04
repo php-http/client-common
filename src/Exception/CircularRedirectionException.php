@@ -11,6 +11,6 @@ use Http\Client\Exception\HttpException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-class CircularRedirectionException extends HttpException
+final class CircularRedirectionException extends HttpException
 {
 }
