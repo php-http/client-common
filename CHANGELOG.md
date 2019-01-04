@@ -3,6 +3,7 @@
 ## 2.0 (unreleased)
 
 ### Changed
+- HttpClientRouter now throws a HttpClientNoMatchException instead of a RequestException if it can not find a client for the request.
 - RetryPlugin will no longer retry requests when the response failed with a HTTP code < 500.
 - Abstract method `HttpClientPool::chooseHttpClient()` has now an explicit return type (`Http\Client\Common\HttpClientPoolItem`)
 - Interface method `Plugin::handleRequest(...)` has now an explicit return type (`Http\Promise\Promise`)
