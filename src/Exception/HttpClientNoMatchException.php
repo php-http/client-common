@@ -12,7 +12,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class HttpClientNoMatchException extends TransferException
+final class HttpClientNoMatchException extends TransferException
 {
     private $request;
 
