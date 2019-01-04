@@ -6,7 +6,6 @@ cache:
   - $HOME/.composer/cache/files
 
 php:
-- 7.0
 - 7.1
 - 7.2
 - 7.3
@@ -16,18 +15,16 @@ matrix:
 
 jobs:
   include:
-  - php: 7.0
+  - php: 7.1
     env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
   - php: 7.2
-    env: COVERAGE=true DEPENDENCIES="leanphp/phpspec-code-coverage"
+    env: COVERAGE=true DEPENDENCIES="leanphp/phpspec-code-coverage phpspec/phpspec:^4.2"
     script:
     - composer test-ci
     after_success:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml --revision=$TRAVIS_COMMIT
     # Test LTS versions
-  - php: 7.2
-    env: DEPENDENCIES="dunglas/symfony-lock:^2"
   - php: 7.2
     env: DEPENDENCIES="dunglas/symfony-lock:^3"
   - php: 7.2
