@@ -144,7 +144,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Increment the request count.
      */
-    private function incrementRequestCount()
+    private function incrementRequestCount(): void
     {
         ++$this->sendingRequestCount;
     }
@@ -152,7 +152,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Decrement the request count.
      */
-    private function decrementRequestCount()
+    private function decrementRequestCount(): void
     {
         --$this->sendingRequestCount;
     }
@@ -160,7 +160,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Enable the current client.
      */
-    private function enable()
+    private function enable(): void
     {
         $this->disabledAt = null;
     }
@@ -168,7 +168,7 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
     /**
      * Disable the current client.
      */
-    private function disable()
+    private function disable(): void
     {
         $this->disabledAt = new \DateTime('now');
     }

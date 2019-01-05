@@ -112,5 +112,5 @@ interface HttpMethodsClientInterface extends HttpClient
      *
      * @throws Exception
      */
-    public function send($method, $uri, array $headers = [], $body = null): ResponseInterface;
+    public function send(string $method, $uri, array $headers = [], $body = null): ResponseInterface;
 }

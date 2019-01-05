@@ -9,7 +9,6 @@ use Http\Client\Common\Exception\MultipleRedirectionException;
 use Http\Client\Common\Plugin;
 use Http\Client\Exception\HttpException;
 use Http\Promise\Promise;
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -98,7 +97,7 @@ final class RedirectPlugin implements Plugin
     private $useDefaultForMultiple;
 
     /**
-     * @var array
+     * @var string[][] Chain identifier => list of URLs for this chain
      */
     private $circularDetection = [];
 
@@ -180,63 +179,51 @@ final class RedirectPlugin implements Plugin
         });
     }
 
-    /**
-     * Builds the redirect request.
-     *
-     * @param RequestInterface $request    Original request
-     * @param UriInterface     $uri        New uri
-     * @param int              $statusCode Status code from the redirect response
-     *
-     * @return MessageInterface|RequestInterface
-     */
-    private function buildRedirectRequest(RequestInterface $request, UriInterface $uri, $statusCode)
+    private function buildRedirectRequest(RequestInterface $originalRequest, UriInterface $targetUri, int $statusCode): RequestInterface
     {
-        $request = $request->withUri($uri);
+        $originalRequest = $originalRequest->withUri($targetUri);
 
-        if (false !== $this->redirectCodes[$statusCode]['switch'] && !in_array($request->getMethod(), $this->redirectCodes[$statusCode]['switch']['unless'])) {
-            $request = $request->withMethod($this->redirectCodes[$statusCode]['switch']['to']);
+        if (false !== $this->redirectCodes[$statusCode]['switch'] && !in_array($originalRequest->getMethod(), $this->redirectCodes[$statusCode]['switch']['unless'])) {
+            $originalRequest = $originalRequest->withMethod($this->redirectCodes[$statusCode]['switch']['to']);
         }
 
         if (is_array($this->preserveHeader)) {
-            $headers = array_keys($request->getHeaders());
+            $headers = array_keys($originalRequest->getHeaders());
 
             foreach ($headers as $name) {
                 if (!in_array($name, $this->preserveHeader)) {
-                    $request = $request->withoutHeader($name);
+                    $originalRequest = $originalRequest->withoutHeader($name);
                 }
             }
         }
 
-        return $request;
+        return $originalRequest;
     }
 
     /**
      * Creates a new Uri from the old request and the location header.
      *
-     * @param ResponseInterface $response The redirect response
-     * @param RequestInterface  $request  The original request
-     *
      * @throws HttpException                If location header is not usable (missing or incorrect)
      * @throws MultipleRedirectionException If a 300 status code is received and default location cannot be resolved (doesn't use the location header or not present)
      */
-    private function createUri(ResponseInterface $response, RequestInterface $request): UriInterface
+    private function createUri(ResponseInterface $redirectResponse, RequestInterface $originalRequest): UriInterface
     {
-        if ($this->redirectCodes[$response->getStatusCode()]['multiple'] && (!$this->useDefaultForMultiple || !$response->hasHeader('Location'))) {
-            throw new MultipleRedirectionException('Cannot choose a redirection', $request, $response);
+        if ($this->redirectCodes[$redirectResponse->getStatusCode()]['multiple'] && (!$this->useDefaultForMultiple || !$redirectResponse->hasHeader('Location'))) {
+            throw new MultipleRedirectionException('Cannot choose a redirection', $originalRequest, $redirectResponse);
         }
 
-        if (!$response->hasHeader('Location')) {
-            throw new HttpException('Redirect status code, but no location header present in the response', $request, $response);
+        if (!$redirectResponse->hasHeader('Location')) {
+            throw new HttpException('Redirect status code, but no location header present in the response', $originalRequest, $redirectResponse);
         }
 
-        $location = $response->getHeaderLine('Location');
+        $location = $redirectResponse->getHeaderLine('Location');
         $parsedLocation = parse_url($location);
 
         if (false === $parsedLocation) {
-            throw new HttpException(sprintf('Location %s could not be parsed', $location), $request, $response);
+            throw new HttpException(sprintf('Location %s could not be parsed', $location), $originalRequest, $redirectResponse);
         }
 
-        $uri = $request->getUri();
+        $uri = $originalRequest->getUri();
 
         if (array_key_exists('scheme', $parsedLocation)) {
             $uri = $uri->withScheme($parsedLocation['scheme']);

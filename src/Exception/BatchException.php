@@ -28,10 +28,8 @@ final class BatchException extends TransferException
 
     /**
      * Returns the BatchResult that contains all responses and exceptions.
-     *
-     * @return BatchResult
      */
-    public function getResult()
+    public function getResult(): BatchResult
     {
         return $this->result;
     }
