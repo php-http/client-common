@@ -17,6 +17,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * Status codes 400-499 lead to a ClientErrorException, status 500-599 to a ServerErrorException.
  *
+ * Warning
+ * =======
+ *
+ * Throwing an exception on a valid response violates the PSR-18 specification.
+ * This plugin is provided as a convenience when writing a small application.
+ * When providing a client to a third party library, this plugin must not be
+ * included, or the third party library will have problems with error handling.
+ *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
 final class ErrorPlugin implements Plugin
