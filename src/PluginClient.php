@@ -41,7 +41,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     private $options;
 
     /**
-     * @param HttpClient|HttpAsyncClient $client
+     * @param HttpClient|HttpAsyncClient|ClientInterface $client
      * @param Plugin[]                   $plugins
      * @param array                      $options {
      *
