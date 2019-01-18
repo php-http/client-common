@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\HttpClient;
 use Http\Client\Common\Exception\BatchException;
 use Psr\Http\Message\RequestInterface;
 
@@ -15,7 +14,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Joel Wurtz <jwurtz@jolicode.com>
  */
-interface BatchClientInterface extends HttpClient
+interface BatchClientInterface
 {
     /**
      * Send several requests.

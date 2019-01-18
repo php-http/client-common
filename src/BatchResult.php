@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Exception;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -102,7 +102,7 @@ final class BatchResult
     /**
      * Returns all exceptions for the unsuccessful requests.
      *
-     * @return Exception[]
+     * @return ClientExceptionInterface[]
      */
     public function getExceptions(): array
     {
@@ -129,7 +129,7 @@ final class BatchResult
      *
      * @throws \UnexpectedValueException If request was not part of the batch or was successful
      */
-    public function getExceptionFor(RequestInterface $request): Exception
+    public function getExceptionFor(RequestInterface $request): ClientExceptionInterface
     {
         try {
             return $this->exceptions[$request];
@@ -143,7 +143,7 @@ final class BatchResult
      *
      * @return BatchResult the new BatchResult with this request-exception pair added to it
      */
-    public function addException(RequestInterface $request, Exception $exception): self
+    public function addException(RequestInterface $request, ClientExceptionInterface $exception): self
     {
         $new = clone $this;
         $new->exceptions->attach($request, $exception);

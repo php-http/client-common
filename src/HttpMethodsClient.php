@@ -21,10 +21,6 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
      */
     private $requestFactory;
 
-    /**
-     * @param ClientInterface $httpClient     The client to send requests with
-     * @param RequestFactory  $requestFactory The message factory to create requests
-     */
     public function __construct(ClientInterface $httpClient, RequestFactory $requestFactory)
     {
         $this->httpClient = $httpClient;
