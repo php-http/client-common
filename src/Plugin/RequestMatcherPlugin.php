@@ -22,12 +22,12 @@ final class RequestMatcherPlugin implements Plugin
     private $requestMatcher;
 
     /**
-     * @var null|Plugin
+     * @var Plugin|null
      */
     private $successPlugin;
 
     /**
-     * @var null|Plugin
+     * @var Plugin|null
      */
     private $failurePlugin;
 
