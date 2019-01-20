@@ -14,15 +14,10 @@ use Psr\Http\Message\ResponseInterface;
 final class Deferred implements Promise
 {
     private $value;
-
     private $failure;
-
     private $state;
-
     private $waitCallback;
-
     private $onFulfilledCallbacks;
-
     private $onRejectedCallbacks;
 
     public function __construct(callable $waitCallback)
@@ -81,12 +76,12 @@ final class Deferred implements Promise
      */
     public function resolve(ResponseInterface $response): void
     {
-        if (self::PENDING !== $this->state) {
+        if (Promise::PENDING !== $this->state) {
             return;
         }
 
         $this->value = $response;
-        $this->state = self::FULFILLED;
+        $this->state = Promise::FULFILLED;
 
         foreach ($this->onFulfilledCallbacks as $onFulfilledCallback) {
             $onFulfilledCallback($response);
@@ -98,12 +93,12 @@ final class Deferred implements Promise
      */
     public function reject(Exception $exception): void
     {
-        if (self::PENDING !== $this->state) {
+        if (Promise::PENDING !== $this->state) {
             return;
         }
 
         $this->failure = $exception;
-        $this->state = self::REJECTED;
+        $this->state = Promise::REJECTED;
 
         foreach ($this->onRejectedCallbacks as $onRejectedCallback) {
             $onRejectedCallback($exception);
@@ -115,16 +110,16 @@ final class Deferred implements Promise
      */
     public function wait($unwrap = true)
     {
-        if (self::PENDING === $this->state) {
+        if (Promise::PENDING === $this->state) {
             $callback = $this->waitCallback;
             $callback();
         }
 
         if (!$unwrap) {
-            return;
+            return null;
         }
 
-        if (self::FULFILLED === $this->state) {
+        if (Promise::FULFILLED === $this->state) {
             return $this->value;
         }
 
