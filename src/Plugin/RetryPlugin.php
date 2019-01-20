@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
-use Http\Client\Exception;
 use Http\Client\Exception\HttpException;
 use Http\Promise\Promise;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -74,7 +74,7 @@ final class RetryPlugin implements Plugin
                 // do not retry client errors
                 return $response->getStatusCode() >= 500 && $response->getStatusCode() < 600;
             },
-            'exception_decider' => function (RequestInterface $request, Exception $e) {
+            'exception_decider' => function (RequestInterface $request, ClientExceptionInterface $e) {
                 // do not retry client errors
                 return !$e instanceof HttpException || $e->getCode() >= 500 && $e->getCode() < 600;
             },
@@ -124,7 +124,7 @@ final class RetryPlugin implements Plugin
             }
 
             return $response;
-        }, function (Exception $exception) use ($request, $next, $first, $chainIdentifier) {
+        }, function (ClientExceptionInterface $exception) use ($request, $next, $first, $chainIdentifier) {
             if (!array_key_exists($chainIdentifier, $this->retryStorage)) {
                 $this->retryStorage[$chainIdentifier] = 0;
             }
@@ -156,7 +156,7 @@ final class RetryPlugin implements Plugin
     /**
      * @param int $retries The number of retries we made before. First time this get called it will be 0.
      */
-    public static function defaultExceptionDelay(RequestInterface $request, Exception $e, int $retries): int
+    public static function defaultExceptionDelay(RequestInterface $request, ClientExceptionInterface $e, int $retries): int
     {
         return pow(2, $retries) * 500000;
     }
