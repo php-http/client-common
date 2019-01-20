@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Exception;
 use Http\Promise\Promise;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -19,7 +19,7 @@ final class Deferred implements Promise
     private $value;
 
     /**
-     * @var Exception|null
+     * @var ClientExceptionInterface|null
      */
     private $failure;
 
@@ -64,12 +64,12 @@ final class Deferred implements Promise
                     $response = $onFulfilled($response);
                 }
                 $deferred->resolve($response);
-            } catch (Exception $exception) {
+            } catch (ClientExceptionInterface $exception) {
                 $deferred->reject($exception);
             }
         };
 
-        $this->onRejectedCallbacks[] = function (Exception $exception) use ($onRejected, $deferred) {
+        $this->onRejectedCallbacks[] = function (ClientExceptionInterface $exception) use ($onRejected, $deferred) {
             try {
                 if (null !== $onRejected) {
                     $response = $onRejected($exception);
@@ -78,7 +78,7 @@ final class Deferred implements Promise
                     return;
                 }
                 $deferred->reject($exception);
-            } catch (Exception $newException) {
+            } catch (ClientExceptionInterface $newException) {
                 $deferred->reject($newException);
             }
         };
@@ -114,7 +114,7 @@ final class Deferred implements Promise
     /**
      * Reject this deferred with an Exception.
      */
-    public function reject(Exception $exception): void
+    public function reject(ClientExceptionInterface $exception): void
     {
         if (Promise::PENDING !== $this->state) {
             return;
