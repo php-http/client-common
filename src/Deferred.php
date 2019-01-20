@@ -13,11 +13,34 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class Deferred implements Promise
 {
+    /**
+     * @var ResponseInterface|null
+     */
     private $value;
+
+    /**
+     * @var Exception|null
+     */
     private $failure;
+
+    /**
+     * @var string
+     */
     private $state;
+
+    /**
+     * @var callable
+     */
     private $waitCallback;
+
+    /**
+     * @var callable[]
+     */
     private $onFulfilledCallbacks;
+
+    /**
+     * @var callable[]
+     */
     private $onRejectedCallbacks;
 
     public function __construct(callable $waitCallback)
