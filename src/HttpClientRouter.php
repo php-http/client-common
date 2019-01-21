@@ -43,7 +43,7 @@ final class HttpClientRouter implements HttpClientRouterInterface
     /**
      * Add a client to the router.
      *
-     * @param HttpClient|HttpAsyncClient $client
+     * @param ClientInterface|HttpAsyncClient $client
      */
     public function addClient($client, RequestMatcher $requestMatcher): void
     {
