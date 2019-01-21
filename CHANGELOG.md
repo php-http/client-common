@@ -1,6 +1,6 @@
 # Change Log
 
-## 2.0 (unreleased)
+## 2.0.0- 2019-01-21
 
 ### Changed
 - HttpClientRouter now throws a HttpClientNoMatchException instead of a RequestException if it can not find a client for the request.
@@ -10,7 +10,7 @@
 - Abstract method `HttpClientPool::chooseHttpClient()` has now an explicit return type (`Http\Client\Common\HttpClientPoolItem`)
 - Interface method `Plugin::handleRequest(...)` has now an explicit return type (`Http\Promise\Promise`)
 - Made  classes final that are not intended to be extended.
-  Added interfaces for BatchClient, HttpClientRouter and HttpMethodsClient.
+- Added interfaces for BatchClient, HttpClientRouter and HttpMethodsClient.
   (These interfaces use the `Interface` suffix to avoid name collisions.)
 - Added an interface for HttpClientPool and moved the abstract class to the HttpClientPool sub namespace.
 - AddPathPlugin: Do not add the prefix if the URL already has the same prefix.
