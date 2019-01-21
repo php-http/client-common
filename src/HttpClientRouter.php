@@ -6,7 +6,6 @@ namespace Http\Client\Common;
 
 use Http\Client\Common\Exception\HttpClientNoMatchException;
 use Http\Client\HttpAsyncClient;
-use Http\Client\HttpClient;
 use Http\Message\RequestMatcher;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -43,7 +42,7 @@ final class HttpClientRouter implements HttpClientRouterInterface
     /**
      * Add a client to the router.
      *
-     * @param HttpClient|HttpAsyncClient $client
+     * @param ClientInterface|HttpAsyncClient $client
      */
     public function addClient($client, RequestMatcher $requestMatcher): void
     {

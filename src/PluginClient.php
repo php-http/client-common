@@ -73,7 +73,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         // If we don't have an http client, use the async call
-        if (!($this->client instanceof HttpClient)) {
+        if (!($this->client instanceof ClientInterface)) {
             return $this->sendAsyncRequest($request)->wait();
         }
 
