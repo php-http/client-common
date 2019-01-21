@@ -6,7 +6,6 @@ namespace Http\Client\Common;
 
 use Http\Client\Common\Exception\HttpClientNoMatchException;
 use Http\Client\HttpAsyncClient;
-use Http\Client\HttpClient;
 use Http\Message\RequestMatcher;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
