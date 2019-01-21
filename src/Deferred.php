@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Exception;
 use Http\Promise\Promise;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -13,16 +13,34 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class Deferred implements Promise
 {
+    /**
+     * @var ResponseInterface|null
+     */
     private $value;
 
+    /**
+     * @var ClientExceptionInterface|null
+     */
     private $failure;
 
+    /**
+     * @var string
+     */
     private $state;
 
+    /**
+     * @var callable
+     */
     private $waitCallback;
 
+    /**
+     * @var callable[]
+     */
     private $onFulfilledCallbacks;
 
+    /**
+     * @var callable[]
+     */
     private $onRejectedCallbacks;
 
     public function __construct(callable $waitCallback)
@@ -46,12 +64,12 @@ final class Deferred implements Promise
                     $response = $onFulfilled($response);
                 }
                 $deferred->resolve($response);
-            } catch (Exception $exception) {
+            } catch (ClientExceptionInterface $exception) {
                 $deferred->reject($exception);
             }
         };
 
-        $this->onRejectedCallbacks[] = function (Exception $exception) use ($onRejected, $deferred) {
+        $this->onRejectedCallbacks[] = function (ClientExceptionInterface $exception) use ($onRejected, $deferred) {
             try {
                 if (null !== $onRejected) {
                     $response = $onRejected($exception);
@@ -60,7 +78,7 @@ final class Deferred implements Promise
                     return;
                 }
                 $deferred->reject($exception);
-            } catch (Exception $newException) {
+            } catch (ClientExceptionInterface $newException) {
                 $deferred->reject($newException);
             }
         };
@@ -81,12 +99,12 @@ final class Deferred implements Promise
      */
     public function resolve(ResponseInterface $response): void
     {
-        if (self::PENDING !== $this->state) {
+        if (Promise::PENDING !== $this->state) {
             return;
         }
 
         $this->value = $response;
-        $this->state = self::FULFILLED;
+        $this->state = Promise::FULFILLED;
 
         foreach ($this->onFulfilledCallbacks as $onFulfilledCallback) {
             $onFulfilledCallback($response);
@@ -96,14 +114,14 @@ final class Deferred implements Promise
     /**
      * Reject this deferred with an Exception.
      */
-    public function reject(Exception $exception): void
+    public function reject(ClientExceptionInterface $exception): void
     {
-        if (self::PENDING !== $this->state) {
+        if (Promise::PENDING !== $this->state) {
             return;
         }
 
         $this->failure = $exception;
-        $this->state = self::REJECTED;
+        $this->state = Promise::REJECTED;
 
         foreach ($this->onRejectedCallbacks as $onRejectedCallback) {
             $onRejectedCallback($exception);
@@ -115,16 +133,16 @@ final class Deferred implements Promise
      */
     public function wait($unwrap = true)
     {
-        if (self::PENDING === $this->state) {
+        if (Promise::PENDING === $this->state) {
             $callback = $this->waitCallback;
             $callback();
         }
 
         if (!$unwrap) {
-            return;
+            return null;
         }
 
-        if (self::FULFILLED === $this->state) {
+        if (Promise::FULFILLED === $this->state) {
             return $this->value;
         }
 
