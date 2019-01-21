@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Decorate the body of the request and the response if it's not seekable by using Http\Message\Stream\BufferedStream
+ * Decorate the body of the request and the response if it's not seekable by using Http\Message\Stream\BufferedStream.
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
@@ -34,7 +34,7 @@ final class AlwaysSeekableBodyPlugin implements Plugin
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'use_file_buffer' => true,
-            'memory_buffer_size' => 2097152
+            'memory_buffer_size' => 2097152,
         ]);
         $resolver->setAllowedTypes('use_file_buffer', 'bool');
         $resolver->setAllowedTypes('memory_buffer_size', 'int');
