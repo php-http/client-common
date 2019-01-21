@@ -60,7 +60,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         } elseif ($client instanceof ClientInterface) {
             $this->client = new EmulatedHttpAsyncClient($client);
         } else {
-            throw new \RuntimeException('Client must be an instance of Psr\\Http\\Client\\ClientInterface or Http\\Client\\HttpAsyncClient');
+            throw new \LogicException(sprintf('Client must be an instance of %s or %s', ClientInterface::class, HttpAsyncClient::class));
         }
 
         $this->plugins = $plugins;
