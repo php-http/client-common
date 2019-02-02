@@ -20,6 +20,12 @@
 - Deprecated option `debug_plugins` has been removed from `PluginClient`
 - Deprecated options `decider` and `delay` have been removed from `RetryPlugin`, use `exception_decider` and `exception_delay` instead.
 
+## 1.9.1 - 2019-02-02
+
+### Added
+
+- Updated type hints in doc blocks.
+
 ## 1.9.0 - 2019-01-03
 
 ### Added
