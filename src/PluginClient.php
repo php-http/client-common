@@ -42,8 +42,8 @@ final class PluginClient implements HttpClient, HttpAsyncClient
 
     /**
      * @param HttpClient|HttpAsyncClient|ClientInterface $client
-     * @param Plugin[]                   $plugins
-     * @param array                      $options {
+     * @param Plugin[]                                   $plugins
+     * @param array                                      $options {
      *
      *     @var int      $max_restarts
      *     @var Plugin[] $debug_plugins an array of plugins that are injected between each normal plugin
