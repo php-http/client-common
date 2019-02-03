@@ -22,7 +22,7 @@ interface BatchClientInterface
      * You may not assume that the requests are executed in a particular order. If the order matters
      * for your application, use sendRequest sequentially.
      *
-     * @param RequestInterface[] The requests to send
+     * @param RequestInterface[] $requests The requests to send
      *
      * @return BatchResult Containing one result per request
      *

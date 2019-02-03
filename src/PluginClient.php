@@ -25,7 +25,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * An HTTP async client.
      *
-     * @var HttpAsyncClient
+     * @var HttpAsyncClient|HttpClient
      */
     private $client;
 

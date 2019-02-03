@@ -106,9 +106,6 @@ final class ContentTypePlugin implements Plugin
         return JSON_ERROR_NONE === json_last_error();
     }
 
-    /**
-     * @param $stream StreamInterface
-     */
     private function isXml(StreamInterface $stream): bool
     {
         if (!function_exists('simplexml_load_string')) {
