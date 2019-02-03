@@ -16,7 +16,7 @@ use Psr\Http\Client\ClientInterface;
 final class PluginClientFactory
 {
     /**
-     * @var callable
+     * @var callable|null
      */
     private static $factory;
 
