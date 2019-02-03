@@ -1,9 +1,6 @@
 # Change Log
 
-## 2.0.0 (unreleased)
-
-
-## 2.0.0-RC1 - 2019-01-21
+## 2.0.0 - 2019-02-03
 
 ### Changed
 - HttpClientRouter now throws a HttpClientNoMatchException instead of a RequestException if it can not find a client for the request.
