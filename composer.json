@@ -22,7 +22,9 @@
         "guzzlehttp/psr7": "^1.4",
         "phpspec/phpspec": "^5.1",
         "phpspec/prophecy": "^1.8",
-        "sebastian/comparator": "^3.0"
+        "sebastian/comparator": "^3.0",
+        "symfony/filesystem": " ^3.4.20 || ^4.0.15 || ^4.1.9 || ^4.2.1",
+        "symfony/phpunit-bridge": "*"
     },
     "suggest": {
         "ext-json": "To detect JSON responses with the ContentTypePlugin",
@@ -38,7 +40,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "spec\\Http\\Client\\Common\\": "spec/"
+            "spec\\Http\\Client\\Common\\": "spec/",
+            "tests\\Http\\Client\\Common\\": "tests/"
         }
     },
     "scripts": {
