@@ -15,7 +15,7 @@
         "php-http/httplug": "^2.0",
         "php-http/message-factory": "^1.0",
         "php-http/message": "^1.6",
-        "symfony/options-resolver": " ^3.4.20 || ^4.0.15 || ^4.1.9 || ^4.2.1"
+        "symfony/options-resolver": " ^3.4.20 || ~4.0.15 || ~4.1.9 || ^4.2.1 || ^5.0"
     },
     "require-dev": {
         "doctrine/instantiator": "^1.1",
