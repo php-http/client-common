@@ -29,6 +29,7 @@ matrix:
         - php: 7.0
         - php: 7.1
         - php: 7.2
+        - php: 7.3
           env: COVERAGE=true TEST_COMMAND="composer test-ci"  DEPENDENCIES="henrikbjorn/phpspec-code-coverage:^1.0"
 
           # Test LTS versions
