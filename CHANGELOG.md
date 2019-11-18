@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.1.0 - 2019-11-18
+
+### Added
+
+- Support Symfony 5
+
 ## 2.0.0 - 2019-02-03
 
 ### Changed
