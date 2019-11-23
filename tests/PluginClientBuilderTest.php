@@ -49,6 +49,29 @@ class PluginClientBuilderTest extends TestCase
         $this->assertSame($expected, $plugged);
     }
 
+    /** @dataProvider clientProvider */
+    public function testOptions(string $client): void
+    {
+        $builder = new PluginClientBuilder();
+        $builder->setOption('max_restarts', 5);
+
+        $client = $this->prophesize($client)->reveal();
+        $client = $builder->createClient($client);
+
+        $closure = Closure::bind(
+            function (): array {
+                return $this->options;
+            },
+            $client,
+            PluginClient::class
+        );
+
+        $options = $closure();
+
+        $this->assertArrayHasKey('max_restarts', $options);
+        $this->assertSame(5, $options['max_restarts']);
+    }
+
     public function clientProvider(): iterable
     {
         yield 'sync\'d http client' => [HttpClient::class];
