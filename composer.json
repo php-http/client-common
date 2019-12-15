@@ -20,7 +20,7 @@
     "require-dev": {
         "doctrine/instantiator": "^1.1",
         "guzzlehttp/psr7": "^1.4",
-        "phpspec/phpspec": "^5.1",
+        "phpspec/phpspec": "^5.1 || ^6.0",
         "phpspec/prophecy": "^1.8",
         "sebastian/comparator": "^3.0"
     },
