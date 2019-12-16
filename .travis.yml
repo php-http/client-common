@@ -9,6 +9,7 @@ php:
 - 7.1
 - 7.2
 - 7.3
+- 7.4
 
 matrix:
   fast_finish: true
@@ -33,7 +34,7 @@ jobs:
     env: TEST_COMMAND="./vendor/bin/phpunit" DEPENDENCIES="phpunit/phpunit:^7.5 nyholm/psr7:^1.0"
 
     # Latest dev release
-  - php: 7.3
+  - php: 7.4
     env: STABILITY="dev"
 
 before_install:
