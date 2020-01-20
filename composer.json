@@ -54,9 +54,6 @@
         ]
     },
     "config": {
-        "platform": {
-            "php": "7.1.33"
-        },
         "sort-packages": true
     },
     "extra": {
