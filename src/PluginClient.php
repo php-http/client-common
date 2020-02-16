@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Common\Exception\LoopException;
 use Http\Client\Exception as HttplugException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;

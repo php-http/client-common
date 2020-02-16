@@ -24,8 +24,6 @@ final class PluginChain
 
     /**
      * @param Plugin[] $plugins
-     * @param callable $clientCallable
-     * @param int $maxRestarts
      */
     public function __construct(array $plugins, callable $clientCallable, int $maxRestarts)
     {
