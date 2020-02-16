@@ -125,27 +125,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      */
     private function createPluginChain(array $pluginList, callable $clientCallable): callable
     {
-        $firstCallable = $lastCallable = $clientCallable;
-
-        while ($plugin = array_pop($pluginList)) {
-            $lastCallable = function (RequestInterface $request) use ($plugin, $lastCallable, &$firstCallable) {
-                return $plugin->handleRequest($request, $lastCallable, $firstCallable);
-            };
-
-            $firstCallable = $lastCallable;
-        }
-
-        $firstCalls = 0;
-        $firstCallable = function (RequestInterface $request) use ($lastCallable, &$firstCalls) {
-            if ($firstCalls > $this->options['max_restarts']) {
-                throw new LoopException('Too many restarts in plugin client', $request);
-            }
-
-            ++$firstCalls;
-
-            return $lastCallable($request);
-        };
-
-        return $firstCallable;
+        return new PluginChain($pluginList, $clientCallable, $this->options['max_restarts']);
     }
 }
