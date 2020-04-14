@@ -125,6 +125,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      */
     private function createPluginChain(array $pluginList, callable $clientCallable): callable
     {
-        return new PluginChain($pluginList, $clientCallable, $this->options['max_restarts']);
+        return new PluginChain($pluginList, $clientCallable, $this->options);
     }
 }

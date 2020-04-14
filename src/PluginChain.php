@@ -27,11 +27,11 @@ final class PluginChain
      * @param callable $clientCallable
      * @param int $maxRestarts
      */
-    public function __construct(array $plugins, callable $clientCallable, int $maxRestarts)
+    public function __construct(array $plugins, callable $clientCallable, array $options = [])
     {
         $this->plugins = $plugins;
         $this->clientCallable = $clientCallable;
-        $this->maxRestarts = $maxRestarts;
+        $this->maxRestarts = (int) ($options['max_restarts'] ?? 0);
     }
 
     private function createChain(): callable
