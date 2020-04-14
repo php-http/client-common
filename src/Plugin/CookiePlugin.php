@@ -119,15 +119,7 @@ final class CookiePlugin implements Plugin
                     try {
                         $expires = CookieUtil::parseDate($value);
                     } catch (UnexpectedValueException $e) {
-                        throw new TransferException(
-                            sprintf(
-                                'Cookie header `%s` expires value `%s` could not be converted to date',
-                                $name,
-                                $value
-                            ),
-                            0,
-                            $e
-                        );
+                        throw new TransferException(sprintf('Cookie header `%s` expires value `%s` could not be converted to date', $name, $value), 0, $e);
                     }
 
                     break;

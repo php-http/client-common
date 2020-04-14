@@ -3,10 +3,10 @@
 namespace spec\Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
-use Psr\Http\Message\RequestInterface;
-use PhpSpec\ObjectBehavior;
-use Psr\Http\Message\UriInterface;
 use Http\Client\Common\Plugin\QueryDefaultsPlugin;
+use PhpSpec\ObjectBehavior;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 class QueryDefaultsPluginSpec extends ObjectBehavior
 {

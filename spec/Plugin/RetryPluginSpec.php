@@ -2,15 +2,15 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Client\Exception;
 use Http\Client\Promise\HttpFulfilledPromise;
 use Http\Client\Promise\HttpRejectedPromise;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Http\Client\Common\Plugin\RetryPlugin;
-use Http\Client\Common\Plugin;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class RetryPluginSpec extends ObjectBehavior
 {

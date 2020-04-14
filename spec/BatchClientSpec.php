@@ -2,14 +2,14 @@
 
 namespace spec\Http\Client\Common;
 
-use Http\Client\HttpClient;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
 use Http\Client\Common\BatchClient;
 use Http\Client\Common\BatchResult;
-use Http\Client\Exception\HttpException;
 use Http\Client\Common\Exception\BatchException;
+use Http\Client\Exception\HttpException;
+use Http\Client\HttpClient;
+use PhpSpec\ObjectBehavior;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class BatchClientSpec extends ObjectBehavior
 {

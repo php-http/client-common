@@ -2,10 +2,10 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\PluginClient;
+use Http\Client\Common\PluginClientFactory;
 use Http\Client\HttpClient;
 use PhpSpec\ObjectBehavior;
-use Http\Client\Common\PluginClientFactory;
-use Http\Client\Common\PluginClient;
 
 class PluginClientFactorySpec extends ObjectBehavior
 {

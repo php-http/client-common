@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
+use function array_reverse;
 use Http\Client\Common\Exception\LoopException;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
-use function array_reverse;
 
 final class PluginChain
 {

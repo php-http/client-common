@@ -2,15 +2,15 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Client\Exception\TransferException;
+use Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin\Journal;
+use Http\Client\Exception\TransferException;
 use Http\Client\Promise\HttpFulfilledPromise;
 use Http\Client\Promise\HttpRejectedPromise;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Http\Client\Common\Plugin;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class HistoryPluginSpec extends ObjectBehavior
 {

@@ -2,13 +2,13 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\ContentLengthPlugin;
 use PhpSpec\Exception\Example\SkippingException;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Http\Client\Common\Plugin\ContentLengthPlugin;
-use Http\Client\Common\Plugin;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ContentLengthPluginSpec extends ObjectBehavior
 {
