@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Common\Exception\LoopException;
 use Http\Client\Exception as HttplugException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
@@ -44,11 +43,11 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     private $options;
 
     /**
-     * @param ClientInterface|HttpAsyncClient $client
-     * @param Plugin[]                        $plugins
+     * @param ClientInterface|HttpAsyncClient $client  An HTTP async client
+     * @param Plugin[]                        $plugins A plugin chain
      * @param array                           $options {
      *
-     *     @var int      $max_restarts
+     *     @var int $max_restarts
      * }
      */
     public function __construct($client, array $plugins = [], array $options = [])
@@ -120,11 +119,11 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * Create the plugin chain.
      *
-     * @param Plugin[] $pluginList     A list of plugins
+     * @param Plugin[] $plugins        A plugin chain
      * @param callable $clientCallable Callable making the HTTP call
      */
-    private function createPluginChain(array $pluginList, callable $clientCallable): callable
+    private function createPluginChain(array $plugins, callable $clientCallable): callable
     {
-        return new PluginChain($pluginList, $clientCallable, $this->options);
+        return new PluginChain($plugins, $clientCallable, $this->options);
     }
 }

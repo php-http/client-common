@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
+use function array_reverse;
 use Http\Client\Common\Exception\LoopException;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
-use function array_reverse;
 
 final class PluginChain
 {
@@ -24,9 +24,12 @@ final class PluginChain
     private $restarts = 0;
 
     /**
-     * @param Plugin[] $plugins
-     * @param callable $clientCallable
-     * @param int $maxRestarts
+     * @param Plugin[] $plugins        A plugin chain
+     * @param callable $clientCallable Callable making the HTTP call
+     * @param array    $options        {
+     *
+     *     @var int $max_restarts
+     * }
      */
     public function __construct(array $plugins, callable $clientCallable, array $options = [])
     {
