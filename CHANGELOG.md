@@ -1,5 +1,21 @@
 # Change Log
 
+## UPCOMING
+
+### Added
+
+- Plugin client builder for making a `PluginClient`
+- Support for the PSR17 request factory in `HttpMethodsClient`
+
+### Changed
+
+- Restored support for `symfony/options-resolver: ^2.6`
+- Consitent implementation of union type checking
+
+### Fixed
+
+- Memory leak when using the `PluginClient` with plugins
+
 ## 2.1.0 - 2019-11-18
 
 ### Added
@@ -9,6 +25,7 @@
 ## 2.0.0 - 2019-02-03
 
 ### Changed
+
 - HttpClientRouter now throws a HttpClientNoMatchException instead of a RequestException if it can not find a client for the request.
 - RetryPlugin will only retry exceptions when there is no response, or a response in the 5xx HTTP code range.
 - RetryPlugin also retries when no exception is thrown if the responses has HTTP code in the 5xx range.
@@ -23,6 +40,7 @@
 - All exceptions in `Http\Client\Common\Exception` are final.
 
 ### Removed
+
 - Deprecated option `debug_plugins` has been removed from `PluginClient`
 - Deprecated options `decider` and `delay` have been removed from `RetryPlugin`, use `exception_decider` and `exception_delay` instead.
 
@@ -72,7 +90,6 @@
 ### Fixed
 
 - Decoder plugin will now remove header when there is no more encoding, instead of setting to an empty array
-
 
 ## 1.7.0 - 2017-11-30
 
