@@ -6,6 +6,7 @@ namespace Http\Client\Common;
 
 use Http\Message\RequestFactory;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -17,12 +18,21 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
     private $httpClient;
 
     /**
-     * @var RequestFactory
+     * @var RequestFactory|RequestFactoryInterface
      */
     private $requestFactory;
 
-    public function __construct(ClientInterface $httpClient, RequestFactory $requestFactory)
+    /**
+     * @param RequestFactory|RequestFactoryInterface
+     */
+    public function __construct(ClientInterface $httpClient, $requestFactory)
     {
+        if (!$requestFactory instanceof RequestFactory && !$requestFactory instanceof RequestFactoryInterface) {
+            throw new \TypeError(
+                sprintf('%s::__construct(): Argument #2 ($requestFactory) must be of type %s|%s, %s given', self::class, RequestFactory::class, RequestFactoryInterface::class, get_debug_type($requestFactory))
+            );
+        }
+
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
     }
