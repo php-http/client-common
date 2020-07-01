@@ -3,12 +3,12 @@
 namespace spec\Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\RequestMatcherPlugin;
 use Http\Message\RequestMatcher;
 use Http\Promise\Promise;
-use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Http\Client\Common\Plugin\RequestMatcherPlugin;
+use Psr\Http\Message\RequestInterface;
 
 class RequestMatcherPluginSpec extends ObjectBehavior
 {

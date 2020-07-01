@@ -2,16 +2,16 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
-use Http\Client\Promise\HttpFulfilledPromise;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Http\Client\Common\Plugin\ErrorPlugin;
-use Http\Client\Common\Plugin;
-use Http\Client\Promise\HttpRejectedPromise;
 use Http\Client\Common\Exception\ClientErrorException;
 use Http\Client\Common\Exception\ServerErrorException;
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Promise\HttpFulfilledPromise;
+use Http\Client\Promise\HttpRejectedPromise;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class ErrorPluginSpec extends ObjectBehavior
 {

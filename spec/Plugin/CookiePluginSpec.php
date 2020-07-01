@@ -2,18 +2,18 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\CookiePlugin;
+use Http\Client\Exception\TransferException;
 use Http\Client\Promise\HttpFulfilledPromise;
+use Http\Client\Promise\HttpRejectedPromise;
 use Http\Message\Cookie;
 use Http\Message\CookieJar;
 use Http\Promise\Promise;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\Plugin\CookiePlugin;
-use Http\Client\Common\Plugin;
-use Http\Client\Promise\HttpRejectedPromise;
-use Http\Client\Exception\TransferException;
 
 class CookiePluginSpec extends ObjectBehavior
 {

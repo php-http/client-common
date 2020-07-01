@@ -4,14 +4,14 @@ namespace spec\Http\Client\Common;
 
 use Http\Client\Common\Exception\HttpClientNoMatchException;
 use Http\Client\Common\HttpClientRouter;
-use Http\Message\RequestMatcher;
+use Http\Client\Common\HttpClientRouterInterface;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
+use Http\Message\RequestMatcher;
 use Http\Promise\Promise;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\HttpClientRouterInterface;
 
 class HttpClientRouterSpec extends ObjectBehavior
 {

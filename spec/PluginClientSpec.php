@@ -2,16 +2,16 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\Exception\LoopException;
+use Http\Client\Common\Plugin;
+use Http\Client\Common\PluginClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
-use Http\Client\Common\Plugin;
 use Http\Promise\Promise;
+use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\Exception\LoopException;
-use Http\Client\Common\PluginClient;
 
 class PluginClientSpec extends ObjectBehavior
 {

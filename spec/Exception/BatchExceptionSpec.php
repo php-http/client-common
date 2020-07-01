@@ -3,9 +3,9 @@
 namespace spec\Http\Client\Common\Exception;
 
 use Http\Client\Common\BatchResult;
+use Http\Client\Common\Exception\BatchException;
 use Http\Client\Exception;
 use PhpSpec\ObjectBehavior;
-use Http\Client\Common\Exception\BatchException;
 
 class BatchExceptionSpec extends ObjectBehavior
 {

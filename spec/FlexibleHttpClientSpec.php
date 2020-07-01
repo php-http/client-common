@@ -2,13 +2,13 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\FlexibleHttpClient;
 
 class FlexibleHttpClientSpec extends ObjectBehavior
 {

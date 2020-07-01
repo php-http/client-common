@@ -3,6 +3,7 @@
 namespace spec\Http\Client\Common\HttpClientPool;
 
 use Http\Client\Exception;
+use Http\Client\Exception\RequestException;
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
@@ -12,7 +13,6 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\Exception\RequestException;
 
 class HttpClientPoolItemSpec extends ObjectBehavior
 {

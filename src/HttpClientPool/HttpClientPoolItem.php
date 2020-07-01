@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Http\Client\Common\HttpClientPool;
 
 use Http\Client\Common\FlexibleHttpClient;
+use Http\Client\Exception;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
-use Http\Client\Exception;
 use Psr\Http\Message\ResponseInterface;
 
 /**

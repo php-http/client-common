@@ -2,11 +2,11 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\BaseUriPlugin;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\Plugin\BaseUriPlugin;
-use Http\Client\Common\Plugin;
 
 class BaseUriPluginSpec extends ObjectBehavior
 {

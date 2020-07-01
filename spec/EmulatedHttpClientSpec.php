@@ -2,15 +2,15 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\EmulatedHttpClient;
+use Http\Client\Exception;
 use Http\Client\Exception\TransferException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\EmulatedHttpClient;
-use Http\Client\Exception;
 
 class EmulatedHttpClientSpec extends ObjectBehavior
 {
