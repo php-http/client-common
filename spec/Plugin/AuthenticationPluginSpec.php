@@ -2,13 +2,13 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\AuthenticationPlugin;
 use Http\Message\Authentication;
 use Http\Promise\Promise;
-use Psr\Http\Message\RequestInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Http\Client\Common\Plugin\AuthenticationPlugin;
-use Http\Client\Common\Plugin;
+use Psr\Http\Message\RequestInterface;
 
 class AuthenticationPluginSpec extends ObjectBehavior
 {

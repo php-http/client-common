@@ -2,17 +2,17 @@
 
 namespace spec\Http\Client\Common\Plugin;
 
+use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Promise\HttpFulfilledPromise;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Http\Message\Encoding\DecompressStream;
+use Http\Message\Encoding\GzipDecodeStream;
 use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Http\Client\Common\Plugin\DecoderPlugin;
-use Http\Client\Common\Plugin;
-use Http\Message\Encoding\GzipDecodeStream;
-use Http\Message\Encoding\DecompressStream;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 class DecoderPluginSpec extends ObjectBehavior
 {

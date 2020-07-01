@@ -2,7 +2,10 @@
 
 namespace spec\Http\Client\Common\HttpClientPool;
 
+use Http\Client\Common\Exception\HttpClientNotFoundException;
 use Http\Client\Common\HttpClientPool\HttpClientPoolItem;
+use Http\Client\Common\HttpClientPool\RoundRobinClientPool;
+use Http\Client\Exception\HttpException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Promise\Promise;
@@ -10,9 +13,6 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\Common\HttpClientPool\RoundRobinClientPool;
-use Http\Client\Common\Exception\HttpClientNotFoundException;
-use Http\Client\Exception\HttpException;
 
 class RoundRobinClientPoolSpec extends ObjectBehavior
 {

@@ -2,11 +2,11 @@
 
 namespace spec\Http\Client\Common;
 
+use Http\Client\Common\BatchResult;
 use Http\Client\Exception;
+use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use PhpSpec\ObjectBehavior;
-use Http\Client\Common\BatchResult;
 
 class BatchResultSpec extends ObjectBehavior
 {
