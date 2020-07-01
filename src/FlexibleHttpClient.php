@@ -24,8 +24,10 @@ final class FlexibleHttpClient implements HttpClient, HttpAsyncClient
      */
     public function __construct($client)
     {
-        if (!($client instanceof ClientInterface) && !($client instanceof HttpAsyncClient)) {
-            throw new \LogicException(sprintf('Client must be an instance of %s or %s', ClientInterface::class, HttpAsyncClient::class));
+        if (!$client instanceof ClientInterface && !$client instanceof HttpAsyncClient) {
+            throw new \TypeError(
+                sprintf('%s::__construct(): Argument #1 ($client) must be of type %s|%s, %s given', self::class, ClientInterface::class, HttpAsyncClient::class, get_debug_type($client))
+            );
         }
 
         $this->httpClient = $client;

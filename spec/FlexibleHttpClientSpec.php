@@ -32,11 +32,11 @@ class FlexibleHttpClientSpec extends ObjectBehavior
         $this->shouldImplement(HttpAsyncClient::class);
     }
 
-    public function it_throw_exception_if_invalid_client()
+    public function it_throw_type_error_if_invalid_client()
     {
         $this->beConstructedWith(null);
 
-        $this->shouldThrow(\LogicException::class)->duringInstantiation();
+        $this->shouldThrow(\TypeError::class)->duringInstantiation();
     }
 
     public function it_emulates_an_async_client(

@@ -46,6 +46,12 @@ final class HttpClientRouter implements HttpClientRouterInterface
      */
     public function addClient($client, RequestMatcher $requestMatcher): void
     {
+        if (!$client instanceof ClientInterface && !$client instanceof HttpAsyncClient) {
+            throw new \TypeError(
+                sprintf('%s::addClient(): Argument #1 ($client) must be of type %s|%s, %s given', self::class, ClientInterface::class, HttpAsyncClient::class, get_debug_type($client))
+            );
+        }
+
         $this->clients[] = [
             'matcher' => $requestMatcher,
             'client' => new FlexibleHttpClient($client),
