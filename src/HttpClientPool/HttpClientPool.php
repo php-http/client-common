@@ -29,6 +29,12 @@ abstract class HttpClientPool implements HttpClientPoolInterface
      */
     public function addHttpClient($client): void
     {
+        if (!$client instanceof ClientInterface && !$client instanceof HttpAsyncClient && !$client instanceof HttpClientPoolItem) {
+            throw new \TypeError(
+                sprintf('%s::addHttpClient(): Argument #1 ($client) must be of type %s|%s|%s, %s given', self::class, ClientInterface::class, HttpAsyncClient::class, HttpClientPoolItem::class, get_debug_type($client))
+            );
+        }
+
         if (!$client instanceof HttpClientPoolItem) {
             $client = new HttpClientPoolItem($client);
         }

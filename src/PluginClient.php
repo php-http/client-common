@@ -50,8 +50,6 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      *
      *     @var int      $max_restarts
      * }
-     *
-     * @throws \RuntimeException if client is not an instance of HttpClient or HttpAsyncClient
      */
     public function __construct($client, array $plugins = [], array $options = [])
     {
@@ -60,7 +58,9 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         } elseif ($client instanceof ClientInterface) {
             $this->client = new EmulatedHttpAsyncClient($client);
         } else {
-            throw new \LogicException(sprintf('Client must be an instance of %s or %s', ClientInterface::class, HttpAsyncClient::class));
+            throw new \TypeError(
+                sprintf('%s::__construct(): Argument #1 ($client) must be of type %s|%s, %s given', self::class, ClientInterface::class, HttpAsyncClient::class, get_debug_type($client))
+            );
         }
 
         $this->plugins = $plugins;
