@@ -5,7 +5,7 @@
 ### Added
 
 - Plugin client builder for making a `PluginClient`
-- Support for the PSR17 request factory in `HttpMethodsClient`
+- Support for the PSR-17 request factory in `HttpMethodsClient`
 
 ### Changed
 
