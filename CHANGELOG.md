@@ -10,7 +10,7 @@
 ### Changed
 
 - Restored support for `symfony/options-resolver: ^2.6`
-- Consitent implementation of union type checking
+- Consistent implementation of union type checking
 
 ### Fixed
 
