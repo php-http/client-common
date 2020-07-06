@@ -6,7 +6,6 @@ namespace Http\Client\Common;
 
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * A plugin is a middleware to transform the request and/or the response.
@@ -25,8 +24,8 @@ interface Plugin
      *
      * @see http://docs.php-http.org/en/latest/plugins/build-your-own.html
      *
-     * @param callable(ResponseInterface): Promise $next  Next middleware in the chain, the request is passed as the first argument
-     * @param callable(ResponseInterface): Promise $first First middleware in the chain, used to to restart a request
+     * @param callable(RequestInterface): Promise $next  Next middleware in the chain, the request is passed as the first argument
+     * @param callable(RequestInterface): Promise $first First middleware in the chain, used to to restart a request
      *
      * @return Promise Resolves a PSR-7 Response or fails with an Http\Client\Exception (The same as HttpAsyncClient)
      */
