@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.0",
         "php-http/httplug": "^2.0",
         "php-http/message-factory": "^1.0",
         "php-http/message": "^1.6",
@@ -26,9 +26,8 @@
         "guzzlehttp/psr7": "^1.4",
         "nyholm/psr7": "^1.2",
         "phpspec/phpspec": "^5.1 || ^6.0",
-        "phpspec/prophecy": "^1.8",
-        "phpunit/phpunit": "^7.5",
-        "sebastian/comparator": "^3.0"
+        "phpspec/prophecy": "^1.10.2",
+        "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.3"
     },
     "suggest": {
         "ext-json": "To detect JSON responses with the ContentTypePlugin",
