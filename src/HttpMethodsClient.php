@@ -116,7 +116,7 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
     private function createRequest(string $method, $uri, array $headers = [], $body = null): RequestInterface
     {
         if ($this->requestFactory instanceof RequestFactory) {
-            return = $this->requestFactory->createRequest(
+            return $this->requestFactory->createRequest(
                 $method,
                 $uri,
                 $headers,
