@@ -30,6 +30,9 @@ final class PluginClientBuilder
         return $this;
     }
 
+    /**
+     * @param mixed $value
+     */
     public function setOption(string $name, $value): self
     {
         $this->options[$name] = $value;
