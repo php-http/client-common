@@ -117,7 +117,7 @@ final class CookiePlugin implements Plugin
             switch (strtolower($key)) {
                 case 'expires':
                     try {
-                        $expires = CookieUtil::parseDate($value);
+                        $expires = CookieUtil::parseDate((string) $value);
                     } catch (UnexpectedValueException $e) {
                         throw new TransferException(
                             sprintf(
