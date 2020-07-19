@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Http\Client\Common;
 
-use Http\Client\Exception as HttplugException;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
-use Http\Client\Promise\HttpFulfilledPromise;
-use Http\Client\Promise\HttpRejectedPromise;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,7 +21,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * An HTTP async client.
      *
-     * @var HttpAsyncClient|HttpClient
+     * @var HttpAsyncClient
      */
     private $client;
 
@@ -71,22 +68,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        // If we don't have an http client, use the async call
-        if (!($this->client instanceof ClientInterface)) {
-            return $this->sendAsyncRequest($request)->wait();
-        }
-
-        // Else we want to use the synchronous call of the underlying client, and not the async one in the case
-        // we have both an async and sync call
-        $pluginChain = $this->createPluginChain($this->plugins, function (RequestInterface $request) {
-            try {
-                return new HttpFulfilledPromise($this->client->sendRequest($request));
-            } catch (HttplugException $exception) {
-                return new HttpRejectedPromise($exception);
-            }
-        });
-
-        return $pluginChain($request)->wait();
+        return $this->sendAsyncRequest($request)->wait();
     }
 
     /**
