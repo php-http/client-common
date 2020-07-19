@@ -24,3 +24,8 @@ parameters:
             message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addFailure\\(\\) has no return typehint specified\\.$#"
             count: 1
             path: src/Plugin/Journal.php
+
+        -
+            message: "#^Call to an undefined method Http\\\\Client\\\\HttpAsyncClient\\:\\:sendRequest\\(\\)\\.$#"
+            count: 1
+            path: src/PluginClient.php
