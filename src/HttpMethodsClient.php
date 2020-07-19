@@ -31,7 +31,7 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
     private $streamFactory;
 
     /**
-     * @param RequestFactory|RequestFactoryInterface
+     * @param RequestFactory|RequestFactoryInterface $requestFactory
      */
     public function __construct(ClientInterface $httpClient, $requestFactory, StreamFactoryInterface $streamFactory = null)
     {
