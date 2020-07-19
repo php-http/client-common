@@ -42,7 +42,7 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
         }
 
         if (!$requestFactory instanceof RequestFactory && null === $streamFactory) {
-            @trigger_error(sprintf('Passing a %s without a %s to %s::__construct() is deprecated as of version 2.3 and will be disallowed in version 3.0. A stream factory is required to create a request with a string body.', RequestFactoryInterface::class, StreamFactoryInterface::class, self::class));
+            @trigger_error(sprintf('Passing a %s without a %s to %s::__construct() is deprecated as of version 2.3 and will be disallowed in version 3.0. A stream factory is required to create a request with a non-empty string body.', RequestFactoryInterface::class, StreamFactoryInterface::class, self::class));
         }
 
         $this->httpClient = $httpClient;
@@ -124,8 +124,8 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
             );
         }
 
-        if (is_string($body) && null === $this->streamFactory) {
-            throw new \RuntimeException('Cannot create request: A stream factory is required to create a request with a string body.');
+        if (is_string($body) && '' !== $body && null === $this->streamFactory) {
+            throw new \RuntimeException('Cannot create request: A stream factory is required to create a request with a non-empty string body.');
         }
 
         $request = $this->requestFactory->createRequest($method, $uri);
@@ -134,7 +134,7 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
             $request = $request->withHeader($key, $value);
         }
 
-        if (null !== $body) {
+        if (null !== $body && '' !== $body) {
             $request = $request->withBody(
                 is_string($body) ? $this->streamFactory->createStream($body) : $body
             );
