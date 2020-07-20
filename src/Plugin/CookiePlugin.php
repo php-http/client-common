@@ -117,7 +117,7 @@ final class CookiePlugin implements Plugin
             switch (strtolower($key)) {
                 case 'expires':
                     try {
-                        $expires = CookieUtil::parseDate($value);
+                        $expires = CookieUtil::parseDate((string) $value);
                     } catch (UnexpectedValueException $e) {
                         throw new TransferException(
                             sprintf(
@@ -167,13 +167,13 @@ final class CookiePlugin implements Plugin
      *
      * @param string $part A single cookie value in format key=value
      *
-     * @return string[]
+     * @return array{0:string, 1:?string}
      */
     private function createValueKey(string $part): array
     {
         $parts = explode('=', $part, 2);
         $key = trim($parts[0]);
-        $value = isset($parts[1]) ? trim($parts[1]) : true;
+        $value = isset($parts[1]) ? trim($parts[1]) : null;
 
         return [$key, $value];
     }

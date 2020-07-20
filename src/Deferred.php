@@ -146,6 +146,7 @@ final class Deferred implements Promise
             return $this->value;
         }
 
+        /** @var ClientExceptionInterface */
         throw $this->failure;
     }
 }

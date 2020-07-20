@@ -12,8 +12,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class SeekableBodyPlugin implements Plugin
 {
+    /**
+     * @var bool
+     */
     protected $useFileBuffer;
 
+    /**
+     * @var int
+     */
     protected $memoryBufferSize;
 
     /**

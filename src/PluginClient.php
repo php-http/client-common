@@ -9,6 +9,7 @@ use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Client\Promise\HttpFulfilledPromise;
 use Http\Client\Promise\HttpRejectedPromise;
+use Http\Promise\Promise;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,7 +25,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * An HTTP async client.
      *
-     * @var HttpAsyncClient|HttpClient
+     * @var HttpAsyncClient
      */
     private $client;
 
@@ -71,13 +72,13 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        // If we don't have an http client, use the async call
-        if (!($this->client instanceof ClientInterface)) {
+        // If the client doesn't support sync calls, call async
+        if (!$this->client instanceof ClientInterface) {
             return $this->sendAsyncRequest($request)->wait();
         }
 
-        // Else we want to use the synchronous call of the underlying client, and not the async one in the case
-        // we have both an async and sync call
+        // Else we want to use the synchronous call of the underlying client,
+        // and not the async one in the case we have both an async and sync call
         $pluginChain = $this->createPluginChain($this->plugins, function (RequestInterface $request) {
             try {
                 return new HttpFulfilledPromise($this->client->sendRequest($request));
@@ -121,9 +122,12 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      *
      * @param Plugin[] $plugins        A plugin chain
      * @param callable $clientCallable Callable making the HTTP call
+     *
+     * @return callable(RequestInterface): Promise
      */
     private function createPluginChain(array $plugins, callable $clientCallable): callable
     {
+        /** @var callable(RequestInterface): Promise */
         return new PluginChain($plugins, $clientCallable, $this->options);
     }
 }

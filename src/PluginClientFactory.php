@@ -16,7 +16,7 @@ use Psr\Http\Client\ClientInterface;
 final class PluginClientFactory
 {
     /**
-     * @var callable|null
+     * @var (callable(ClientInterface|HttpAsyncClient, Plugin[], array): PluginClient)|null
      */
     private static $factory;
 
@@ -28,8 +28,10 @@ final class PluginClientFactory
      * application execution.
      *
      * @internal
+     *
+     * @param callable(ClientInterface|HttpAsyncClient, Plugin[], array): PluginClient $factory
      */
-    public static function setFactory(callable $factory)
+    public static function setFactory(callable $factory): void
     {
         static::$factory = $factory;
     }

@@ -30,15 +30,7 @@ final class FlexibleHttpClient implements HttpClient, HttpAsyncClient
             );
         }
 
-        $this->httpClient = $client;
-        $this->httpAsyncClient = $client;
-
-        if (!($this->httpClient instanceof ClientInterface)) {
-            $this->httpClient = new EmulatedHttpClient($this->httpClient);
-        }
-
-        if (!($this->httpAsyncClient instanceof HttpAsyncClient)) {
-            $this->httpAsyncClient = new EmulatedHttpAsyncClient($this->httpAsyncClient);
-        }
+        $this->httpClient = $client instanceof ClientInterface ? $client : new EmulatedHttpClient($client);
+        $this->httpAsyncClient = $client instanceof HttpAsyncClient ? $client : new EmulatedHttpAsyncClient($client);
     }
 }

@@ -1,0 +1,31 @@
+parameters:
+    level: max
+    checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - src
+    ignoreErrors:
+        -
+            message: "#^Strict comparison using \\!\\=\\= between null and null will always evaluate to false\\.$#"
+            count: 1
+            path: src/HttpMethodsClient.php
+
+        -
+            message: "#^Cannot call method createStream\\(\\) on Psr\\\\Http\\\\Message\\\\StreamFactoryInterface\\|null\\.$#"
+            count: 1
+            path: src/HttpMethodsClient.php
+
+        -
+            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addSuccess\\(\\) has no return typehint specified\\.$#"
+            count: 1
+            path: src/Plugin/Journal.php
+
+        -
+            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addFailure\\(\\) has no return typehint specified\\.$#"
+            count: 1
+            path: src/Plugin/Journal.php
+
+        -
+            message: "#^Call to an undefined method Http\\\\Client\\\\HttpAsyncClient\\:\\:sendRequest\\(\\)\\.$#"
+            count: 1
+            path: src/PluginClient.php

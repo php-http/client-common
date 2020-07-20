@@ -14,7 +14,7 @@ final class PluginChain
     /** @var Plugin[] */
     private $plugins;
 
-    /** @var callable */
+    /** @var callable(RequestInterface): Promise */
     private $clientCallable;
 
     /** @var int */
@@ -24,9 +24,9 @@ final class PluginChain
     private $restarts = 0;
 
     /**
-     * @param Plugin[] $plugins        A plugin chain
-     * @param callable $clientCallable Callable making the HTTP call
-     * @param array    $options        {
+     * @param Plugin[]                            $plugins        A plugin chain
+     * @param callable(RequestInterface): Promise $clientCallable Callable making the HTTP call
+     * @param array                               $options        {
      *
      *     @var int $max_restarts
      * }

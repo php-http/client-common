@@ -5,4 +5,5 @@
 /composer.lock
 /phpspec.yml
 /phpunit.xml
+/phpstan.neon
 /vendor/
