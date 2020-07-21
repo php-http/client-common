@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.3.0 - 2020-07-21
+
+### Fixed
+
+- HttpMethodsClient with PSR RequestFactory
+- Bug in the cookie plugin with empty cookies
+- Bug when parsing null-valued date headers
+
+### Changed
+
+- Deprecation when constructing a HttpMethodsClient with PSR RequestFactory but without a StreamFactory
+
 ## 2.2.1 - 2020-07-13
 
 ### Fixed
