@@ -4,7 +4,7 @@
 
 ### Added
 
-- `strict` option to `RedirectPlugin`
+- `strict` option to `RedirectPlugin` to allow preserving the request method on redirections with status 300, 301 and 302.
 
 ## 2.3.0 - 2020-07-21
 
