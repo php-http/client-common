@@ -286,11 +286,56 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
         $modifiedRequest->getUri()->willReturn($uriRedirect);
+        $uriRedirect->__toString()->willReturn('/redirect');
+        $modifiedRequest->getMethod()->willReturn('POST');
+        $modifiedRequest->withMethod('GET')->shouldBeCalled()->willReturn($modifiedRequest);
 
+        $next = function (RequestInterface $receivedRequest) use ($request, $responseRedirect) {
+            if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {
+                return new HttpFulfilledPromise($responseRedirect->getWrappedObject());
+            }
+        };
+
+        $first = function (RequestInterface $receivedRequest) use ($modifiedRequest, $promise) {
+            if (Argument::is($modifiedRequest->getWrappedObject())->scoreArgument($receivedRequest)) {
+                return $promise->getWrappedObject();
+            }
+        };
+
+        $promise->getState()->willReturn(Promise::FULFILLED);
+        $promise->wait()->shouldBeCalled()->willReturn($finalResponse);
+
+        $this->handleRequest($request, $next, $first);
+    }
+
+    public function it_does_not_switch_method_for_302_with_strict_option(
+        UriInterface $uri,
+        UriInterface $uriRedirect,
+        RequestInterface $request,
+        ResponseInterface $responseRedirect,
+        RequestInterface $modifiedRequest,
+        ResponseInterface $finalResponse,
+        Promise $promise
+    ) {
+        $this->beConstructedWith(['strict' => true]);
+
+        $request->getUri()->willReturn($uri);
+        $uri->__toString()->willReturn('/original');
+
+        $responseRedirect->getStatusCode()->willReturn(302);
+        $responseRedirect->hasHeader('Location')->willReturn(true);
+        $responseRedirect->getHeaderLine('Location')->willReturn('/redirect');
+
+        $request->getUri()->willReturn($uri);
+        $uri->withPath('/redirect')->willReturn($uriRedirect);
+        $uriRedirect->withFragment('')->willReturn($uriRedirect);
+        $uriRedirect->withQuery('')->willReturn($uriRedirect);
+
+        $request->withUri($uriRedirect)->willReturn($modifiedRequest);
         $modifiedRequest->getUri()->willReturn($uriRedirect);
         $uriRedirect->__toString()->willReturn('/redirect');
         $modifiedRequest->getMethod()->willReturn('POST');
-        $modifiedRequest->withMethod('GET')->willReturn($modifiedRequest);
+        $modifiedRequest->withMethod('GET')->shouldNotBeCalled();
 
         $next = function (RequestInterface $receivedRequest) use ($request, $responseRedirect) {
             if (Argument::is($request->getWrappedObject())->scoreArgument($receivedRequest)) {

@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.4.0 (unreleased)
+
+### Added
+
+- `strict` option to `RedirectPlugin` to allow preserving the request method on redirections with status 300, 301 and 302.
+
 ## 2.3.0 - 2020-07-21
 
 ### Fixed
@@ -112,7 +118,7 @@
 
 ## 1.7.0 - 2017-11-30
 
-### Added 
+### Added
 
 - Symfony 4 support
 
@@ -132,12 +138,12 @@
 
 ### Changed
 
-- The `RetryPlugin` does now wait between retries. To disable/change this feature you must write something like: 
- 
+- The `RetryPlugin` does now wait between retries. To disable/change this feature you must write something like:
+
 ```php
-$plugin = new RetryPlugin(['delay' => function(RequestInterface $request, Exception $e, $retries) { 
-  return 0; 
-}); 
+$plugin = new RetryPlugin(['delay' => function(RequestInterface $request, Exception $e, $retries) {
+  return 0;
+});
 ```
 
 ### Deprecated
