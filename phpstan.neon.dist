@@ -6,14 +6,14 @@ parameters:
         - src
     ignoreErrors:
         -
-            message: "#^Strict comparison using \\!\\=\\= between null and null will always evaluate to false\\.$#"
+            message: "#^Cannot call method createStream\\(\\) on Psr\\\\Http\\\\Message\\\\StreamFactoryInterface\\|null\\.$#"
             count: 1
             path: src/HttpMethodsClient.php
 
         -
-            message: "#^Cannot call method createStream\\(\\) on Psr\\\\Http\\\\Message\\\\StreamFactoryInterface\\|null\\.$#"
+            message: "#^Cannot call method isDisabled() on Http\\Client\\Common\\HttpClientPool\\HttpClientPoolItem|false\\.$#"
             count: 1
-            path: src/HttpMethodsClient.php
+            path: src/HttpClientPool/RoundRobinClientPool.php
 
         -
             message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addSuccess\\(\\) has no return typehint specified\\.$#"
