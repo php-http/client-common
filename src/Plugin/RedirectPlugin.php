@@ -105,7 +105,7 @@ final class RedirectPlugin implements Plugin
      * @param array $config {
      *
      *     @var bool|string[] $preserve_header True keeps all headers, false remove all of them, an array is interpreted as a list of header names to keep
-     *     @var bool $use_default_for_multiple Whether the location header must be directly used for a multiple redirection status code (300).
+     *     @var bool $use_default_for_multiple Whether the location header must be directly used for a multiple redirection status code (300)
      *     @var bool $strict When true, redirect codes 300, 301, 302 will not modify request method and body.
      * }
      */
