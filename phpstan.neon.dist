@@ -11,11 +11,6 @@ parameters:
             path: src/HttpMethodsClient.php
 
         -
-            message: "#^Cannot call method isDisabled() on Http\\Client\\Common\\HttpClientPool\\HttpClientPoolItem|false\\.$#"
-            count: 1
-            path: src/HttpClientPool/RoundRobinClientPool.php
-
-        -
             message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addSuccess\\(\\) has no return typehint specified\\.$#"
             count: 1
             path: src/Plugin/Journal.php
