@@ -69,6 +69,18 @@
 - Deprecated option `debug_plugins` has been removed from `PluginClient`
 - Deprecated options `decider` and `delay` have been removed from `RetryPlugin`, use `exception_decider` and `exception_delay` instead.
 
+## 1.11.0 - 2021-07-11
+
+### Changed
+
+- Backported from version 2: AddPathPlugin: Do not add the prefix if the URL already has the same prefix.
+
+## 1.10.0 - 2019-11-18
+
+### Added
+
+- Support for Symfony 5
+
 ## 1.9.1 - 2019-02-02
 
 ### Added
