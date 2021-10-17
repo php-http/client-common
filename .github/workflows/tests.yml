@@ -26,6 +26,12 @@ jobs:
       - name: Install PHP dependencies
         run: composer update --prefer-dist --no-interaction --no-progress
 
+      - name: Require PHPSpec 7.1 dependencies
+        run: |
+          composer require "phpspec/phpspec:^7.1@dev" --no-interaction --no-update
+          composer update --prefer-dist --no-interaction --no-progress --ignore-platform-req=php
+        if: "matrix.php == '8.1'"
+
       - name: Execute tests
         run: composer test
 
