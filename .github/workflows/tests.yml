@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        symfony: ['2', '3', '4', '5', '6']
+        symfony: ['4', '5', '6']
 
     steps:
       - name: Checkout code
@@ -85,8 +85,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require dunglas/symfony-lock:v${{ matrix.symfony }} --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --prefer-stable --prefer-lowest --no-progress
+          SYMFONY_REQUIRE=${{ matrix.symfony }} composer update --prefer-dist --no-interaction --prefer-stable --prefer-lowest --no-progress
 
       - name: Execute tests
         run: composer test
