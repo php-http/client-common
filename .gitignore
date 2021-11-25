@@ -7,3 +7,5 @@
 /phpunit.xml
 /phpstan.neon
 /vendor/
+
+.phpunit.result.cache
