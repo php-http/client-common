@@ -124,10 +124,6 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
             );
         }
 
-        if (is_string($body) && '' !== $body && null === $this->streamFactory) {
-            throw new \RuntimeException('Cannot create request: A stream factory is required to create a request with a non-empty string body.');
-        }
-
         $request = $this->requestFactory->createRequest($method, $uri);
 
         foreach ($headers as $key => $value) {
@@ -135,6 +131,10 @@ final class HttpMethodsClient implements HttpMethodsClientInterface
         }
 
         if (null !== $body && '' !== $body) {
+            if (null === $this->streamFactory) {
+                throw new \RuntimeException('Cannot create request: A stream factory is required to create a request with a non-empty string body.');
+            }
+
             $request = $request->withBody(
                 is_string($body) ? $this->streamFactory->createStream($body) : $body
             );

@@ -23,11 +23,11 @@ abstract class SeekableBodyPlugin implements Plugin
     protected $memoryBufferSize;
 
     /**
-     * @param array $config {
+     * @param array{'use_file_buffer'?: bool, 'memory_boffer_size'?: int} $config
      *
-     *    @var bool $use_file_buffer    Whether this plugin should use a file as a buffer if the stream is too big, defaults to true
-     *    @var int  $memory_buffer_size Max memory size in bytes to use for the buffer before it use a file, defaults to 2097152 (2 mb)
-     * }
+     * Configuration options:
+     *   - use_file_buffer: Whether this plugin should use a file as a buffer if the stream is too big, defaults to true
+     *   - memory_buffer_size: Max memory size in bytes to use for the buffer before it use a file, defaults to 2097152 (2 mb)
      */
     public function __construct(array $config = [])
     {

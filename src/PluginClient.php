@@ -46,9 +46,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     /**
      * @param ClientInterface|HttpAsyncClient $client  An HTTP async client
      * @param Plugin[]                        $plugins A plugin chain
-     * @param array                           $options {
-     *     @var int $max_restarts
-     * }
+     * @param array{'max_restarts'?: int}     $options
      */
     public function __construct($client, array $plugins = [], array $options = [])
     {

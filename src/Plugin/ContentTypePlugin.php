@@ -35,11 +35,11 @@ final class ContentTypePlugin implements Plugin
     private $sizeLimit;
 
     /**
-     * @param array $config {
+     * @param array{'skip_detection'?: bool, 'size_limit'?: int} $config
      *
-     *     @var bool $skip_detection true skip detection if stream size is bigger than $size_limit
-     *     @var int $size_limit size stream limit for which the detection as to be skipped.
-     * }
+     * Configuration options:
+     *   - skip_detection: true skip detection if stream size is bigger than $size_limit
+     *   - size_limit: size stream limit for which the detection as to be skipped.
      */
     public function __construct(array $config = [])
     {

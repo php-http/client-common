@@ -56,14 +56,14 @@ final class RetryPlugin implements Plugin
     private $retryStorage = [];
 
     /**
-     * @param array $config {
+     * @param array{'retries'?: int, 'error_response_decider'?: callable, 'exception_decider'?: callable, 'error_response_delay'?: callable, 'exception_delay'?: callable} $config
      *
-     *     @var int $retries Number of retries to attempt if an exception occurs before letting the exception bubble up
-     *     @var callable $error_response_decider A callback that gets a request and response to decide whether the request should be retried
-     *     @var callable $exception_decider A callback that gets a request and an exception to decide after a failure whether the request should be retried
-     *     @var callable $error_response_delay A callback that gets a request and response and the current number of retries and returns how many microseconds we should wait before trying again
-     *     @var callable $exception_delay A callback that gets a request, an exception and the current number of retries and returns how many microseconds we should wait before trying again
-     * }
+     * Configuration options:
+     *   - retries: Number of retries to attempt if an exception occurs before letting the exception bubble up
+     *   - error_response_decider: A callback that gets a request and response to decide whether the request should be retried
+     *   - exception_decider: A callback that gets a request and an exception to decide after a failure whether the request should be retried
+     *   - error_response_delay: A callback that gets a request and response and the current number of retries and returns how many microseconds we should wait before trying again
+     *   - exception_delay: A callback that gets a request, an exception and the current number of retries and returns how many microseconds we should wait before trying again
      */
     public function __construct(array $config = [])
     {
@@ -115,6 +115,7 @@ final class RetryPlugin implements Plugin
             }
 
             if (call_user_func($this->errorResponseDecider, $request, $response)) {
+                /** @var int $time */
                 $time = call_user_func($this->errorResponseDelay, $request, $response, $this->retryStorage[$chainIdentifier]);
                 $response = $this->retry($request, $next, $first, $chainIdentifier, $time);
             }
@@ -139,6 +140,7 @@ final class RetryPlugin implements Plugin
                 throw $exception;
             }
 
+            /** @var int $time */
             $time = call_user_func($this->exceptionDelay, $request, $exception, $this->retryStorage[$chainIdentifier]);
 
             return $this->retry($request, $next, $first, $chainIdentifier, $time);

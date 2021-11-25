@@ -5,22 +5,43 @@ parameters:
     paths:
         - src
     ignoreErrors:
+        # Exception still thrown in PHP 8, not sure why phpstan complains
         -
-            message: "#^Cannot call method createStream\\(\\) on Psr\\\\Http\\\\Message\\\\StreamFactoryInterface\\|null\\.$#"
-            count: 1
-            path: src/HttpMethodsClient.php
+            message: "#^Dead catch - UnexpectedValueException is never thrown in the try block\\.$#"
+            count: 2
+            path: src/BatchResult.php
 
         -
-            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addSuccess\\(\\) has no return typehint specified\\.$#"
+            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addSuccess\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Plugin/Journal.php
 
         -
-            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addFailure\\(\\) has no return typehint specified\\.$#"
+            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addFailure\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Plugin/Journal.php
 
         -
             message: "#^Call to an undefined method Http\\\\Client\\\\HttpAsyncClient\\:\\:sendRequest\\(\\)\\.$#"
             count: 1
+            path: src/PluginClient.php
+
+        -
+            message: "#^Method Http\\\\Client\\\\Common\\\\EmulatedHttpClient\\:\\:sendRequest\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
+            count: 1
+            path: src/EmulatedHttpClient.php
+
+        -
+            message: "#^Anonymous function should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\RetryPlugin\\:\\:retry\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: "#^Method Http\\\\Client\\\\Common\\\\PluginClient\\:\\:sendRequest\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
+            count: 2
             path: src/PluginClient.php

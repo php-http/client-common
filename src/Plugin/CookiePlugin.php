@@ -97,7 +97,7 @@ final class CookiePlugin implements Plugin
     {
         $parts = array_map('trim', explode(';', $setCookieHeader));
 
-        if (empty($parts) || !strpos($parts[0], '=')) {
+        if ('' === $parts[0] || false === strpos($parts[0], '=')) {
             return null;
         }
 
