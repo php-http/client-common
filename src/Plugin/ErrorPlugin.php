@@ -37,10 +37,10 @@ final class ErrorPlugin implements Plugin
     private $onlyServerException;
 
     /**
-     * @param array $config {
+     * @param array{'only_server_exception'?: bool} $config
      *
-     *    @var bool only_server_exception Whether this plugin should only throw 5XX Exceptions (default to false).
-     * }
+     * Configuration options:
+     *   - only_server_exception: Whether this plugin should only throw 5XX Exceptions (default to false).
      */
     public function __construct(array $config = [])
     {
