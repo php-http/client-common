@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.5.0 - 2021-11-26
+
+### Added
+
+- Support for Symfony 6
+- Support for PHP 8.1
+
+### Changed
+
+- Dropped support for Symfony 2 and 3 - please keep using version 2.4.0 of this library if you can't update Symfony.
+
 ## 2.4.0 - 2021-07-05
 
 ### Added
