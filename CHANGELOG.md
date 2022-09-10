@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.1 - 2022-09-??
+
+### Fixed
+
+- Fixes false positive circular detection in RedirectPlugin in cases when target location does not contain path
+
 ## 2.5.0 - 2021-11-26
 
 ### Added
