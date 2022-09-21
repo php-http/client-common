@@ -162,6 +162,9 @@ class RedirectPluginSpec extends ObjectBehavior
 
         $request->getUri()->willReturn($uri);
         $uri->withScheme('https')->willReturn($uriRedirect);
+        $uri->withPath('/redirect')->willReturn($uri);
+        $uri->withQuery('query')->willReturn($uri);
+        $uri->withFragment('fragment')->willReturn($uri);
         $uriRedirect->withHost('server.com')->willReturn($uriRedirect);
         $uriRedirect->withPort('8000')->willReturn($uriRedirect);
         $uriRedirect->withPath('/redirect')->willReturn($uriRedirect);
@@ -520,6 +523,9 @@ class RedirectPluginSpec extends ObjectBehavior
         $request->getUri()->willReturn($uri);
         $request->withUri($uriRedirect)->willReturn($modifiedRequest);
         $uri->__toString()->willReturn('http://my-site.com/original');
+        $uri->withPath('/original')->willReturn($uri);
+        $uri->withFragment('')->willReturn($uri);
+        $uri->withQuery('')->willReturn($uri);
 
         $uri->withScheme('https')->willReturn($uriRedirect);
         $uriRedirect->withHost('my-site.com')->willReturn($uriRedirect);

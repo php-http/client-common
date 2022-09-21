@@ -231,6 +231,11 @@ final class RedirectPlugin implements Plugin
         }
 
         $uri = $originalRequest->getUri();
+        $uri = $uri
+            ->withPath(array_key_exists('path', $parsedLocation) ? $parsedLocation['path'] : '')
+            ->withQuery(array_key_exists('query', $parsedLocation) ? $parsedLocation['query'] : '')
+            ->withFragment(array_key_exists('fragment', $parsedLocation) ? $parsedLocation['fragment'] : '')
+        ;
 
         if (array_key_exists('scheme', $parsedLocation)) {
             $uri = $uri->withScheme($parsedLocation['scheme']);
@@ -242,22 +247,6 @@ final class RedirectPlugin implements Plugin
 
         if (array_key_exists('port', $parsedLocation)) {
             $uri = $uri->withPort($parsedLocation['port']);
-        }
-
-        if (array_key_exists('path', $parsedLocation)) {
-            $uri = $uri->withPath($parsedLocation['path']);
-        }
-
-        if (array_key_exists('query', $parsedLocation)) {
-            $uri = $uri->withQuery($parsedLocation['query']);
-        } else {
-            $uri = $uri->withQuery('');
-        }
-
-        if (array_key_exists('fragment', $parsedLocation)) {
-            $uri = $uri->withFragment($parsedLocation['fragment']);
-        } else {
-            $uri = $uri->withFragment('');
         }
 
         return $uri;
