@@ -85,6 +85,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer config --no-plugins allow-plugins.symfony/flex true
           composer require --no-update --no-interaction --no-progress symfony/flex
           composer config extra.symfony.require ${{ matrix.symfony}}
           composer update --prefer-dist --no-interaction --prefer-stable --prefer-lowest --no-progress
