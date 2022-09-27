@@ -4,7 +4,8 @@
 
 ### Fixed
 
-- Fixes false positive circular detection in RedirectPlugin in cases when target location does not contain path
+- [RedirectPlugin] Fixed handling of redirection to different domain with default port
+- [RedirectPlugin] Fixed false positive circular detection in RedirectPlugin in cases when target location does not contain path
 
 ## 2.5.0 - 2021-11-26
 
