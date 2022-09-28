@@ -9,15 +9,13 @@ use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginChain;
 use Http\Promise\Promise;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 
 class PluginChainTest extends TestCase
 {
     private function createPlugin(callable $func): Plugin
     {
-        return new class ($func) implements Plugin
-        {
+        return new class($func) implements Plugin {
             public $func;
 
             public function __construct(callable $func)

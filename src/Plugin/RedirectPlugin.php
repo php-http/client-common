@@ -107,7 +107,7 @@ final class RedirectPlugin implements Plugin
      * Configuration options:
      *   - preserve_header: True keeps all headers, false remove all of them, an array is interpreted as a list of header names to keep
      *   - use_default_for_multiple: Whether the location header must be directly used for a multiple redirection status code (300)
-     *   - strict: When true, redirect codes 300, 301, 302 will not modify request method and body.
+     *   - strict: When true, redirect codes 300, 301, 302 will not modify request method and body
      */
     public function __construct(array $config = [])
     {
@@ -242,7 +242,7 @@ final class RedirectPlugin implements Plugin
             if ('' === $path) {
                 $path = $originalPath;
             } elseif (($pos = strrpos($originalPath, '/')) !== false) {
-                $path = substr($originalPath, 0, $pos+1).$path;
+                $path = substr($originalPath, 0, $pos + 1).$path;
             } else {
                 $path = '/'.$path;
             }
