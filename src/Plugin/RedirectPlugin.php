@@ -107,7 +107,7 @@ final class RedirectPlugin implements Plugin
      * Configuration options:
      *   - preserve_header: True keeps all headers, false remove all of them, an array is interpreted as a list of header names to keep
      *   - use_default_for_multiple: Whether the location header must be directly used for a multiple redirection status code (300)
-     *   - strict: When true, redirect codes 300, 301, 302 will not modify request method and body.
+     *   - strict: When true, redirect codes 300, 301, 302 will not modify request method and body
      */
     public function __construct(array $config = [])
     {
@@ -226,13 +226,39 @@ final class RedirectPlugin implements Plugin
         $location = $redirectResponse->getHeaderLine('Location');
         $parsedLocation = parse_url($location);
 
-        if (false === $parsedLocation) {
-            throw new HttpException(sprintf('Location %s could not be parsed', $location), $originalRequest, $redirectResponse);
+        if (false === $parsedLocation || '' === $location) {
+            throw new HttpException(sprintf('Location "%s" could not be parsed', $location), $originalRequest, $redirectResponse);
         }
 
         $uri = $originalRequest->getUri();
+
+        // Redirections can either use an absolute uri or a relative reference https://www.rfc-editor.org/rfc/rfc3986#section-4.2
+        // If relative, we need to check if we have an absolute path or not
+
+        $path = array_key_exists('path', $parsedLocation) ? $parsedLocation['path'] : '';
+        if (!array_key_exists('host', $parsedLocation) && '/' !== $location[0]) {
+            // the target is a relative-path reference, we need to merge it with the base path
+            $originalPath = $uri->getPath();
+            if ('' === $path) {
+                $path = $originalPath;
+            } elseif (($pos = strrpos($originalPath, '/')) !== false) {
+                $path = substr($originalPath, 0, $pos + 1).$path;
+            } else {
+                $path = '/'.$path;
+            }
+            /* replace '/./' or '/foo/../' with '/' */
+            $re = ['#(/\./)#', '#/(?!\.\.)[^/]+/\.\./#'];
+            for ($n = 1; $n > 0; $path = preg_replace($re, '/', $path, -1, $n)) {
+                if (null === $path) {
+                    throw new HttpException(sprintf('Failed to resolve Location %s', $location), $originalRequest, $redirectResponse);
+                }
+            }
+        }
+        if (null === $path) {
+            throw new HttpException(sprintf('Failed to resolve Location %s', $location), $originalRequest, $redirectResponse);
+        }
         $uri = $uri
-            ->withPath(array_key_exists('path', $parsedLocation) ? $parsedLocation['path'] : '')
+            ->withPath($path)
             ->withQuery(array_key_exists('query', $parsedLocation) ? $parsedLocation['query'] : '')
             ->withFragment(array_key_exists('fragment', $parsedLocation) ? $parsedLocation['fragment'] : '')
         ;
@@ -247,6 +273,8 @@ final class RedirectPlugin implements Plugin
 
         if (array_key_exists('port', $parsedLocation)) {
             $uri = $uri->withPort($parsedLocation['port']);
+        } elseif (array_key_exists('host', $parsedLocation)) {
+            $uri = $uri->withPort(null);
         }
 
         return $uri;
