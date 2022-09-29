@@ -37,6 +37,7 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
+        $this->beConstructedWith(['stream_factory' => null]);
         $responseRedirect->getStatusCode()->willReturn(302);
         $responseRedirect->hasHeader('Location')->willReturn(true);
         $responseRedirect->getHeaderLine('Location')->willReturn('/redirect');
@@ -81,6 +82,7 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         ResponseInterface $redirectResponse
     ) {
+        $this->beConstructedWith(['stream_factory' => null]);
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
         $uri->withPath('/redirect')->willReturn($uriRedirect);
@@ -153,6 +155,7 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
+        $this->beConstructedWith(['stream_factory' => null]);
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
 
@@ -275,6 +278,7 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
+        $this->beConstructedWith(['stream_factory' => null]);
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
 
@@ -367,7 +371,10 @@ class RedirectPluginSpec extends ObjectBehavior
         ResponseInterface $finalResponse,
         Promise $promise
     ) {
-        $this->beConstructedWith(['preserve_header' => ['Accept']]);
+        $this->beConstructedWith([
+            'preserve_header' => ['Accept'],
+            'stream_factory' => null,
+        ]);
 
         $request->getUri()->willReturn($uri);
         $uri->__toString()->willReturn('/original');
