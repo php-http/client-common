@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.6.0 - 2022-09-29
+
+- [RedirectPlugin] Redirection of non GET/HEAD requests with a body now removes the body on follow-up requests, if the
+  HTTP method changes. To do this, the plugin needs to find a PSR-7 stream implementation. If none is found, you can
+  explicitly pass a PSR-17 StreamFactoryInterface in the `stream_factory` option.
+  To keep sending the body in all cases, set the `stream_factory` option to null explicitly.
+
 ## 2.5.1 - 2022-09-29
 
 ### Fixed

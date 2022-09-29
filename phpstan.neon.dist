@@ -36,6 +36,18 @@ parameters:
             count: 1
             path: src/Plugin/RedirectPlugin.php
 
+        # phpstan is confused by the optional dependencies. we check for existence first
+        -
+            message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\RedirectPlugin::guessStreamFactory\\(\\) should return Psr\\\\Http\\\\Message\\\\StreamFactoryInterface\\|null but returns Nyholm\\\\Psr7\\\\Factory\\\\Psr17Factory\\.$#"
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        # phpstan is confused by the optional dependencies. we check for existence first
+        -
+            message: "#^Call to static method streamFor\\(\\) on an unknown class GuzzleHttp\\\\Psr7\\\\Utils\\.$#"
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
         -
             message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\RetryPlugin\\:\\:retry\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
             count: 1
