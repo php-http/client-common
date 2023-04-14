@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace tests\Http\Client\Common;
 
-use Closure;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\Common\PluginClientBuilder;
@@ -32,7 +31,7 @@ class PluginClientBuilderTest extends TestCase
         $client = $this->prophesize($client)->reveal();
         $client = $builder->createClient($client);
 
-        $closure = Closure::bind(
+        $closure = \Closure::bind(
             function (): array {
                 return $this->plugins;
             },
@@ -58,7 +57,7 @@ class PluginClientBuilderTest extends TestCase
         $client = $this->prophesize($client)->reveal();
         $client = $builder->createClient($client);
 
-        $closure = Closure::bind(
+        $closure = \Closure::bind(
             function (): array {
                 return $this->options;
             },

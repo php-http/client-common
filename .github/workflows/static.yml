@@ -3,7 +3,7 @@ name: static
 on:
   push:
       branches:
-          - master
+          - '*.x'
   pull_request:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: PHPStan
         uses: OskarStark/phpstan-ga@0.12.32
@@ -28,7 +28,7 @@ jobs:
 
       steps:
           - name: Checkout code
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
 
           - name: PHP-CS-Fixer
             uses: docker://oskarstark/php-cs-fixer-ga

@@ -3,7 +3,7 @@ name: tests
 on:
   push:
       branches:
-          - master
+          - '*.x'
   pull_request:
 
 jobs:
@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -42,11 +42,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4']
+        php: ['7.1', '7.4', '8.2']
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -68,16 +68,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        symfony: ['4', '5', '6']
+        include:
+          - symfony: '4'
+            php-version: '7.1'
+          - symfony: '5'
+            php-version: '7.4'
+          - symfony: '6'
+            php-version: '8.2'
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.1
+          php-version: ${{ matrix.php-version }}
           tools: composer:v2
           coverage: none
 
@@ -101,7 +107,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
