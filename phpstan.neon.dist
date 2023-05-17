@@ -31,6 +31,27 @@ parameters:
             count: 1
             path: src/EmulatedHttpClient.php
 
+        # we still support the obsolete RequestFactory for BC but do not require the package anymore
+        -
+            message: "#^Call to method createRequest\\(\\) on an unknown class Http\\\\Message\\\\RequestFactory\\.$#"
+            count: 1
+            path: src/HttpMethodsClient.php
+
+        -
+            message: "#^Class Http\\\\Message\\\\RequestFactory not found\\.$#"
+            count: 4
+            path: src/HttpMethodsClient.php
+
+        -
+            message: "#^Parameter \\$requestFactory of method Http\\\\Client\\\\Common\\\\HttpMethodsClient\\:\\:__construct\\(\\) has invalid type Http\\\\Message\\\\RequestFactory\\.$#"
+            count: 1
+            path: src/HttpMethodsClient.php
+
+        -
+            message: "#^Property Http\\\\Client\\\\Common\\\\HttpMethodsClient\\:\\:\\$requestFactory has unknown class Http\\\\Message\\\\RequestFactory as its type\\.$#"
+            count: 1
+            path: src/HttpMethodsClient.php
+
         -
             message: "#^Anonymous function should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
             count: 1

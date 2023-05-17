@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Http\Client\Common\Plugin;
+namespace Tests\Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin\AddPathPlugin;
