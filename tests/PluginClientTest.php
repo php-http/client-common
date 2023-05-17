@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests\Http\Client\Common;
+namespace Tests\Http\Client\Common;
 
 use Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin\HeaderAppendPlugin;
