@@ -42,7 +42,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "spec\\Http\\Client\\Common\\": "spec/"
+            "spec\\Http\\Client\\Common\\": "spec/",
+            "Tests\\Http\\Client\\Common\\": "tests/"
         }
     },
     "scripts": {
