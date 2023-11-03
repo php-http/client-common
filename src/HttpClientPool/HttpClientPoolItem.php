@@ -8,6 +8,7 @@ use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\Exception;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
+use Http\Promise\Promise;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -89,6 +90,9 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
         return $response;
     }
 
+    /**
+     * @return Promise<ResponseInterface>
+     */
     public function sendAsyncRequest(RequestInterface $request)
     {
         if ($this->isDisabled()) {

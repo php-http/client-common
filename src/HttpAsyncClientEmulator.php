@@ -23,6 +23,7 @@ trait HttpAsyncClientEmulator
 
     /**
      * @see HttpAsyncClient::sendAsyncRequest
+     * @return \Http\Promise\Promise<ResponseInterface|\Throwable>
      */
     public function sendAsyncRequest(RequestInterface $request)
     {

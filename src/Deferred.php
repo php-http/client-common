@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * A deferred allow to return a promise which has not been resolved yet.
+ *
+ * @implements Promise<ResponseInterface>
  */
 final class Deferred implements Promise
 {
@@ -51,6 +53,11 @@ final class Deferred implements Promise
         $this->onRejectedCallbacks = [];
     }
 
+    /**
+     * @param callable(ResponseInterface): ResponseInterface|null $onFulfilled
+     * @param callable(\Throwable): ResponseInterface|null $onRejected
+     * @return Promise<ResponseInterface>
+     */
     public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
     {
         $deferred = new self($this->waitCallback);
@@ -90,6 +97,7 @@ final class Deferred implements Promise
 
     /**
      * Resolve this deferred with a Response.
+     * @param ResponseInterface $response
      */
     public function resolve(ResponseInterface $response): void
     {
@@ -122,6 +130,9 @@ final class Deferred implements Promise
         }
     }
 
+    /**
+     * {@inheritDoc}
+    */
     public function wait($unwrap = true)
     {
         if (Promise::PENDING === $this->state) {

@@ -7,13 +7,14 @@ namespace Http\Client\Common;
 use Http\Client\Common\Exception\LoopException;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 final class PluginChain
 {
     /** @var Plugin[] */
     private $plugins;
 
-    /** @var callable(RequestInterface): Promise */
+    /** @var callable(RequestInterface): Promise<ResponseInterface> */
     private $clientCallable;
 
     /** @var int */
@@ -24,7 +25,7 @@ final class PluginChain
 
     /**
      * @param Plugin[]                            $plugins        A plugin chain
-     * @param callable(RequestInterface): Promise $clientCallable Callable making the HTTP call
+     * @param callable(RequestInterface): Promise<ResponseInterface> $clientCallable Callable making the HTTP call
      * @param array{'max_restarts'?: int}         $options
      */
     public function __construct(array $plugins, callable $clientCallable, array $options = [])
@@ -48,6 +49,9 @@ final class PluginChain
         return $lastCallable;
     }
 
+    /**
+     * @return Promise<ResponseInterface>
+     */
     public function __invoke(RequestInterface $request): Promise
     {
         if ($this->restarts > $this->maxRestarts) {

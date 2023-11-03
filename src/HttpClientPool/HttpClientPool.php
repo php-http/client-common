@@ -7,6 +7,7 @@ namespace Http\Client\Common\HttpClientPool;
 use Http\Client\Common\Exception\HttpClientNotFoundException;
 use Http\Client\Common\HttpClientPool as HttpClientPoolInterface;
 use Http\Client\HttpAsyncClient;
+use Http\Promise\Promise;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -52,6 +53,9 @@ abstract class HttpClientPool implements HttpClientPoolInterface
      */
     abstract protected function chooseHttpClient(): HttpClientPoolItem;
 
+    /**
+     * @return Promise<ResponseInterface>
+     */
     public function sendAsyncRequest(RequestInterface $request)
     {
         return $this->chooseHttpClient()->sendAsyncRequest($request);

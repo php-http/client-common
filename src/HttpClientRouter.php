@@ -7,6 +7,7 @@ namespace Http\Client\Common;
 use Http\Client\Common\Exception\HttpClientNoMatchException;
 use Http\Client\HttpAsyncClient;
 use Http\Message\RequestMatcher;
+use Http\Promise\Promise;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -26,6 +27,9 @@ final class HttpClientRouter implements HttpClientRouterInterface
         return $this->chooseHttpClient($request)->sendRequest($request);
     }
 
+    /**
+     * @return Promise<ResponseInterface>
+     */
     public function sendAsyncRequest(RequestInterface $request)
     {
         return $this->chooseHttpClient($request)->sendAsyncRequest($request);

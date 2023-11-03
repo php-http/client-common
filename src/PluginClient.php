@@ -84,6 +84,9 @@ final class PluginClient implements HttpClient, HttpAsyncClient
         return $pluginChain($request)->wait();
     }
 
+    /**
+     * @return Promise<ResponseInterface>
+     */
     public function sendAsyncRequest(RequestInterface $request)
     {
         $pluginChain = $this->createPluginChain($this->plugins, function (RequestInterface $request) {
@@ -114,7 +117,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
      * @param Plugin[] $plugins        A plugin chain
      * @param callable $clientCallable Callable making the HTTP call
      *
-     * @return callable(RequestInterface): Promise
+     * @return callable(RequestInterface): Promise<ResponseInterface>
      */
     private function createPluginChain(array $plugins, callable $clientCallable): callable
     {
