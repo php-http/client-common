@@ -158,9 +158,6 @@ final class RedirectPlugin implements Plugin
         $this->streamFactory = $options['stream_factory'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         // Check in storage
