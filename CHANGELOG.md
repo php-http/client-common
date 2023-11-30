@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.7.1 - 2023-11-30
+
+- Allow installation with Symfony 7.
+
 ## 2.7.0 - 2023-05-17
 
 - Dropped `php-http/message-factory` from composer requirements as it is abandoned and this package does not actually use it.
