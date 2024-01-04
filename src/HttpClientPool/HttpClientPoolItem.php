@@ -69,9 +69,6 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
         $this->reenableAfter = $reenableAfter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         if ($this->isDisabled()) {
@@ -92,9 +89,6 @@ class HttpClientPoolItem implements HttpClient, HttpAsyncClient
         return $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendAsyncRequest(RequestInterface $request)
     {
         if ($this->isDisabled()) {

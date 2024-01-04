@@ -1,5 +1,9 @@
 # Change Log
 
+## unreleased
+
+- Cleaned up phpdoc.
+
 ## 2.7.1 - 2023-11-30
 
 - Allow installation with Symfony 7.

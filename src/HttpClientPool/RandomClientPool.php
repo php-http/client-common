@@ -13,9 +13,6 @@ use Http\Client\Common\Exception\HttpClientNotFoundException;
  */
 final class RandomClientPool extends HttpClientPool
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function chooseHttpClient(): HttpClientPoolItem
     {
         $clientPool = array_filter($this->clientPool, function (HttpClientPoolItem $clientPoolItem) {

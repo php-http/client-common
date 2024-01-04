@@ -38,9 +38,6 @@ final class RequestMatcherPlugin implements Plugin
         $this->failurePlugin = $delegateOnNoMatch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         if ($this->requestMatcher->matches($request)) {
