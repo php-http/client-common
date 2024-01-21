@@ -21,12 +21,13 @@
         "symfony/polyfill-php80": "^1.17"
     },
     "require-dev": {
-        "doctrine/instantiator": "^1.1",
-        "guzzlehttp/psr7": "^1.4",
-        "nyholm/psr7": "^1.2",
-        "phpspec/phpspec": "^5.1 || ^6.3 || ^7.1",
-        "phpspec/prophecy": "^1.10.2",
-        "phpunit/phpunit": "^7.5.20 || ^8.5.33 || ^9.6.7"
+        "doctrine/instantiator": "^1.5 || ^2.0",
+        "guzzlehttp/psr7": "^1.9.1 || ^2.6.2",
+        "nyholm/psr7": "^1.8",
+        "phpspec/phpspec": "^5.1 || ^6.3 || ^7.5",
+        "phpspec/prophecy": "^1.18",
+        "phpspec/prophecy-phpunit": "^1.1 || ^2.1",
+        "phpunit/phpunit": "^7.5.20 || ^8.5.36 || ^9.6.16"
     },
     "suggest": {
         "ext-json": "To detect JSON responses with the ContentTypePlugin",

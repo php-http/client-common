@@ -10,9 +10,12 @@ use Http\Client\Common\PluginClientBuilder;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class PluginClientBuilderTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @dataProvider clientProvider */
     public function testPriority(string $client): void
     {
