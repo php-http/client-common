@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Cient\Common\Plugin;
+namespace Tests\Http\Client\Common\Plugin;
 
 use Http\Client\Common\Exception\CircularRedirectionException;
 use Http\Client\Common\Plugin\RedirectPlugin;
