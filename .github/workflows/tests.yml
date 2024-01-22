@@ -50,9 +50,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: |
-          composer require "sebastian/comparator:^3.0.2" --no-interaction --no-update
-          composer update --prefer-dist --prefer-stable --prefer-lowest --no-interaction --no-progress
+        run: composer update --prefer-dist --prefer-stable --prefer-lowest --no-interaction --no-progress
 
       - name: Execute tests
         run: composer test
@@ -63,11 +61,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - symfony: '4.0.*'
+          - symfony: '4.4.*'
             php-version: '7.1'
-          - symfony: '5.0.*'
+          - symfony: '5.4.*'
             php-version: '7.4'
-          - symfony: '6.0.*'
+          - symfony: '6.4.*'
             php-version: '8.2'
           - symfony: '7.0.*'
             php-version: '8.2'
