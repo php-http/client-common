@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Remove phpspec
         run: composer remove --dev friends-of-phpspec/phpspec-code-coverage phpspec/phpspec
@@ -31,7 +31,7 @@ jobs:
 
       steps:
           - name: Checkout code
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
           - name: PHP-CS-Fixer
             uses: docker://oskarstark/php-cs-fixer-ga
