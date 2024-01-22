@@ -85,8 +85,8 @@ jobs:
         env:
           SYMFONY_REQUIRE: ${{ matrix.symfony }}
         run: |
-          composer config --no-plugins allow-plugins.symfony/flex true
-          composer require --no-progress --no-scripts --no-plugins symfony/flex
+          composer global config --no-plugins allow-plugins.symfony/flex true
+          composer global require --no-progress --no-scripts --no-plugins symfony/flex
           composer update --prefer-dist --no-interaction --prefer-stable --no-progress
 
       - name: Execute tests
