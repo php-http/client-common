@@ -31,7 +31,7 @@ class PluginClientTest extends TestCase
         $this->assertInstanceOf($returnType, $result);
     }
 
-    public function clientAndMethodProvider()
+    public static function clientAndMethodProvider()
     {
         $syncClient = new class() implements ClientInterface {
             public function sendRequest(RequestInterface $request): ResponseInterface
