@@ -107,7 +107,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "friends-of-phpspec/phpspec-code-coverage:^4.3.2" --no-interaction --no-update
+          composer require "friends-of-phpspec/phpspec-code-coverage:^6.3" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
