@@ -164,7 +164,7 @@ final class CookiePlugin implements Plugin
      *
      * @param string $part A single cookie value in format key=value
      *
-     * @return array{0:string, 1:?string}
+     * @return array{0:string, 1?:string}
      */
     private function createValueKey(string $part): array
     {
