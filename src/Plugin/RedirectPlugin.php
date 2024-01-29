@@ -113,7 +113,7 @@ final class RedirectPlugin implements Plugin
     private $streamFactory;
 
     /**
-     * @param array{'preserve_header'?: bool|string[], 'use_default_for_multiple'?: bool, 'strict'?: bool} $config
+     * @param array{'preserve_header'?: bool|string[], 'use_default_for_multiple'?: bool, 'strict'?: bool, 'stream_factory'?:StreamFactoryInterface} $config
      *
      * Configuration options:
      *   - preserve_header: True keeps all headers, false remove all of them, an array is interpreted as a list of header names to keep
