@@ -10,9 +10,12 @@ use Http\Client\Common\PluginClientBuilder;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class PluginClientBuilderTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @dataProvider clientProvider */
     public function testPriority(string $client): void
     {
@@ -71,7 +74,7 @@ class PluginClientBuilderTest extends TestCase
         $this->assertSame(5, $options['max_restarts']);
     }
 
-    public function clientProvider(): iterable
+    public static function clientProvider(): iterable
     {
         yield 'sync\'d http client' => [HttpClient::class];
         yield 'async\'d http client' => [HttpAsyncClient::class];

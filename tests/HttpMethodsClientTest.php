@@ -5,6 +5,7 @@ namespace Tests\Http\Client\Common;
 use Http\Client\Common\HttpMethodsClient;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -16,15 +17,9 @@ class HttpMethodsClientTest extends TestCase
     private const HEADER_VALUE = 'text/plain';
     private const BODY = 'body';
 
-    /**
-     * @var ClientInterface
-     */
-    private $httpClient;
+    private ClientInterface|MockObject $httpClient;
 
-    /**
-     * @var HttpMethodsClient
-     */
-    private $httpMethodsClient;
+    private HttpMethodsClient $httpMethodsClient;
 
     protected function setUp(): void
     {

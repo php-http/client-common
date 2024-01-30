@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="./vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="./vendor/autoload.php"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true">
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+>
 
-    <testsuites>
-        <testsuite name="HTTPlug unit tests">
-            <directory suffix="Test.php">./tests</directory>
-        </testsuite>
-    </testsuites>
+  <testsuites>
+    <testsuite name="HTTPlug unit tests">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
+
 </phpunit>

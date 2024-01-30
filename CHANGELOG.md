@@ -2,6 +2,8 @@
 
 ## unreleased
 
+- drop support for php < 8.1
+- drop support for symfony < 5.4
 - Cleaned up phpdoc.
 
 ## 2.7.1 - 2023-11-30
