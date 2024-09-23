@@ -78,7 +78,7 @@ class HttpMethodsClientTest extends TestCase
      *
      * As there is no data provider in phpspec, we keep separate methods to get new mocks for each test.
      */
-    private function expectSendRequest(string $method, string $body = null): void
+    private function expectSendRequest(string $method, ?string $body = null): void
     {
         $response = new Response();
         $this->httpClient->expects($this->once())

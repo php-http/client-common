@@ -218,7 +218,7 @@ final class RedirectPlugin implements Plugin
             return new Psr17Factory();
         }
         if (class_exists(Utils::class)) {
-            return new class() implements StreamFactoryInterface {
+            return new class implements StreamFactoryInterface {
                 public function createStream(string $content = ''): StreamInterface
                 {
                     return Utils::streamFor($content);
