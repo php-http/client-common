@@ -31,7 +31,7 @@ final class RequestMatcherPlugin implements Plugin
      */
     private $failurePlugin;
 
-    public function __construct(RequestMatcher $requestMatcher, ?Plugin $delegateOnMatch, Plugin $delegateOnNoMatch = null)
+    public function __construct(RequestMatcher $requestMatcher, ?Plugin $delegateOnMatch, ?Plugin $delegateOnNoMatch = null)
     {
         $this->requestMatcher = $requestMatcher;
         $this->successPlugin = $delegateOnMatch;
