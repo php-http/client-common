@@ -1,10 +1,11 @@
 # Change Log
 
-## unreleased
+## 2.7.2 - 2024-09-24
 
+- Updated code to not raise warnings for nullable parameters in PHP 8.4.
 - drop support for php < 8.1
 - drop support for symfony < 5.4
-- Cleaned up phpdoc.
+- Cleaned up PHPDoc comments.
 
 ## 2.7.1 - 2023-11-30
 

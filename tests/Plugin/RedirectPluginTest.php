@@ -93,7 +93,7 @@ class RedirectPluginTest extends TestCase
             'relative-path with ./' => ['https://example.com:8000/path/', './other?query=value', 'https://example.com:8000/path/other?query=value'],
             'relative-path with //' => ['https://example.com:8000/path/', 'other//sub?query=value', 'https://example.com:8000/path/other//sub?query=value'],
             'relative-path redirect with only query' => ['https://example.com:8000/path', '?query=value', 'https://example.com:8000/path?query=value'],
-       ];
+        ];
     }
 
     /**
