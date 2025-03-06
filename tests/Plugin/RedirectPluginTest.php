@@ -78,7 +78,7 @@ class RedirectPluginTest extends TestCase
         $this->assertSame('https://example.com/other', $response->getHeaderLine('uri'));
     }
 
-    public function provideRedirections(): array
+    public static function provideRedirections(): array
     {
         return [
             'no path on target' => ['https://example.com/path?query=value', 'https://example.com?query=value', 'https://example.com?query=value'],
