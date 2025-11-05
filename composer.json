@@ -24,7 +24,7 @@
         "doctrine/instantiator": "^1.1",
         "guzzlehttp/psr7": "^1.4",
         "nyholm/psr7": "^1.2",
-        "phpspec/phpspec": "^5.1 || ^6.3 || ^7.1",
+        "phpspec/phpspec": "^5.1 || ^6.3 || ^7.1 || ^8.0",
         "phpspec/prophecy": "^1.10.2",
         "phpunit/phpunit": "^7.5.20 || ^8.5.33 || ^9.6.7"
     },
