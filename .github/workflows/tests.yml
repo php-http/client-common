@@ -71,8 +71,10 @@ jobs:
             php-version: '7.4'
           - symfony: '6.4.*'
             php-version: '8.2'
-          - symfony: '7.0.*'
-            php-version: '8.2'
+          - symfony: '7.4.*'
+            php-version: '8.3'
+          - symfony: '8.0.*'
+            php-version: '8.4'
 
     steps:
       - name: Checkout code

@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.8.0
+
+- Allow installation with Symfony 8.
+
 ## 2.7.2 - 2024-09-24
 
 - Updated code to not raise warnings for nullable parameters in PHP 8.4.
