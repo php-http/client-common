@@ -59,6 +59,7 @@ jobs:
     name: Symfony ${{ matrix.symfony }} LTS
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - symfony: '4.4.*'
