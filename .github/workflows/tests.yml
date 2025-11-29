@@ -11,6 +11,7 @@ jobs:
     name: PHP ${{ matrix.php }} Latest
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
 
@@ -39,6 +40,7 @@ jobs:
     name: PHP ${{ matrix.php }} Lowest
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php: ['7.1', '7.4', '8.2', '8.3']
 
@@ -113,7 +115,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "friends-of-phpspec/phpspec-code-coverage:^4.3.2" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests

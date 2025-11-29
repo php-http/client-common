@@ -1,10 +1,10 @@
 parameters:
     level: max
-    checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false
     paths:
         - src
     ignoreErrors:
+        - "#.*no value type specified in iterable type array.*#"
         # Exception still thrown in PHP 8, not sure why phpstan complains
         -
             message: "#^Dead catch - UnexpectedValueException is never thrown in the try block\\.$#"
@@ -70,6 +70,11 @@ parameters:
             path: src/Plugin/RedirectPlugin.php
 
         -
+            message: "#^Method Psr\\\\Http\\\\Message\\\\StreamFactoryInterface@anonymous\/Plugin\/RedirectPlugin.php:221\\:\\:createStream\\(\\) should return Psr\\\\Http\\\\Message\\\\StreamInterface but returns mixed\\.$#"
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
             message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\RetryPlugin\\:\\:retry\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
             count: 1
             path: src/Plugin/RetryPlugin.php
@@ -78,3 +83,279 @@ parameters:
             message: "#^Method Http\\\\Client\\\\Common\\\\PluginClient\\:\\:sendRequest\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
             count: 2
             path: src/PluginClient.php
+
+        -
+            message: '#^Method Http\\Client\\Common\\BatchResult\:\:getExceptionFor\(\) has UnexpectedValueException in PHPDoc @throws tag but it''s not thrown\.$#'
+            identifier: throws.unusedType
+            count: 1
+            path: src/BatchResult.php
+
+        -
+            message: '#^Method Http\\Client\\Common\\BatchResult\:\:getResponseFor\(\) has UnexpectedValueException in PHPDoc @throws tag but it''s not thrown\.$#'
+            identifier: throws.unusedType
+            count: 1
+            path: src/BatchResult.php
+
+        -
+            message: '#^Parameter \#1 \$response of method Http\\Client\\Common\\Deferred\:\:resolve\(\) expects Psr\\Http\\Message\\ResponseInterface, mixed given\.$#'
+            identifier: argument.type
+            count: 2
+            path: src/Deferred.php
+
+        -
+            message: '#^Invalid type mixed to throw\.$#'
+            identifier: throw.notThrowable
+            count: 1
+            path: src/HttpClientPool/HttpClientPoolItem.php
+
+        -
+            message: '#^Method Http\\Client\\Common\\HttpMethodsClient\:\:createRequest\(\) should return Psr\\Http\\Message\\RequestInterface but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/HttpMethodsClient.php
+
+        -
+            message: '#^Parameter \#2 \$value of method Psr\\Http\\Message\\MessageInterface\:\:withHeader\(\) expects array\<string\>\|string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/HttpMethodsClient.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\AddHostPlugin\:\:\$replace \(bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/AddHostPlugin.php
+
+        -
+            message: '#^Parameter \#2 \$config of class Http\\Client\\Common\\Plugin\\AddHostPlugin constructor expects array\{replace\?\: bool\}, array given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/BaseUriPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\ContentTypePlugin\:\:\$sizeLimit \(int\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/ContentTypePlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\ContentTypePlugin\:\:\$skipDetection \(bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/ContentTypePlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\DecoderPlugin\:\:\$useContentEncoding \(bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/DecoderPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\ErrorPlugin\:\:\$onlyServerException \(bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/ErrorPlugin.php
+
+        -
+            message: '#^Parameter \#2 \$value of method Psr\\Http\\Message\\MessageInterface\:\:withAddedHeader\(\) expects array\<string\>\|string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/HeaderAppendPlugin.php
+
+        -
+            message: '#^Parameter \#2 \$value of method Psr\\Http\\Message\\MessageInterface\:\:withHeader\(\) expects array\<string\>\|string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/HeaderDefaultsPlugin.php
+
+        -
+            message: '#^Parameter \#1 \$name of method Psr\\Http\\Message\\MessageInterface\:\:hasHeader\(\) expects string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/HeaderRemovePlugin.php
+
+        -
+            message: '#^Parameter \#1 \$name of method Psr\\Http\\Message\\MessageInterface\:\:withoutHeader\(\) expects string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/HeaderRemovePlugin.php
+
+        -
+            message: '#^Parameter \#2 \$value of method Psr\\Http\\Message\\MessageInterface\:\:withHeader\(\) expects array\<string\>\|string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/HeaderSetPlugin.php
+
+        -
+            message: '#^Cannot access offset ''multiple'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot access offset ''permanent'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot access offset ''status'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot access offset ''switch'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 4
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot access offset ''to'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 2
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot access offset ''unless'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot access offset ''uri'' on mixed\.$#'
+            identifier: offsetAccess.nonOffsetAccessible
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Method Http\\Client\\Common\\Plugin\\RedirectPlugin\:\:guessStreamFactory\(\) should return Psr\\Http\\Message\\StreamFactoryInterface\|null but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Parameter \#1 \$method of method Psr\\Http\\Message\\RequestInterface\:\:withMethod\(\) expects string, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Parameter \#2 \$haystack of function in_array expects array, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Parameter \#2 \$targetUri of method Http\\Client\\Common\\Plugin\\RedirectPlugin\:\:buildRedirectRequest\(\) expects Psr\\Http\\Message\\UriInterface, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Parameter \#3 \$statusCode of method Http\\Client\\Common\\Plugin\\RedirectPlugin\:\:buildRedirectRequest\(\) expects int, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RedirectPlugin\:\:\$preserveHeader \(array\|bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RedirectPlugin\:\:\$streamFactory \(Psr\\Http\\Message\\StreamFactoryInterface\|null\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RedirectPlugin\:\:\$useDefaultForMultiple \(bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RedirectPlugin.php
+
+        -
+            message: '#^Cannot use \+\+ on mixed\.$#'
+            identifier: preInc.type
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RetryPlugin\:\:\$errorResponseDecider \(callable\(\)\: mixed\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RetryPlugin\:\:\$errorResponseDelay \(callable\(\)\: mixed\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RetryPlugin\:\:\$exceptionDecider \(callable\(\)\: mixed\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RetryPlugin\:\:\$exceptionDelay \(callable\(\)\: mixed\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\RetryPlugin\:\:\$retry \(int\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/RetryPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\SeekableBodyPlugin\:\:\$memoryBufferSize \(int\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/SeekableBodyPlugin.php
+
+        -
+            message: '#^Property Http\\Client\\Common\\Plugin\\SeekableBodyPlugin\:\:\$useFileBuffer \(bool\) does not accept mixed\.$#'
+            identifier: assign.propertyType
+            count: 1
+            path: src/Plugin/SeekableBodyPlugin.php
+
+        -
+            message: '#^Trait Http\\Client\\Common\\Plugin\\VersionBridgePlugin is used zero times and is not analysed\.$#'
+            identifier: trait.unused
+            count: 1
+            path: src/Plugin/VersionBridgePlugin.php
+
+        -
+            message: '#^Method Http\\Client\\Common\\PluginChain\:\:__invoke\(\) should return Http\\Promise\\Promise but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/PluginChain.php
+
+        -
+            message: '#^Parameter \#1 \$response of class Http\\Client\\Promise\\HttpFulfilledPromise constructor expects Psr\\Http\\Message\\ResponseInterface, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/PluginClient.php
+
+        -
+            message: '#^Parameter \#3 \$options of class Http\\Client\\Common\\PluginChain constructor expects array\{max_restarts\?\: int\}, array given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/PluginClient.php
+
+        -
+            message: '#^Parameter \#3 \$options of class Http\\Client\\Common\\PluginClient constructor expects array\{max_restarts\?\: int\}, array given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/PluginClientBuilder.php
+
+        -
+            message: '#^Trait Http\\Client\\Common\\VersionBridgeClient is used zero times and is not analysed\.$#'
+            identifier: trait.unused
+            count: 1
+            path: src/VersionBridgeClient.php

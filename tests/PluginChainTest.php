@@ -43,11 +43,11 @@ class PluginChainTest extends TestCase
             $pluginOrderCalls[] = 'plugin2';
         });
 
-        $request = $this->prophesize(RequestInterface::class);
-        $responsePromise = $this->prophesize(Promise::class);
+        $request = $this->createMock(RequestInterface::class);
+        $responsePromise = $this->createMock(Promise::class);
 
         $clientCallable = static function () use ($responsePromise) {
-            return $responsePromise->reveal();
+            return $responsePromise;
         };
 
         $pluginOrderCalls = [];
@@ -59,9 +59,9 @@ class PluginChainTest extends TestCase
 
         $pluginChain = new PluginChain($plugins, $clientCallable);
 
-        $result = $pluginChain($request->reveal());
+        $result = $pluginChain($request);
 
-        $this->assertSame($responsePromise->reveal(), $result);
+        $this->assertSame($responsePromise, $result);
         $this->assertSame(['plugin1', 'plugin2'], $pluginOrderCalls);
     }
 
@@ -69,23 +69,23 @@ class PluginChainTest extends TestCase
     {
         $this->expectException(LoopException::class);
 
-        $request = $this->prophesize(RequestInterface::class);
-        $responsePromise = $this->prophesize(Promise::class);
+        $request = $this->createMock(RequestInterface::class);
+        $responsePromise = $this->createMock(Promise::class);
         $calls = 0;
         $clientCallable = static function () use ($responsePromise, &$calls) {
             ++$calls;
 
-            return $responsePromise->reveal();
+            return $responsePromise;
         };
 
         $pluginChain = new PluginChain([], $clientCallable, ['max_restarts' => 2]);
 
-        $pluginChain($request->reveal());
+        $pluginChain($request);
         $this->assertSame(1, $calls);
-        $pluginChain($request->reveal());
+        $pluginChain($request);
         $this->assertSame(2, $calls);
-        $pluginChain($request->reveal());
+        $pluginChain($request);
         $this->assertSame(3, $calls);
-        $pluginChain($request->reveal());
+        $pluginChain($request);
     }
 }
