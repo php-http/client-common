@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
       - name: Checkout code
@@ -25,10 +25,6 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: none
-
-      - name: Emulate PHP 8.3
-        run: composer config platform.php 8.3.999
-        if: matrix.php == '8.4'
 
       - name: Install PHP dependencies
         run: composer update --prefer-dist --no-interaction --no-progress
@@ -42,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.1', '7.4', '8.2', '8.3']
+        php: ['7.1', '7.4', '8.2', '8.5']
 
     steps:
       - name: Checkout code
@@ -65,6 +61,7 @@ jobs:
     name: Symfony ${{ matrix.symfony }} LTS
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - symfony: '4.4.*'
@@ -73,8 +70,10 @@ jobs:
             php-version: '7.4'
           - symfony: '6.4.*'
             php-version: '8.2'
-          - symfony: '7.0.*'
+          - symfony: '7.4.*'
             php-version: '8.2'
+          - symfony: '8.*'
+            php-version: '8.5'
 
     steps:
       - name: Checkout code
