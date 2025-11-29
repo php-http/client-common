@@ -19,16 +19,16 @@ class PluginClientBuilderTest extends TestCase
         $builder = new PluginClientBuilder();
 
         $plugins = [
-            10 => $this->prophesize(Plugin::class)->reveal(),
-            -10 => $this->prophesize(Plugin::class)->reveal(),
-            0 => $this->prophesize(Plugin::class)->reveal(),
+            10 => $this->createMock(Plugin::class),
+            -10 => $this->createMock(Plugin::class),
+            0 => $this->createMock(Plugin::class),
         ];
 
         foreach ($plugins as $priority => $plugin) {
             $builder->addPlugin($plugin, $priority);
         }
 
-        $client = $this->prophesize($client)->reveal();
+        $client = $this->createMock($client);
         $client = $builder->createClient($client);
 
         $closure = \Closure::bind(
@@ -54,7 +54,7 @@ class PluginClientBuilderTest extends TestCase
         $builder = new PluginClientBuilder();
         $builder->setOption('max_restarts', 5);
 
-        $client = $this->prophesize($client)->reveal();
+        $client = $this->createMock($client);
         $client = $builder->createClient($client);
 
         $closure = \Closure::bind(
