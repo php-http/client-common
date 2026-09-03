@@ -178,7 +178,7 @@ final class RedirectPlugin implements Plugin
 
             $uri = $this->createUri($response, $request);
             $redirectRequest = $this->buildRedirectRequest($request, $uri, $statusCode);
-            $chainIdentifier = spl_object_hash((object) $first);
+            $chainIdentifier = \PHP_VERSION_ID < 70200 ? spl_object_hash((object) $first) : (string) spl_object_id((object) $first);
 
             if (!array_key_exists($chainIdentifier, $this->circularDetection)) {
                 $this->circularDetection[$chainIdentifier] = [];

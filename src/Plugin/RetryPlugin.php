@@ -98,7 +98,7 @@ final class RetryPlugin implements Plugin
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
-        $chainIdentifier = spl_object_hash((object) $first);
+        $chainIdentifier = \PHP_VERSION_ID < 70200 ? spl_object_hash((object) $first) : (string) spl_object_id((object) $first);
 
         return $next($request)->then(function (ResponseInterface $response) use ($request, $next, $first, $chainIdentifier) {
             if (!array_key_exists($chainIdentifier, $this->retryStorage)) {
