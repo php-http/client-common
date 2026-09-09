@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "doctrine/instantiator": "^1.1",
-        "guzzlehttp/psr7": "^1.4",
+        "guzzlehttp/psr7": "^1.4 || ^2.0 || ^3.0",
         "nyholm/psr7": "^1.2",
         "phpunit/phpunit": "^7.5.20 || ^8.5.33 || ^9.6.7"
     },

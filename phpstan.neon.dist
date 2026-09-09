@@ -5,11 +5,6 @@ parameters:
         - src
     ignoreErrors:
         - "#.*no value type specified in iterable type array.*#"
-        # Exception still thrown in PHP 8, not sure why phpstan complains
-        -
-            message: "#^Dead catch - UnexpectedValueException is never thrown in the try block\\.$#"
-            count: 2
-            path: src/BatchResult.php
 
         -
             message: "#^Method Http\\\\Client\\\\Common\\\\Plugin\\\\Journal\\:\\:addSuccess\\(\\) has no return type specified\\.$#"
@@ -83,18 +78,6 @@ parameters:
             message: "#^Method Http\\\\Client\\\\Common\\\\PluginClient\\:\\:sendRequest\\(\\) should return Psr\\\\Http\\\\Message\\\\ResponseInterface but returns mixed\\.$#"
             count: 2
             path: src/PluginClient.php
-
-        -
-            message: '#^Method Http\\Client\\Common\\BatchResult\:\:getExceptionFor\(\) has UnexpectedValueException in PHPDoc @throws tag but it''s not thrown\.$#'
-            identifier: throws.unusedType
-            count: 1
-            path: src/BatchResult.php
-
-        -
-            message: '#^Method Http\\Client\\Common\\BatchResult\:\:getResponseFor\(\) has UnexpectedValueException in PHPDoc @throws tag but it''s not thrown\.$#'
-            identifier: throws.unusedType
-            count: 1
-            path: src/BatchResult.php
 
         -
             message: '#^Parameter \#1 \$response of method Http\\Client\\Common\\Deferred\:\:resolve\(\) expects Psr\\Http\\Message\\ResponseInterface, mixed given\.$#'

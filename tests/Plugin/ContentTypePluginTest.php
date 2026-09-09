@@ -56,7 +56,7 @@ class ContentTypePluginTest extends TestCase
         $stream->method('isSeekable')->willReturn(true);
         $stream->method('getSize')->willReturn(null);
         $stream->method('getContents')->willReturn('');
-        $stream->method('rewind')->willReturn(null);
+        $stream->method('rewind');
         $request = (new Request('POST', 'https://example.com'))->withBody($stream);
         $this->assertFalse($this->handle(new ContentTypePlugin(), $request)->hasHeader('Content-Type'));
     }
