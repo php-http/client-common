@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.7.4 - unreleased
+
+- Fix `spl_object_hash` deprecation on PHP 8.6.
+
 ## 2.7.3 - 2025-11-29
 
 - Allow installation with Symfony 8.
