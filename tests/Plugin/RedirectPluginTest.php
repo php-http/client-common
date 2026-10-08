@@ -28,6 +28,73 @@ class RedirectPluginTest extends TestCase
         )->wait();
     }
 
+    public function testCircularDetectionAcrossSeveralRedirections(): void
+    {
+        $responses = [
+            'https://example.com/a' => new Response(302, ['Location' => 'https://example.com/b']),
+            'https://example.com/b' => new Response(302, ['Location' => 'https://example.com/a']),
+        ];
+        $first = $this->createFirst(new RedirectPlugin(), $responses);
+
+        $this->expectException(CircularRedirectionException::class);
+        $first(new Request('GET', 'https://example.com/a'))->wait();
+    }
+
+    public function testFinishedChainDoesNotLeakIntoTheNextOneWithTheSameFirstCallable(): void
+    {
+        $responses = [
+            'https://example.com/a' => new Response(302, ['Location' => 'https://example.com/b']),
+            'https://example.com/b' => new Response(200),
+            'https://example.com/c' => new Response(302, ['Location' => 'https://example.com/a']),
+        ];
+        // the chain identifier is derived from $first, so reusing the instance simulates a new
+        // chain that gets the identifier of a finished one
+        $first = $this->createFirst(new RedirectPlugin(), $responses);
+
+        $this->assertSame(200, $first(new Request('GET', 'https://example.com/a'))->wait()->getStatusCode());
+        $this->assertSame(200, $first(new Request('GET', 'https://example.com/c'))->wait()->getStatusCode());
+    }
+
+    public function testChainStoppedByACircularRedirectionDoesNotLeakIntoTheNextOne(): void
+    {
+        $responses = [
+            'https://example.com/a' => new Response(302, ['Location' => 'https://example.com/b']),
+            'https://example.com/b' => new Response(302, ['Location' => 'https://example.com/a']),
+        ];
+        $first = $this->createFirst(new RedirectPlugin(), $responses);
+
+        try {
+            $first(new Request('GET', 'https://example.com/a'))->wait();
+            $this->fail('The first chain should be detected as circular.');
+        } catch (CircularRedirectionException $e) {
+        }
+
+        $responses = [
+            'https://example.com/c' => new Response(302, ['Location' => 'https://example.com/a']),
+            'https://example.com/a' => new Response(200),
+        ];
+
+        $this->assertSame(200, $first(new Request('GET', 'https://example.com/c'))->wait()->getStatusCode());
+    }
+
+    /**
+     * Builds the $first callable of a plugin chain made of the redirect plugin only, like PluginClient does.
+     *
+     * @param array<string, ResponseInterface> $responses Response for each requested URI
+     */
+    private function createFirst(RedirectPlugin $plugin, array &$responses): callable
+    {
+        $next = function (RequestInterface $request) use (&$responses) {
+            return new FulfilledPromise($responses[(string) $request->getUri()]);
+        };
+
+        $first = function (RequestInterface $request) use ($plugin, $next, &$first) {
+            return $plugin->handleRequest($request, $next, $first);
+        };
+
+        return $first;
+    }
+
     public function testPostGetDropRequestBody(): void
     {
         $response = (new RedirectPlugin())->handleRequest(

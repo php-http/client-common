@@ -180,25 +180,33 @@ final class RedirectPlugin implements Plugin
             $redirectRequest = $this->buildRedirectRequest($request, $uri, $statusCode);
             $chainIdentifier = \PHP_VERSION_ID < 70200 ? spl_object_hash((object) $first) : (string) spl_object_id((object) $first);
 
-            if (!array_key_exists($chainIdentifier, $this->circularDetection)) {
+            // the identifier can be reused once the chain is finished, so the chain that starts it also clears it
+            $startsChain = !array_key_exists($chainIdentifier, $this->circularDetection);
+            if ($startsChain) {
                 $this->circularDetection[$chainIdentifier] = [];
             }
 
-            $this->circularDetection[$chainIdentifier][] = (string) $request->getUri();
+            try {
+                $this->circularDetection[$chainIdentifier][] = (string) $request->getUri();
 
-            if (in_array((string) $redirectRequest->getUri(), $this->circularDetection[$chainIdentifier], true)) {
-                throw new CircularRedirectionException('Circular redirection detected', $request, $response);
+                if (in_array((string) $redirectRequest->getUri(), $this->circularDetection[$chainIdentifier], true)) {
+                    throw new CircularRedirectionException('Circular redirection detected', $request, $response);
+                }
+
+                if ($this->redirectCodes[$statusCode]['permanent']) {
+                    $this->redirectStorage[(string) $request->getUri()] = [
+                        'uri' => $uri,
+                        'status' => $statusCode,
+                    ];
+                }
+
+                // Call redirect request synchronously
+                return $first($redirectRequest)->wait();
+            } finally {
+                if ($startsChain) {
+                    unset($this->circularDetection[$chainIdentifier]);
+                }
             }
-
-            if ($this->redirectCodes[$statusCode]['permanent']) {
-                $this->redirectStorage[(string) $request->getUri()] = [
-                    'uri' => $uri,
-                    'status' => $statusCode,
-                ];
-            }
-
-            // Call redirect request synchronously
-            return $first($redirectRequest)->wait();
         });
     }
 

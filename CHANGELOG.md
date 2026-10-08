@@ -3,6 +3,8 @@
 ## 2.7.4 - unreleased
 
 - Fix `spl_object_hash` deprecation on PHP 8.6.
+- Fix `RedirectPlugin` reporting a circular redirection when a new request reuses the identifier of a finished one,
+  and stop keeping the URLs of finished redirect chains in memory.
 
 ## 2.7.3 - 2025-11-29
 

@@ -65,7 +65,7 @@ parameters:
             path: src/Plugin/RedirectPlugin.php
 
         -
-            message: "#^Method Psr\\\\Http\\\\Message\\\\StreamFactoryInterface@anonymous\/Plugin\/RedirectPlugin.php:221\\:\\:createStream\\(\\) should return Psr\\\\Http\\\\Message\\\\StreamInterface but returns mixed\\.$#"
+            message: "#^Method Psr\\\\Http\\\\Message\\\\StreamFactoryInterface@anonymous\/Plugin\/RedirectPlugin.php:229\\:\\:createStream\\(\\) should return Psr\\\\Http\\\\Message\\\\StreamInterface but returns mixed\\.$#"
             count: 1
             path: src/Plugin/RedirectPlugin.php
 
